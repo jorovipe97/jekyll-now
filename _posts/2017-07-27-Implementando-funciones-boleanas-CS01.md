@@ -75,7 +75,8 @@ Esto hara que en muchos chips no tengamos que pensar mucho para hallar su funcio
 La funcion **Nand** (al igual que la **Xor**) tiene una importancia teorica y practica, a partir de ella podemos construir la compuerta **And** la **Or** y la **Not**, ademas teniendo en cuenta que apartir de estas tres podemos implementar cualquier otra compuerta boleana sin importar su complejidad, encontramos por lo tanto que a partir de la **Nand** se puede construir cualquier otra compuerta boleana.
 
 # Implementando el chip Or con chips Nand.
-´´´hdl
+```hdl
+
 CHIP Or {
     IN a, b;
     OUT out;
@@ -86,4 +87,5 @@ CHIP Or {
     Nand(a=b, b=b, out=nandb);
     Nand(a=nanda, b=nandb, out=out);
 }
-´´´
+
+```
