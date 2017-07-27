@@ -58,7 +58,7 @@ Consiste en representar una funcion boleana como suma de miniterminos a partir d
 
 > poner imagen xor_miniterms_sum.png
 
-Como se puede ver se necesita primero que todo tener definida la tabla de verdad de la función en cuestion, luego miramos en dicha tabla unicamente los casos en los que la salida de la funcion es **true**, 
+Como se puede ver se necesita primero que todo tener definida la tabla de verdad de la función en cuestion, luego miramos en dicha tabla unicamente los casos en los que la salida de la funcion es **true**, se configuran en un and las entradas de una de las salidas que fueron **true** pasando por un **Not** las entradas que valieron 0, se hace el mismo proceso con las entradas de las demas salidas que valieron **true** y luego a estos terminos se le  
 
 Esto hara que en muchos chips no tengamos que pensar mucho para hallar su funcion, sin embargo cabe decir que en chips mas complejos sera necesario el pensamiento.
 
