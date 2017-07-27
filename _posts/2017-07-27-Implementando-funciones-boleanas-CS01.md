@@ -29,7 +29,7 @@ Para facilitar la compresión dividiré el post en las siguientes partes:
 
 1. Conceptos importantes.
     1. ¿Porque es importante realizar en orden el proyecto?
-    2. ¿Orden de lectura del HardwareSimulator?
+    2. HardwareSimulator y tecnicas para hacer debugging.
     3. Representación canónica y sus implicaciones teóricas.
     4. La función Nand y sus superpoderes.
 2. Implementando el Or con chips Nand.
@@ -53,12 +53,19 @@ Para la realizacion del problema planteado en esta ocación resulta muy util los
 ## ¿Porque es importante realizar en orden el proyecto?
 Es importante ir implementando los chips de una modo progresivo, es decir en el orden en el que se dio en la lista-1, esto debido a que por ejemplo el **Xor** y el **Mux** dependen del **And** el **Or** y el **Not**, a su vez el **Mux4Way16** puede depender del **Xor** y otros chips implementados anteriormente, esto permitira disminuir drasticamente el uso de chips que usa cada chip determinado.
 
+## HardwareSimulator y tecnicas para hacer debugging
+HardwareSimulator busca los chips que usemos en un chip cuya implementacion se propia en un orden especifica si por ejemplo vamos a  implementar un **Xor** cuya implementacion depende del **And** el **Or** y el **Not** (chips basicos), y suponiendo que estamos implementando el **Xor** en el directorio */home/jose/chips/Xor.hdl* el buscara los chips basicos en el mismo directorio donde se encuentra el *Xor.hdl* si ahi no se encuentran los buscara en un directorio propio del HardwareSimulator donde se encuentran muchos chips ya implementados, pero entonces ¿como usar esto para hacer **debugging**?
+
+Supongamos que tenemos nuestra implementacion del Xor y los chips basicos de los cuales depende este en el mismo directorio (HardwareSimulator) */home/jose/chips/*, ¿como sabemos si el error esta en la implementacion misma del Xor o en los chips basicos que este usa?
+
+Respuesta: Podriamos crear un subdirectorio en el directorio *~/chips/xor_temp/* y pasar alli nuestra implementacion del Xor y probarla, como en dicho subdirectorio temporal los chips basicos no estan, HardwareSimulator usara los chips nativos, si resulta que al hacer el test no ocurre ningun error seria una clara señal de que nuestro Xor ha sido bien implementado y que posiblemente el problema lo tenga la implementación nuestra de uno de los chips basicos, para descubrir cual es el chip con el problema se podria ahora ir pasando uno a uno dichos chips al directorio temporal anteriormente creado y ejecutar el test para que HardwareSimulator use la version del chip basico que fue implementado por nosotros mismos hasta que aparezca de nuevo el error y asi podriamos deducir cual es el chip defectuoso.
+
 ## Represantacion cananonica y sus implicaciones teoricas
 Consiste en representar una funcion boleana como suma de miniterminos a partir de su tabla de verdad, por ejemplo vamos a continuación a usar esta tecnica para hallar la funcion boleana del Xor dada su tabla de verdad:
 
 > poner imagen xor_miniterms_sum.png
 
-Como se puede ver se necesita primero que todo tener definida la tabla de verdad de la función en cuestion, luego miramos en dicha tabla unicamente los casos en los que la salida de la funcion es **true**, se configuran en un and las entradas de una de las salidas que fueron **true** pasando por un **Not** las entradas que valieron 0, se hace el mismo proceso con las entradas de las demas salidas que valieron **true** y luego a estos terminos se le  
+Como se puede ver se necesita primero que todo tener definida la tabla de verdad de la función en cuestion, luego miramos en dicha tabla unicamente los casos en los que la salida de la funcion es **true**, se configuran en un and las entradas de una de las salidas que fueron **true** pasando por un **Not** las entradas que valieron 0, se hace el mismo proceso con las entradas de las demas salidas que valieron **true** y luego a estos terminos se les une con un **Or**.
 
-Esto hara que en muchos chips no tengamos que pensar mucho para hallar su funcion, sin embargo cabe decir que en chips mas complejos sera necesario el pensamiento.
+Esto hara que en muchos chips no tengamos que pensar mucho para hallar su funcion boleana, sin embargo cabe decir que en chips mas complejos sera necesario el pensamiento.
 
