@@ -74,7 +74,29 @@ Esto hara que en muchos chips no tengamos que pensar mucho para hallar su funcio
 ## La función Nand y sus superpoderes.
 La funcion **Nand** (al igual que la **Xor**) tiene una importancia teorica y practica, a partir de ella podemos construir la compuerta **And** la **Or** y la **Not**, ademas teniendo en cuenta que apartir de estas tres podemos implementar cualquier otra compuerta boleana sin importar su complejidad, encontramos por lo tanto que a partir de la **Nand** se puede construir cualquier otra compuerta boleana.
 
-# Implementando el chip Or con chips Nand.
+# Implementando el chip Or con chips Nand
+A continuación muestro el diagrama del CHIP
+
+![Not](https://raw.githubusercontent.com/jorovipe97/computer_science_code/f417c6049fa7343fad3b63fd36f3a76fafbb2600/projects_resources/01/not.jpg)
+
+```HDL
+CHIP Not {
+    IN in;
+    OUT out;
+
+    PARTS:
+    // Put your code here:
+    Nand(a=in, b=in, out=out);
+}
+```
+
+Vemos que es una función sencilla, como tiene una unica entrada tiene solo dos posibles salidas y siempre sera el valor logico contrario al que entro.
+
+
+# Implementando el Or con chips Nand
+
+![Or using nand´s](https://rawgit.com/jorovipe97/computer_science_code/f417c6049fa7343fad3b63fd36f3a76fafbb2600/projects_resources/01/or_using_nands.jpg)
+
 ```HDL
 CHIP Or {
     IN a, b;
@@ -87,12 +109,50 @@ CHIP Or {
     Nand(a=nanda, b=nandb, out=out);
 }
 ```
-A continuación muestro el diagrama del CHIP
+**Advertencia**: En adelante explicaré el circuito solo si considero que es importante hacer observaciones o aclarar puntos interesantes.
 
-![Not](https://raw.githubusercontent.com/jorovipe97/computer_science_code/f417c6049fa7343fad3b63fd36f3a76fafbb2600/projects_resources/01/not.jpg)
 
-Vemos que es una función sencilla, como tiene una unica entrada tiene solo dos posibles salidas:
-in | **out**
---- | ---
-0 | 1
-1 | 0
+# Implementando el And con chips Nand
+
+![And](https://rawgit.com/jorovipe97/computer_science_code/f417c6049fa7343fad3b63fd36f3a76fafbb2600/projects_resources/01/and_using_nands.jpg)
+```HDL
+CHIP And {
+    IN a, b;
+    OUT out;
+
+    PARTS:
+    // Put your code here:
+    Nand(a=a, b=b, out=nand1);
+    Nand(a=nand1, b=nand1, out=out);
+}
+```
+
+# Implementando el Xor
+
+![Xor](https://rawgit.com/jorovipe97/computer_science_code/f417c6049fa7343fad3b63fd36f3a76fafbb2600/projects_resources/01/xor_2.jpg)
+
+Para hallar la funcion del boleana del Xor se uso la tecnica de los miniterminos (explicada en la seccion 1.iii.) esto simplificó el proceso significativamente.
+
+Una vez hallada la funcion boleana fue relativamente sencillo implementar el chip en HDL.
+```HDL
+CHIP Xor {
+    IN a, b;
+    OUT out;
+
+    PARTS:
+    // Put your code here:
+    Not(in=a, out=nota);
+    Not(in=b, out=notb);
+
+    And(a=a, b=notb, out=and1);
+    And(a=nota, b=b, out=and2);
+
+    Or(a=and1, b=and2, out=out);
+}
+```
+
+# Implementando el Mux
+
+![Mux](https://rawgit.com/jorovipe97/computer_science_code/f417c6049fa7343fad3b63fd36f3a76fafbb2600/projects_resources/01/Mux.jpg)
+
+En esta ocación se volvio a usar la tecnica de los miniterminos abstrayendo el significado humanamente dado a las entradas y escribiendo una cruda tabla de verdad, luego a la funcion resultanto se la simplificó usando la ley identidad y la ley distributiva, disminuyendo asi el numero de chips necesarios para la implementacin del Mux.
