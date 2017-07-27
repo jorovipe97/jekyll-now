@@ -28,19 +28,19 @@ El único problema es que se pone una restricción inicial: Sólo se puede usar 
 Para facilitar la compresión dividiré el post en las siguientes partes:
 
 1. Conocimientos necesarios.
---1. Representación canónica y sus implicaciones teóricas.
---2. La función Nand y sus superpoderes.
+    1. Representación canónica y sus implicaciones teóricas.
+    2. La función Nand y sus superpoderes.
 2. Implementando el Or con chips Nand.
 3. Implementando el And con chips Nand.
 4. Implementando el Xor.
 5. Implementando el Mux.
 6. Implementando el DMux.
 7. ¿Que es un chip multi-bit?
---1. Implementando la versión. multi-bit de los anteriores chips.
+    1. Implementando la versión. multi-bit de los anteriores chips.
 8. ¿Que es un chip multi-way?
---1. Implementando el Or8Way.
---2. Implementando el Mux4Way16.
---3. Implementando el Mux8Way16.
---4. Implementando el DMux4Way.
---5. Implementando el DMux8Way.
---6. Bibliografía.
+    1. Implementando el Or8Way.
+    2. Implementando el Mux4Way16.
+    3. Implementando el Mux8Way16.
+    4. Implementando el DMux4Way.
+    5. Implementando el DMux8Way.
+    6. Bibliografía.
