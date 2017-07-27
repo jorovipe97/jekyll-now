@@ -3,7 +3,7 @@ layout: post
 title: Implementando funciones boleanas con HDL - CS01
 ---
 
-Este es el primer post de una serie de posts, en los cuales subiré mis aprendizajes acerca de un curso de computer science que estoy siguiendo (nand2tetris)[www.nand2tetris.org]
+Este es el primer post de una serie de posts, en los cuales subiré mis aprendizajes acerca de un curso de computer science que estoy siguiendo [nand2tetris](www.nand2tetris.org)
 
 En esta ocasión el objetivo es implementar las siguientes funciones lógicas (chips) ver lista-1:
 
