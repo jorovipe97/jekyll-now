@@ -88,4 +88,11 @@ CHIP Or {
 }
 ```
 A continuación muestro el diagrama del CHIP
+
 ![Not](https://raw.githubusercontent.com/jorovipe97/computer_science_code/f417c6049fa7343fad3b63fd36f3a76fafbb2600/projects_resources/01/not.jpg)
+
+Vemos que es una función sencilla, como tiene una unica entrada tiene solo dos posibles salidas:
+in | **out**
+--- | ---
+0 | 1
+1 | 0
