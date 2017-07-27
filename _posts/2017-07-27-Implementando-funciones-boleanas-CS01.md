@@ -87,3 +87,5 @@ CHIP Or {
     Nand(a=nanda, b=nandb, out=out);
 }
 ```
+A continuacin muestro el diagrama del CHIP
+>
