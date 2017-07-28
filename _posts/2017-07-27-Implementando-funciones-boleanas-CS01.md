@@ -477,4 +477,5 @@ CHIP DMux8Way {
 
 # Lista de chequeo y auto evaluación
 [Lista de chequeo](https://docs.google.com/spreadsheets/d/1X6-rO-6J3cyO9a6pEXFOBlY33oGKyIMm0gvI9SM1FYo/edit?usp=sharing)
+
 [Auto evaluación](https://docs.google.com/spreadsheets/d/1iQwefnnzveo2K_xAvspReNPAY6KGPqGVXmIErIpdYyM/edit?usp=sharing)
