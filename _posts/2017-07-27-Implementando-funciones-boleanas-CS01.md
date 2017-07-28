@@ -365,7 +365,7 @@ Este chip fue implementado usando 3 Mux16, la función de los 2 primeros multipl
 En este punto hay un problema por resolver en el chip:
 > ¡Tenemos dos salidas y solo debe haber una!
 
-Para solucionar este problema se pensó en una función de dos entradas cuya salida fuera **true** en 2 casos y **false** en 2 casos para que funcionara como un selector *"inteligente que supiera cuando escoger mux1 y cuando mux2"*, asi se llego a la función Xor que devuelve **true** solo cuando sus entradas tienen valores logicos diferentes, esto y la observación de que las dos veces que el **multiplexor selector** (muxsel) vale **true** la salida del **mux2** es diferente y las dos veces que la salida del **muxsel** vale **false** la salida del **mux1** tambíen es diferente permitieron llegar al circuito que se muestra en la imagen anterior.
+Para solucionar este problema se pensó en una función de dos entradas cuya salida fuera **true** en 2 casos y **false** en 2 casos para que funcionara como un selector *"inteligente que supiera cuando escoger mux1 y cuando mux2"*, asi se llego a la función Xor que devuelve **true** solo cuando sus entradas tienen valores logicos diferentes, se pudo llegar al circuito que se muestra en la imagen anterior cuando se observó que las dos veces que el **multiplexor selector** (muxsel) vale **true** la salida del **mux2** es diferente y las dos veces que la salida del **muxsel** vale **false** la salida del **mux1** tambíen es diferente.
 
 Asi ya solo era cuestion de escribir el chip en HDL:
 ```HDL
@@ -384,7 +384,7 @@ CHIP Mux4Way16 {
 }
 ```
 
-Cabe decir que esta implementación muestra ciertas ventajas pero tambien tiene ciertas desventajas, entre las ventajas encontramos que requiere de muy pocos chips lo que la hace una solución elegante, ademas con esta implementación no es necesario crear otros *"chips auxiliares"*, entre sus desventajas se encuentra que hay que conectar las entradas del **Mux4Way16** de una forma *"desordenada"* en los dos primeros mux porque si no lo hacemos asi cuando el selector sea 00 no siempre devolvera a, o cuando sea 01 tampoco devolvera b sino otro valor como por ejemplo d, esta desventaja resulta en un mayor tiempo de construcción para el chip puesto que se debe cambiar de una forma manual el orden en el que se hace el cableado en los multiplexores internos.
+Cabe decir que esta implementación muestra ciertas ventajas pero tambien tiene algunas desventajas, entre las ventajas encontramos que requiere de muy pocos chips lo que la hace una solución elegante, ademas con esta implementación no es necesario crear otros *"chips auxiliares"*, entre sus desventajas se encuentra que hay que conectar las entradas del **Mux4Way16** de una forma *"desordenada"* en los dos primeros mux, esto debido a que si no lo hacemos asi cuando el selector sea 00 no siempre devolvera a, o cuando sea 01 tampoco devolvera b sino otro valor como por ejemplo d, esta desventaja resulta en un mayor tiempo de construcción para el chip puesto que se debe cambiar de una forma manual el orden en el que se hace el cableado en los multiplexores internos.
 
 Dado que tanto el **Mux8Way16** como el **DMux4Way** y el **DMux8Way** fueron implementados siguiendo esta lógica al ver su implementación interna se observa el mismo *"desorden aparente"*.
 
