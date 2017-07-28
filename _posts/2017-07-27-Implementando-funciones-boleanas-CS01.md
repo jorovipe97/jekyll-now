@@ -215,7 +215,7 @@ Para implementar la versión multi-bit de un chip determinado solo es cuestion d
 
 Es importante aclarar que la versión multi-bit de un chip realiza la operación bit a bit, por ejemplo en el ejemplo del or16, el bit a[0] se opera con el bit b[0] y el resultado sale por out[0], el a[1] con b[1] y el resultado sale por out[1] ... el a[15] con el b[15] y el resultado sale por out[15].
 
-Dicho lo anterior procederé mostrando unícamente la implementación en HDL de la versión multi-bit de varios chips, sin entrar en detalles explicando la razon de dicha implementación puesto que lo dicho anteriormente aplica en los casos aqui mostrados.
+Dicho lo anterior procederé mostrando únicamente la implementación en HDL de la versión multi-bit de varios chips, sin entrar en detalles explicando la razon de dicha implementación puesto que lo dicho anteriormente aplica en los casos aqui mostrados.
 
 ## Implementando el Not16
 ```HDL
@@ -325,3 +325,71 @@ CHIP Mux16 {
     Mux(a=a[15], b=b[15], sel=sel, out=out[15]);
 }
 ```
+
+
+8. ¿Que es un chip multi-way?
+    1. Implementando el Or8Way.
+    2. Implementando el Mux4Way16.
+    3. Implementando el Mux8Way16.
+    4. Implementando el DMux4Way.
+    5. Implementando el DMux8Way.
+
+# ¿Que es un chip multi-way?
+La interpretacion que he dado a la palabra way es la de autopista, via o carril, basado en eso, un chip multi-way es un chip que es capaz de recibir mas entradas de las que su implementacion estandar lo permite, por ejemplo el **Or** estandar tiene 2 entradas y una salida, en cambio un **Or8Way** tendría 8 entradas y mantendría la única salida.
+
+Cabe resaltar que es posible hacer un chip m-way y n-bit al mismo tiempo, por ejemplo un Or8Way16 sería un bit que tiene ocho entradas *(carriles)* donde cada entrada tiene capacidad para que *"transiten"* por ella 8 bits simultaneamente.
+
+A diferencia de los chips multi-bits los chips multi-ways no son todos tan sencillos, por lo que dare explicaciones en los casos que se amerite.
+
+## Implementando el Or8Way
+![Or8Way](https://rawgit.com/jorovipe97/computer_science_code/master/projects_resources/01/or8way.jpg)
+
+En este caso la implementación es sencilla puesto que resulta unicamente de encadenar Or's
+```HDL
+CHIP Or8Way {
+    IN in[8];
+    OUT out;
+
+    PARTS:
+    // Put your code here:
+    Or(a=in[0], b=in[1], out=or1);
+    Or(a=or1, b=in[2], out=or2);
+    Or(a=or2, b=in[3], out=or3);
+    Or(a=or3, b=in[4], out=or4);
+    Or(a=or4, b=in[5], out=or5);
+    Or(a=or5, b=in[6], out=or6);
+    Or(a=or6, b=in[7], out=out);
+
+}
+```
+
+# Implementando el Mux4Way16
+![Mux4way16](https://rawgit.com/jorovipe97/computer_science_code/master/projects_resources/01/mux4way16_1.jpg)
+
+Este chip fue implementado usando 3 Mux16, la función de los 2 primeros es recibir las 4 entradas, cada uno se encarga de 2, ademas se ve que se usa el bit ubicado en la posicion 0 del selector para controlar el selector del mux1 y el otro bit se usa para controlar el selector del mux2.
+
+En este punto hay un problema por resolver en el chip:
+> ¡Tenemos dos salidas y solo debe haber una!
+
+Para solucionar este problema se pensó en una función de dos entradas cuya salida fuera **true** en 2 casos y **false** en 2 casos para que funcionara como un selector *"inteligente que supiera cuando escoger mux1 y cuando mux2"*, asi se llego a la función Xor que devuelve **true** solo cuando sus entradas tienen valores logicos diferentes, esto y la observación de que las dos veces que el **multiplexor selector** (muxsel) vale **true** la salida del **mux2** es diferente y las dos veces que la salida del **muxsel** vale **false** las salidas del **mux1** tambíen son diferentes permitieron llegar al circuito que se muestra en la imagen anterior.
+
+Asi ya solo era cuestion de escribir el chip en HDL:
+```HDL
+CHIP Mux4Way16 {
+    IN a[16], b[16], c[16], d[16], sel[2];
+    OUT out[16];
+
+    PARTS:
+    // Put your code here:
+    Mux16(a=a, b=d, sel=sel[0], out=mux1);
+    Mux16(a=b, b=c, sel=sel[1], out=mux2);
+
+    Xor(a=sel[0], b=sel[1], out=muxsel);
+
+    Mux16(a=mux1, b=mux2, sel=muxsel, out=out);
+}
+```
+
+Cabe decir que esta implementación muestra ciertas ventajas pero tambien tiene ciertas desventajas, entre las ventajas encontramos que requiere de muy pocos chips lo que la hace una solución elegante, ademas con esta implementación no es necesario crear otros *"chips auxiliares"*, entre sus desventajas se encuentra que hay que conectar las entradas del **Mux4Way16** de una forma *"desordenada"* en los dos primeros mux porque si no lo hacemos asi cuando el selector sea 00 no siempre devolvera a, o cuando sea 01 tampoco devolvera b sino otro valor como por ejemplo d, esta desventaja resulta en un mayor tiempo de construcción para el chip puesto que se debe cambiar de una forma manual el orden en el que se hace el cableado en los multiplexores internos.
+
+Dado que tanto el **Mux8Way16** como el **DMux4Way** y el **DMux8Way** fueron implementados siguiendo esta lógica al ver su implementación interna se observa el mismo *"desorden aparente"*.
