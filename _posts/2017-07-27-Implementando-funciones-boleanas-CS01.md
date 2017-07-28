@@ -50,30 +50,6 @@ Para facilitar la compresión dividiré el post en las siguientes partes:
   * [Implementando el Mux8Way16](#implementando-el-mux8way16)
   * [Implementando el DMux4Way](#implementando-el-dmux4way)
   * [Implementando el DMux8Way](#implementando-el-dmux8way)
-
-1. [Conocimientos importantes.](#conocimientos-importantes)
-    1. [¿Porque es importante realizar en orden el proyecto?](#porque-es-importante-realizar-en-orden-el-proyecto)
-    2. [HardwareSimulator y tecnicas para hacer debugging.](#hardwaresimulator-y-tecnicas-para-hacer-debugging)
-    3. [Representación canónica y sus implicaciones teóricas.](#representacion-canonica-y-sus-implicaciones-teoricas.)
-    4. [La función Nand y sus superpoderes.](#la-funcion-nand-y-sus-superpoderes)
-    5. [¿Donde esta el bit mas significativo?](#donde-esta-el-bit-mas-significativo)
-2. [Implementando el chip Not con chips Nand.](#implementando-el-chip-not-con-chips-nand)
-3. [Implementando el Or con chips Nand.](#Implementando-el-or-con-chips-nand)
-4. Implementando el And con chips Nand.
-5. Implementando el Xor.
-6. Implementando el Mux.
-7. Implementando el DMux.
-8. ¿Que es un chip multi-bit?
-    1. Implementando el Not16.
-    2. Implementando el And16.
-    3. Implementando el Or16.
-    4. Implementando el Mux16.        
-9. ¿Que es un chip multi-way?
-    1. Implementando el Or8Way.
-    2. Implementando el Mux4Way16.
-    3. Implementando el Mux8Way16.
-    4. Implementando el DMux4Way.
-    5. Implementando el DMux8Way.
     
     
 # Conocimientos importantes:
