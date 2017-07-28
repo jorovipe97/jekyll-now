@@ -31,7 +31,7 @@ Para facilitar la compresión dividiré el post en las siguientes partes:
   * [¿Porque es importante realizar en orden el proyecto?](#porque-es-importante-realizar-en-orden-el-proyecto)
   * [HardwareSimulator y tecnicas para hacer debugging](#hardwaresimulator-y-tecnicas-para-hacer-debugging)
   * [Represantacion cananonica y sus implicaciones teoricas](#represantacion-cananonica-y-sus-implicaciones-teoricas)
-  * [La función Nand y sus superpoderes.](#la-funcion-nand-y-sus-superpoderes)
+  * [La función Nand y sus superpoderes.](#user-content-la-funcion-nand-y-sus-superpoderes)
   * [¿Donde esta el bit menos significativo?](#donde-esta-el-bit-menos-significativo)
 - [Implementando el chip Not con chips Nand](#implementando-el-chip-not-con-chips-nand)
 - [Implementando el Or con chips Nand](#implementando-el-or-con-chips-nand)
