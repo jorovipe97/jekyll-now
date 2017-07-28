@@ -32,13 +32,17 @@ Para facilitar la compresión dividiré el post en las siguientes partes:
     2. HardwareSimulator y tecnicas para hacer debugging.
     3. Representación canónica y sus implicaciones teóricas.
     4. La función Nand y sus superpoderes.
+    5. ¿Donde esta el bit mas significativo?
 2. Implementando el Or con chips Nand.
 3. Implementando el And con chips Nand.
 4. Implementando el Xor.
 5. Implementando el Mux.
 6. Implementando el DMux.
 7. ¿Que es un chip multi-bit?
-    1. Implementando la versión. multi-bit de los anteriores chips.
+    1. Implementando el Not16.
+    2. Implementando el And16.
+    3. Implementando el Or16.
+    4. Implementando el Mux16.        
 8. ¿Que es un chip multi-way?
     1. Implementando el Or8Way.
     2. Implementando el Mux4Way16.
@@ -73,6 +77,11 @@ Esto hara que en muchos chips no tengamos que pensar mucho para hallar su funcio
 
 ## La función Nand y sus superpoderes.
 La funcion **Nand** (al igual que la **Xor**) tiene una importancia teorica y practica, a partir de ella podemos construir la compuerta **And** la **Or** y la **Not**, ademas teniendo en cuenta que apartir de estas tres podemos implementar cualquier otra compuerta boleana sin importar su complejidad, encontramos por lo tanto que a partir de la **Nand** se puede construir cualquier otra compuerta boleana.
+
+## ¿Donde esta el bit mas significativo?
+
+> poner imagen significative-bits.png
+
 
 # Implementando el chip Or con chips Nand
 A continuación muestro el diagrama del CHIP
@@ -127,6 +136,7 @@ CHIP And {
 }
 ```
 
+
 # Implementando el Xor
 
 ![Xor](https://rawgit.com/jorovipe97/computer_science_code/f417c6049fa7343fad3b63fd36f3a76fafbb2600/projects_resources/01/xor_2.jpg)
@@ -151,8 +161,59 @@ CHIP Xor {
 }
 ```
 
+
 # Implementando el Mux
 
 ![Mux](https://rawgit.com/jorovipe97/computer_science_code/f417c6049fa7343fad3b63fd36f3a76fafbb2600/projects_resources/01/Mux.jpg)
 
-En esta ocación se volvio a usar la tecnica de los miniterminos abstrayendo el significado humanamente dado a las entradas y escribiendo una cruda tabla de verdad, luego a la funcion resultanto se la simplificó usando la ley identidad y la ley distributiva, disminuyendo asi el numero de chips necesarios para la implementacin del Mux.
+En esta ocación se volvio a usar la tecnica de los miniterminos abstrayendo el significado humanamente dado a las entradas y escribiendo una cruda tabla de verdad, luego a la funcion resultante se simplificó usando la ley identidad y la ley distributiva, disminuyendo asi el numero de chips necesarios para la implementacin del Mux.
+```HDL
+CHIP Mux {
+    IN a, b, sel;
+    OUT out;
+
+    PARTS:
+    // Put your code here:
+    Not(in=sel, out=notsel);
+
+    And(a=b, b=sel, out=and1);
+    And(a=a, b=notsel, out=and2);
+
+    Or(a=and1, b=and2, out=out);  
+}
+```
+
+# Implementando el DMux
+
+!(DMux)[https://raw.githubusercontent.com/jorovipe97/computer_science_code/f417c6049fa7343fad3b63fd36f3a76fafbb2600/projects_resources/01/dmux.jpg]
+
+Para hallar la funcion boleana de este chip fue necesario hacer dos observaciones.
+1. La función tiene dos salidas y por lo tanto tiene *"una funcion independiente para cada salida"*.
+2. El **DMux** solo devuelve un **true** cuando en el **in** entra un **true**, cuando en el **in** hay un **false** no importa si el selector pin determina que salga por **a** o por **b** el **DMux** devolvera **false**.
+```HDL
+CHIP DMux {
+    IN in, sel;
+    OUT a, b;
+
+    PARTS:
+    // Put your code here:
+    // a output
+    Not(in=sel, out=notsel);
+    And(a=in, b=notsel, out=a);
+
+    // b output
+    And(a=in, b=sel, out=b);
+}
+```
+
+# ¿Que es un chip multi-bit?
+Un chip multi-bit es un chip que realiza una operacion logica bit-wise es decir bit a bit, estos chips podrian interpretarse como la implementacion a bajo nivel de los operadores bit-wise de los lenguajes de programación de alto nivel como c++ ya que su funcionamiento externo es similar.
+
+Para implementar la versión multi-bit de un chip determinado solo es cuestion de tomar la version one-bit de dicho chip y a cada input que tenga lo cambiamos por uno de n-bits y luego hacer lo mismo con la salida si corresponde, asi el Or multi-bit 16 seria tomar un or-one-bit y ponerle dos entradas de 16 bits a[16], b[16], y una salida de 16 bits (out[16]).
+
+Es importante aclarar que la versión multi-bit de un chip realiza la operación bit a bit, por ejemplo en el ejemplo del or16, el bit a[0] se opera con el bit b[0] y el resultado sale por out[0], el a[1] con b[1] y el resultado sale por out[1] ... el a[15] con el b[15] y el resultado sale por out[15].
+
+Dicho lo anterior procederé mostrando unícamente la implementación en HDL de la versión multi-bit de varios chips, sin entrar en detalles explicando la razon de dicha implementación puesto que lo dicho anteriormente aplica en los casos aqui mostrados.
+
+# Implementando el Not16
+
