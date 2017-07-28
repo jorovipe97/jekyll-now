@@ -90,8 +90,7 @@ A continuación muestro el diagrama del CHIP
 
 ![Not](https://cdn.rawgit.com/jorovipe97/computer_science_code/1e0838ec/projects_resources/01/not_2.png)
 
-{{ "{% highlight HDL "}}%}
-
+```HDL
 CHIP Not {
     IN in;
     OUT out;
@@ -100,8 +99,7 @@ CHIP Not {
     // Put your code here:
     Nand(a=in, b=in, out=out);
 }
-
-{{ "{% endhighlight "}}%}
+```
 
 Vemos que es una función sencilla, como tiene una unica entrada tiene solo dos posibles salidas y siempre sera el valor logico contrario al que entro.
 
