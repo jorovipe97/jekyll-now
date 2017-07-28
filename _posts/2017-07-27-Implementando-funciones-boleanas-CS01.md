@@ -51,6 +51,7 @@ Para facilitar la compresión dividiré el post en las siguientes partes:
     5. Implementando el DMux8Way.
     6. Bibliografía.
     
+    
 # Conocimientos importantes:
 Para la realizacion del problema planteado en esta ocación resulta muy util los siguientes conocimientos:
 
@@ -67,7 +68,7 @@ Supongamos que tenemos nuestra implementacion del Xor y los chips basicos de los
 ## Represantacion cananonica y sus implicaciones teoricas
 Consiste en representar una funcion boleana como suma de miniterminos a partir de su tabla de verdad, por ejemplo vamos a continuación a usar esta tecnica para hallar la funcion boleana del Xor dada su tabla de verdad:
 
-> poner imagen xor_miniterms_sum.png
+![Miniterm technique example](https://rawgit.com/jorovipe97/computer_science_code/master/projects_resources/01/xor_miniterms_sum.png)
 
 Como se puede ver se necesita primero que todo tener definida la tabla de verdad de la función en cuestion, luego miramos en dicha tabla unicamente los casos en los que la salida de la funcion es **true**, se configuran en un and las entradas de una de las salidas que fueron **true** pasando por un **Not** las entradas que valieron 0, se hace el mismo proceso con las entradas de las demas salidas que valieron **true** y luego a estos terminos se les une con un **Or**.
 
@@ -78,9 +79,10 @@ Esto hara que en muchos chips no tengamos que pensar mucho para hallar su funcio
 ## La función Nand y sus superpoderes.
 La funcion **Nand** (al igual que la **Xor**) tiene una importancia teorica y practica, a partir de ella podemos construir la compuerta **And** la **Or** y la **Not**, ademas teniendo en cuenta que apartir de estas tres podemos implementar cualquier otra compuerta boleana sin importar su complejidad, encontramos por lo tanto que a partir de la **Nand** se puede construir cualquier otra compuerta boleana.
 
-## ¿Donde esta el bit mas significativo?
+## ¿Donde esta el bit menos significativo?
 
-> poner imagen significative-bits.png
+![Significative bit](https://rawgit.com/jorovipe97/computer_science_code/master/projects_resources/01/significative-bits.png)
+Es importante tener en cuenta que cuando trabajemos con entradas o salidas multi-bit el bit menos significativo estara ubicado en el indice 0, tal como se muestra en la imagen anterior, esto se menciona porque se puede por habíto del programador creer que el bit ubicado en el indice 0 es el bit mas significativo cuando en realidad no lo es, esta confusión puede llevar a problemas inesperados a la hora de implementar algun chip.
 
 
 # Implementando el chip Or con chips Nand
@@ -185,7 +187,7 @@ CHIP Mux {
 
 # Implementando el DMux
 
-!(DMux)[https://raw.githubusercontent.com/jorovipe97/computer_science_code/f417c6049fa7343fad3b63fd36f3a76fafbb2600/projects_resources/01/dmux.jpg]
+![DMux](https://raw.githubusercontent.com/jorovipe97/computer_science_code/f417c6049fa7343fad3b63fd36f3a76fafbb2600/projects_resources/01/dmux.jpg)
 
 Para hallar la funcion boleana de este chip fue necesario hacer dos observaciones.
 1. La función tiene dos salidas y por lo tanto tiene *"una funcion independiente para cada salida"*.
@@ -215,5 +217,111 @@ Es importante aclarar que la versión multi-bit de un chip realiza la operación
 
 Dicho lo anterior procederé mostrando unícamente la implementación en HDL de la versión multi-bit de varios chips, sin entrar en detalles explicando la razon de dicha implementación puesto que lo dicho anteriormente aplica en los casos aqui mostrados.
 
-# Implementando el Not16
+## Implementando el Not16
+```HDL
+CHIP Not16 {
+    IN in[16];
+    OUT out[16];
 
+    PARTS:
+    // Put your code here:
+    Not(in=in[0], out=out[0]);
+    Not(in=in[1], out=out[1]);
+    Not(in=in[2], out=out[2]);
+    Not(in=in[3], out=out[3]);
+    Not(in=in[4], out=out[4]);
+    Not(in=in[5], out=out[5]);
+    Not(in=in[6], out=out[6]);
+    Not(in=in[7], out=out[7]);
+    Not(in=in[8], out=out[8]);
+    Not(in=in[9], out=out[9]);
+    Not(in=in[10], out=out[10]);
+    Not(in=in[11], out=out[11]);
+    Not(in=in[12], out=out[12]);
+    Not(in=in[13], out=out[13]);
+    Not(in=in[14], out=out[14]);
+    Not(in=in[15], out=out[15]);
+}
+```
+**Nota para el lector**:  En este HDL no se cuenta con bucles por lo tanto es necesario usar las tecnicas de copy and paste la cantidad de veces que sea necesaria (en este caso 15 veces).
+
+## Implementando el And16
+```HDL
+CHIP And16 {
+    IN a[16], b[16];
+    OUT out[16];
+
+    PARTS:
+    // Put your code here:
+    And(a=a[0], b=b[0], out=out[0]);
+    And(a=a[1], b=b[1], out=out[1]);
+    And(a=a[2], b=b[2], out=out[2]);
+    And(a=a[3], b=b[3], out=out[3]);
+    And(a=a[4], b=b[4], out=out[4]);
+    And(a=a[5], b=b[5], out=out[5]);
+    And(a=a[6], b=b[6], out=out[6]);
+    And(a=a[7], b=b[7], out=out[7]);
+    And(a=a[8], b=b[8], out=out[8]);
+    And(a=a[9], b=b[9], out=out[9]);
+    And(a=a[10], b=b[10], out=out[10]);
+    And(a=a[11], b=b[11], out=out[11]);
+    And(a=a[12], b=b[12], out=out[12]);
+    And(a=a[13], b=b[13], out=out[13]);
+    And(a=a[14], b=b[14], out=out[14]);
+    And(a=a[15], b=b[15], out=out[15]);
+}
+```
+
+## Implementando el Or16
+```HDL
+CHIP Or16 {
+    IN a[16], b[16];
+    OUT out[16];
+
+    PARTS:
+    // Put your code here:
+    Or(a=a[0], b=b[0], out=out[0]);
+    Or(a=a[1], b=b[1], out=out[1]);
+    Or(a=a[2], b=b[2], out=out[2]);
+    Or(a=a[3], b=b[3], out=out[3]);
+    Or(a=a[4], b=b[4], out=out[4]);
+    Or(a=a[5], b=b[5], out=out[5]);
+    Or(a=a[6], b=b[6], out=out[6]);
+    Or(a=a[7], b=b[7], out=out[7]);
+    Or(a=a[8], b=b[8], out=out[8]);
+    Or(a=a[9], b=b[9], out=out[9]);
+    Or(a=a[10], b=b[10], out=out[10]);
+    Or(a=a[11], b=b[11], out=out[11]);
+    Or(a=a[12], b=b[12], out=out[12]);
+    Or(a=a[13], b=b[13], out=out[13]);
+    Or(a=a[14], b=b[14], out=out[14]);
+    Or(a=a[15], b=b[15], out=out[15]);    
+}
+```
+
+## Implementando el Mux16
+```HDL
+CHIP Mux16 {
+    IN a[16], b[16], sel;
+    OUT out[16];
+
+    PARTS:
+    // Put your code here:
+    Mux(a=a[0], b=b[0], sel=sel, out=out[0]);
+    Mux(a=a[1], b=b[1], sel=sel, out=out[1]);
+    Mux(a=a[2], b=b[2], sel=sel, out=out[2]);
+    Mux(a=a[3], b=b[3], sel=sel, out=out[3]);
+    Mux(a=a[4], b=b[4], sel=sel, out=out[4]);
+    Mux(a=a[5], b=b[5], sel=sel, out=out[5]);
+    Mux(a=a[6], b=b[6], sel=sel, out=out[6]);
+    Mux(a=a[7], b=b[7], sel=sel, out=out[7]);
+    Mux(a=a[8], b=b[8], sel=sel, out=out[8]);
+    Mux(a=a[9], b=b[9], sel=sel, out=out[9]);
+    Mux(a=a[10], b=b[10], sel=sel, out=out[10]);
+    Mux(a=a[11], b=b[11], sel=sel, out=out[11]);
+    Mux(a=a[12], b=b[12], sel=sel, out=out[12]);
+    Mux(a=a[13], b=b[13], sel=sel, out=out[13]);
+    Mux(a=a[14], b=b[14], sel=sel, out=out[14]);
+    Mux(a=a[15], b=b[15], sel=sel, out=out[15]);
+}
+```
