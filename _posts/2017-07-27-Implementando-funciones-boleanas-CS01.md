@@ -68,7 +68,7 @@ Supongamos que tenemos nuestra implementacion del Xor y los chips basicos de los
 ## Represantacion cananonica y sus implicaciones teoricas
 Consiste en representar una funcion boleana como suma de miniterminos a partir de su tabla de verdad, por ejemplo vamos a continuación a usar esta tecnica para hallar la funcion boleana del Xor dada su tabla de verdad:
 
-![Miniterm technique example](https://rawgit.com/jorovipe97/computer_science_code/master/projects_resources/01/xor_miniterms_sum.png)
+![Miniterm technique example](https://cdn.rawgit.com/jorovipe97/computer_science_code/master/projects_resources/01/xor_miniterms_sum.png)
 
 Como se puede ver se necesita primero que todo tener definida la tabla de verdad de la función en cuestion, luego miramos en dicha tabla únicamente los casos en los que la salida de la función es **true**, se configuran en un and las entradas de una de las salidas que fueron **true** pasando por un **Not** las entradas que valieron 0, se hace el mismo proceso con las entradas de las demas salidas que valieron **true** y luego a estos terminos se les une con un **Or**.
 
@@ -81,14 +81,14 @@ La funcion **Nand** (al igual que la **Xor**) tiene una importancia teorica y pr
 
 ## ¿Donde esta el bit menos significativo?
 
-![Significative bit](https://rawgit.com/jorovipe97/computer_science_code/master/projects_resources/01/significative-bits.png)
+![Significative bit](https://cdn.rawgit.com/jorovipe97/computer_science_code/master/projects_resources/01/significative-bits.png)
 Es importante tener en cuenta que cuando trabajemos con entradas o salidas multi-bit el bit menos significativo estara ubicado en el indice 0, tal como se muestra en la imagen anterior, esto se menciona porque se puede por habíto del programador creer que el bit ubicado en el indice 0 es el bit mas significativo cuando en realidad no lo es, esta confusión puede llevar a problemas inesperados a la hora de implementar algun chip.
 
 
 # Implementando el chip Or con chips Nand
 A continuación muestro el diagrama del CHIP
 
-![Not](https://raw.githubusercontent.com/jorovipe97/computer_science_code/f417c6049fa7343fad3b63fd36f3a76fafbb2600/projects_resources/01/not.jpg)
+![Not](https://cdn.rawgit.com/jorovipe97/computer_science_code/b0811151/projects_resources/01/not.jpg)
 
 ```HDL
 CHIP Not {
@@ -106,7 +106,7 @@ Vemos que es una función sencilla, como tiene una unica entrada tiene solo dos 
 
 # Implementando el Or con chips Nand
 
-![Or using nand´s](https://rawgit.com/jorovipe97/computer_science_code/f417c6049fa7343fad3b63fd36f3a76fafbb2600/projects_resources/01/or_using_nands.jpg)
+![Or using nand´s](https://cdn.rawgit.com/jorovipe97/computer_science_code/f417c6049fa7343fad3b63fd36f3a76fafbb2600/projects_resources/01/or_using_nands.jpg)
 
 ```HDL
 CHIP Or {
@@ -125,7 +125,7 @@ CHIP Or {
 
 # Implementando el And con chips Nand
 
-![And](https://rawgit.com/jorovipe97/computer_science_code/f417c6049fa7343fad3b63fd36f3a76fafbb2600/projects_resources/01/and_using_nands.jpg)
+![And](https://cdn.rawgit.com/jorovipe97/computer_science_code/f417c6049fa7343fad3b63fd36f3a76fafbb2600/projects_resources/01/and_using_nands.jpg)
 ```HDL
 CHIP And {
     IN a, b;
@@ -141,7 +141,7 @@ CHIP And {
 
 # Implementando el Xor
 
-![Xor](https://rawgit.com/jorovipe97/computer_science_code/f417c6049fa7343fad3b63fd36f3a76fafbb2600/projects_resources/01/xor_2.jpg)
+![Xor](https://cdn.rawgit.com/jorovipe97/computer_science_code/f417c6049fa7343fad3b63fd36f3a76fafbb2600/projects_resources/01/xor_2.jpg)
 
 Para hallar la funcion del boleana del Xor se uso la tecnica de los miniterminos (explicada en la seccion 1.iii.) esto simplificó el proceso significativamente.
 
@@ -166,7 +166,7 @@ CHIP Xor {
 
 # Implementando el Mux
 
-![Mux](https://rawgit.com/jorovipe97/computer_science_code/f417c6049fa7343fad3b63fd36f3a76fafbb2600/projects_resources/01/Mux.jpg)
+![Mux](https://cdn.rawgit.com/jorovipe97/computer_science_code/f417c6049fa7343fad3b63fd36f3a76fafbb2600/projects_resources/01/Mux.jpg)
 
 En esta ocación se volvio a usar la tecnica de los miniterminos abstrayendo el significado humanamente dado a las entradas y escribiendo una cruda tabla de verdad, luego a la funcion resultante se simplificó usando la ley identidad y la ley distributiva, disminuyendo asi el numero de chips necesarios para la implementacin del Mux.
 ```HDL
@@ -187,7 +187,7 @@ CHIP Mux {
 
 # Implementando el DMux
 
-![DMux](https://raw.githubusercontent.com/jorovipe97/computer_science_code/f417c6049fa7343fad3b63fd36f3a76fafbb2600/projects_resources/01/dmux.jpg)
+![DMux](https://cdn.rawgit.com/jorovipe97/computer_science_code/b0811151/projects_resources/01/dmux.jpg)
 
 Para hallar la funcion boleana de este chip fue necesario hacer dos observaciones.
 1. La función tiene dos salidas y por lo tanto tiene *"una funcion independiente para cada salida"*.
@@ -327,13 +327,6 @@ CHIP Mux16 {
 ```
 
 
-8. ¿Que es un chip multi-way?
-    1. Implementando el Or8Way.
-    2. Implementando el Mux4Way16.
-    3. Implementando el Mux8Way16.
-    4. Implementando el DMux4Way.
-    5. Implementando el DMux8Way.
-
 # ¿Que es un chip multi-way?
 La interpretación que he dado a la palabra way es la de autopista, via o carril, basado en eso, un chip multi-way es un chip que es capaz de recibir mas entradas de las que su implementacion estandar lo permite, por ejemplo el **Or** estandar tiene 2 entradas y una salida, en cambio un **Or8Way** tendría 8 entradas y mantendría la única salida.
 
@@ -342,7 +335,7 @@ Cabe resaltar que es posible hacer un chip m-way y n-bit al mismo tiempo, por ej
 A diferencia de los chips multi-bits los chips multi-ways no son todos tan sencillos, por lo que dare explicaciones en los casos que se amerite.
 
 ## Implementando el Or8Way
-![Or8Way](https://rawgit.com/jorovipe97/computer_science_code/master/projects_resources/01/or8way.jpg)
+![Or8Way](https://cdn.rawgit.com/jorovipe97/computer_science_code/master/projects_resources/01/or8way.jpg)
 
 En este caso la implementación es sencilla puesto que resulta unicamente de encadenar Or's
 ```HDL
@@ -364,7 +357,7 @@ CHIP Or8Way {
 ```
 
 # Implementando el Mux4Way16
-![Mux4way16](https://rawgit.com/jorovipe97/computer_science_code/master/projects_resources/01/mux4way16_1.jpg)
+![Mux4way16](https://cdn.rawgit.com/jorovipe97/computer_science_code/master/projects_resources/01/mux4way16_1.jpg)
 
 Este chip fue implementado usando 3 Mux16, la función de los 2 primeros multiplexores es recibir las 4 entradas, cada uno se encarga de  2 de ellas, ademas se ve que se usa el bit ubicado en la posicion 0 del selector para controlar el selector del mux1 y el otro bit se usa para controlar el selector del mux2.
 
@@ -400,4 +393,82 @@ Como se digo anteriormente para este chip se siguió la misma lógica que la que
 En este caso se usaron dos **Mux4Way16** que sirvieron de procesadores de las 8 entradas, donde cada uno se encargaba de 4 y un Mux16 que sirvió de multiplexor selector.
 ![mux8way16_2](https://cdn.rawgit.com/jorovipe97/computer_science_code/29fd2f65/projects_resources/01/mux8way16_2.jpg)
 
-En esta ocasión el **muxsel** no podia ser un **Xor** de dos entradas porque era necesario procesar los 3 bits del selector, por lo tanto se diseño un **Xor3Way** y su salida sa uso para controlar la saldia a escoger por el **Mux16**.
+En esta ocasión el **muxsel** no podia ser un **Xor** de dos entradas porque era necesario procesar los 3 bits del selector, por lo tanto se diseñó un **Xor3Way** y su salida se uso para controlar la salida a escoger por el **Mux16**, a continuacipon una tabla de verdad donde se muestra el funcionamiento de este circuito y la salida del **muxsel**.
+![Mux8way16_1](https://cdn.rawgit.com/jorovipe97/computer_science_code/29fd2f65/projects_resources/01/mux8way16_1.jpg)
+
+Cabe decir que aunque toricamente las salidas estaban ordenadas, fue necesario conectar las entradas del **Mux8Way16** de una forma *"desordenada"* a las entradas de los 2 **Mux4Way16**, a continuación se muestra la implementación final en HDL.
+```HDL
+CHIP Mux8Way16 {
+    IN a[16], b[16], c[16], d[16],
+       e[16], f[16], g[16], h[16],
+       sel[3];
+    OUT out[16];
+
+    PARTS:
+    // Put your code here:
+    // Final 4mux selector
+    Xor(a=sel[0], b=sel[1], out=mux4waysel1-1);
+    Xor(a=mux4waysel1-1, b=sel[2], out=mux4waysel1-2);
+    /*
+	En HDL el signo - no se interpreta como un signo menos sino como 
+	un guion, por tanto una variable puede tener dicho
+	signo ej: foo1-2, en cambio el raya piso es un operador
+	que no es valido, ej: foo1_2, es un nombre de pin no valido
+
+	otro asunto a tener en cuenta es que si tengo un pin de 3 bits
+	y quiere seleccionar los dos primeros puedo usar la siguiente sintaxis:
+	x[0..1]
+	y para seleccionar los dos ultimos podria hacer
+	x[1..2]
+	Esto es sintazis valida en HDL
+    */
+
+    // sel[0..1] es sintaxis valida?
+    Mux4Way16(a=a, b=d, c=f, d=g, sel=sel[0..1], out=mux4way16-1);
+	Mux4Way16(a=e, b=b, c=c, d=h, sel=sel[1..2], out=mux4way16-2);
+
+	Mux16(a=mux4way16-1, b=mux4way16-2, sel=mux4waysel1-2, out=out);
+}
+```
+Como se puede ver este enfoque tiene la ventaja de que su implementación final requiere de muy pocos chips, sacrificando el entendimiento intuitivo del circuito.
+
+## Implementando el DMux4Way
+La implementación que se realizó basa su funcionamiento en una idea parecida a la utilizada en la implementación del **Mux4Way16** pero en este caso el problema es el inverso, en un principio se pensó que la técnica de la representación canónica podia derivar en una construcción mas sencilla del chip, y aunque en efecto resulto mas sencilla de entender, el numero de chips necesarios para su implementación crecia de forma cuadratica dependiendo del numero de *"ways"* que requiriese el chip, por lo tanto esta idea fue abandonada y se retornó a la idea originalmente planteada.
+![DMux4Way circuit](https://cdn.rawgit.com/jorovipe97/computer_science_code/master/projects_resources/01/dmux4way_1.jpg)
+
+En este caso hay un **DMux16** que recibe la señal de entrada y basado en **xor1** (que depende de los bits del selector) decide si enviar la señal por **demuxsela** o **demuxselb**, luego estos **DMux16** hacen su trabajo y ocurre la magia:
+```HDL
+CHIP DMux4Way {
+    IN in, sel[2];
+    OUT a, b, c, d;
+
+    PARTS:
+    // Put your code here:
+    Xor(a=sel[1], b=sel[0], out=xor1);
+    DMux(in=in, sel=xor1, a=dmuxsela, b=dmuxselb);
+
+    DMux(in=dmuxsela, sel=sel[1], a=a, b=d);
+    DMux(in=dmuxselb, sel=sel[0], a=c, b=b);
+}
+```
+Aqui es de nuevo importante recordar la desventaja subyacente en esta idea y es el *"desorden aparente en el cableado"*.
+
+## Implementando el DMux8Way
+En este punto ya se ha explicado la misma idea repetidas veces asi que intentare no repetir lo mismo, en esta ocasión similar a como en la del **Mux8Way16** se decidió usar 2 **DMux4Way**, un **DMux16** y un **Xor** de 3 entradas para el manejar el selector.
+![DMux8Way](https://cdn.rawgit.com/jorovipe97/computer_science_code/b0811151/projects_resources/01/dmux8way_1.jpg)
+```HDL
+CHIP DMux8Way {
+    IN in, sel[3];
+    OUT a, b, c, d, e, f, g, h;
+
+    PARTS:
+    // Put your code here:
+    Xor(a=sel[2], b=sel[1], out=xor1);
+    Xor(a=xor1, b=sel[0], out=xor2);
+    DMux(in=in, sel=xor2, a=dmuxa, b=dmuxb);
+
+    DMux4Way(in=dmuxa, sel=sel[1..2], a=a, b=d, c=f, d=g);
+    DMux4Way(in=dmuxb, sel=sel[0..1], a=e, b=b, c=c, d=h);
+
+}
+```
