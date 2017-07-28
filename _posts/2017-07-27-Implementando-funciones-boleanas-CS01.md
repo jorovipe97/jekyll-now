@@ -27,23 +27,24 @@ El único problema es que se pone una restricción inicial: Sólo se puede usar 
 
 Para facilitar la compresión dividiré el post en las siguientes partes:
 
-1. Conceptos importantes.
+1. [Conceptos importantes.](#conceptos-importantes)
     1. ¿Porque es importante realizar en orden el proyecto?
     2. HardwareSimulator y tecnicas para hacer debugging.
     3. Representación canónica y sus implicaciones teóricas.
     4. La función Nand y sus superpoderes.
     5. ¿Donde esta el bit mas significativo?
-2. Implementando el Or con chips Nand.
-3. Implementando el And con chips Nand.
-4. Implementando el Xor.
-5. Implementando el Mux.
-6. Implementando el DMux.
-7. ¿Que es un chip multi-bit?
+2. Implementando el chip Not con chips Nand
+3. Implementando el Or con chips Nand.
+4. Implementando el And con chips Nand.
+5. Implementando el Xor.
+6. Implementando el Mux.
+7. Implementando el DMux.
+8. ¿Que es un chip multi-bit?
     1. Implementando el Not16.
     2. Implementando el And16.
     3. Implementando el Or16.
     4. Implementando el Mux16.        
-8. ¿Que es un chip multi-way?
+9. ¿Que es un chip multi-way?
     1. Implementando el Or8Way.
     2. Implementando el Mux4Way16.
     3. Implementando el Mux8Way16.
