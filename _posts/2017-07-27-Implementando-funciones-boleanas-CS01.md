@@ -88,7 +88,7 @@ Es importante tener en cuenta que cuando trabajemos con entradas o salidas multi
 # Implementando el chip Or con chips Nand
 A continuación muestro el diagrama del CHIP
 
-![Not](https://cdn.rawgit.com/jorovipe97/computer_science_code/b0811151/projects_resources/01/not.jpg)
+![Not](https://cdn.rawgit.com/jorovipe97/computer_science_code/1e0838ec/projects_resources/01/not_2.png)
 
 ```HDL
 CHIP Not {
