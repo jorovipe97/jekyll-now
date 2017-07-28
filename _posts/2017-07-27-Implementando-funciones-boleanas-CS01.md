@@ -27,14 +27,38 @@ El único problema es que se pone una restricción inicial: Sólo se puede usar 
 
 Para facilitar la compresión dividiré el post en las siguientes partes:
 
-1. [Conceptos importantes.](#conceptos-importantes)
-    1. ¿Porque es importante realizar en orden el proyecto?
-    2. HardwareSimulator y tecnicas para hacer debugging.
-    3. Representación canónica y sus implicaciones teóricas.
-    4. La función Nand y sus superpoderes.
-    5. ¿Donde esta el bit mas significativo?
-2. Implementando el chip Not con chips Nand
-3. Implementando el Or con chips Nand.
+- [Conocimientos importantes:](#conocimientos-importantes)
+  * [¿Porque es importante realizar en orden el proyecto?](#porque-es-importante-realizar-en-orden-el-proyecto)
+  * [HardwareSimulator y tecnicas para hacer debugging](#hardwaresimulator-y-tecnicas-para-hacer-debugging)
+  * [Represantacion cananonica y sus implicaciones teoricas](#represantacion-cananonica-y-sus-implicaciones-teoricas)
+  * [La función Nand y sus superpoderes.](#la-funcion-nand-y-sus-superpoderes)
+  * [¿Donde esta el bit menos significativo?](#donde-esta-el-bit-menos-significativo)
+- [Implementando el chip Not con chips Nand](#implementando-el-chip-not-con-chips-nand)
+- [Implementando el Or con chips Nand](#implementando-el-or-con-chips-nand)
+- [Implementando el And con chips Nand](#implementando-el-and-con-chips-nand)
+- [Implementando el Xor](#implementando-el-xor)
+- [Implementando el Mux](#implementando-el-mux)
+- [Implementando el DMux](#implementando-el-dmux)
+- [¿Que es un chip multi-bit?](#que-es-un-chip-multi-bit)
+  * [Implementando el Not16](#implementando-el-not16)
+  * [Implementando el And16](#implementando-el-and16)
+  * [Implementando el Or16](#implementando-el-or16)
+  * [Implementando el Mux16](#implementando-el-mux16)
+- [¿Que es un chip multi-way?](#que-es-un-chip-multi-way)
+  * [Implementando el Or8Way](#implementando-el-or8way)
+  * [Implementando el Mux4Way16](#implementando-el-mux4way16)
+  * [Implementando el Mux8Way16](#implementando-el-mux8way16)
+  * [Implementando el DMux4Way](#implementando-el-dmux4way)
+  * [Implementando el DMux8Way](#implementando-el-dmux8way)
+
+1. [Conocimientos importantes.](#conocimientos-importantes)
+    1. [¿Porque es importante realizar en orden el proyecto?](#porque-es-importante-realizar-en-orden-el-proyecto)
+    2. [HardwareSimulator y tecnicas para hacer debugging.](#hardwaresimulator-y-tecnicas-para-hacer-debugging)
+    3. [Representación canónica y sus implicaciones teóricas.](#representacion-canonica-y-sus-implicaciones-teoricas.)
+    4. [La función Nand y sus superpoderes.](#la-funcion-nand-y-sus-superpoderes)
+    5. [¿Donde esta el bit mas significativo?](#donde-esta-el-bit-mas-significativo)
+2. [Implementando el chip Not con chips Nand.](#implementando-el-chip-not-con-chips-nand)
+3. [Implementando el Or con chips Nand.](#Implementando-el-or-con-chips-nand)
 4. Implementando el And con chips Nand.
 5. Implementando el Xor.
 6. Implementando el Mux.
@@ -50,7 +74,6 @@ Para facilitar la compresión dividiré el post en las siguientes partes:
     3. Implementando el Mux8Way16.
     4. Implementando el DMux4Way.
     5. Implementando el DMux8Way.
-    6. Bibliografía.
     
     
 # Conocimientos importantes:
