@@ -85,7 +85,7 @@ La funcion **Nand** (al igual que la **Xor**) tiene una importancia teorica y pr
 Es importante tener en cuenta que cuando trabajemos con entradas o salidas multi-bit el bit menos significativo estara ubicado en el indice 0, tal como se muestra en la imagen anterior, esto se menciona porque se puede por habíto del programador creer que el bit ubicado en el indice 0 es el bit mas significativo cuando en realidad no lo es, esta confusión puede llevar a problemas inesperados a la hora de implementar algun chip.
 
 
-# Implementando el chip Or con chips Nand
+# Implementando el chip Not con chips Nand
 A continuación muestro el diagrama del CHIP
 
 ![Not](https://cdn.rawgit.com/jorovipe97/computer_science_code/1e0838ec/projects_resources/01/not_2.png)
