@@ -70,9 +70,9 @@ Consiste en representar una funcion boleana como suma de miniterminos a partir d
 
 ![Miniterm technique example](https://rawgit.com/jorovipe97/computer_science_code/master/projects_resources/01/xor_miniterms_sum.png)
 
-Como se puede ver se necesita primero que todo tener definida la tabla de verdad de la función en cuestion, luego miramos en dicha tabla unicamente los casos en los que la salida de la funcion es **true**, se configuran en un and las entradas de una de las salidas que fueron **true** pasando por un **Not** las entradas que valieron 0, se hace el mismo proceso con las entradas de las demas salidas que valieron **true** y luego a estos terminos se les une con un **Or**.
+Como se puede ver se necesita primero que todo tener definida la tabla de verdad de la función en cuestion, luego miramos en dicha tabla únicamente los casos en los que la salida de la función es **true**, se configuran en un and las entradas de una de las salidas que fueron **true** pasando por un **Not** las entradas que valieron 0, se hace el mismo proceso con las entradas de las demas salidas que valieron **true** y luego a estos terminos se les une con un **Or**.
 
-La representación canonica tiene una implicación teorica importante y es que cualquier funcion boleana sin importar su complejida se puede expresar en la forma canonica, es decir cualquier funcion boleana se puede representar usando los operadores **And**, **Or** y **Not**.
+La representación canónica tiene una implicación teórica importante y es que cualquier función boleana sin importar su complejidad se puede expresar en la forma canónica, es decir cualquier función boleana se puede representar usando los operadores **And**, **Or** y **Not**.
 
 Esto hara que en muchos chips no tengamos que pensar mucho para hallar su funcion boleana, sin embargo cabe decir que en chips mas complejos sera necesario el pensamiento.
 
