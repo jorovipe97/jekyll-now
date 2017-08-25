@@ -56,17 +56,17 @@ Para facilitar la compresión dividiré el post en las siguientes partes:
 # Conocimientos importantes:
 Para la realizacion del problema planteado en esta ocación resulta muy util los siguientes conocimientos:
 
-## ¿Porque es importante realizar en orden el proyecto?
+## ¿Porque es importante realizar en orden el proyecto?-concepto8a
 Es importante ir implementando los chips de una modo progresivo, es decir en el orden en el que se dio en la lista-1, esto debido a que por ejemplo el **Xor** y el **Mux** dependen del **And** el **Or** y el **Not**, a su vez el **Mux4Way16** puede depender del **Xor** y otros chips implementados anteriormente, esto permitira disminuir drasticamente el uso de chips que usa cada chip determinado.
 
-## HardwareSimulator y tecnicas para hacer debugging
+## HardwareSimulator y tecnicas para hacer debugging-concepto8b
 HardwareSimulator busca los chips que usemos en un chip cuya implementacion se propia en un orden especifica si por ejemplo vamos a  implementar un **Xor** cuya implementacion depende del **And** el **Or** y el **Not** (chips basicos), y suponiendo que estamos implementando el **Xor** en el directorio */home/jose/chips/Xor.hdl* el buscara los chips basicos en el mismo directorio donde se encuentra el *Xor.hdl* si ahi no se encuentran los buscara en un directorio propio del HardwareSimulator donde se encuentran muchos chips ya implementados, pero entonces ¿como usar esto para hacer **debugging**?
 
 Supongamos que tenemos nuestra implementacion del Xor y los chips basicos de los cuales depende este en el mismo directorio (HardwareSimulator) */home/jose/chips/*, ¿como sabemos si el error esta en la implementacion misma del Xor o en los chips basicos que este usa?
 
 **Respuesta**: Podriamos crear un subdirectorio en el directorio *~/chips/xor_temp/* y pasar alli nuestra implementacion del Xor y probarla, como en dicho subdirectorio temporal los chips basicos no estan, HardwareSimulator usara los chips nativos, si resulta que al hacer el test no ocurre ningun error seria una clara señal de que nuestro Xor ha sido bien implementado y que posiblemente el problema lo tenga la implementación nuestra de uno de los chips basicos, para descubrir cual es el chip con el problema se podria ahora ir pasando uno a uno dichos chips al directorio temporal anteriormente creado y ejecutar el test para que HardwareSimulator use la version del chip basico que fue implementado por nosotros mismos hasta que aparezca de nuevo el error y asi podriamos deducir cual es el chip defectuoso.
 
-## Represantacion cananonica y sus implicaciones teoricas
+## Represantacion cananonica y sus implicaciones teoricas-concepto2-concepto3
 Consiste en representar una funcion boleana como suma de miniterminos a partir de su tabla de verdad, por ejemplo vamos a continuación a usar esta tecnica para hallar la funcion boleana del Xor dada su tabla de verdad:
 
 ![Miniterm technique example](https://cdn.rawgit.com/jorovipe97/computer_science_code/master/projects_resources/01/xor_miniterms_sum.png)
@@ -77,14 +77,18 @@ La representación canónica tiene una implicación teórica importante y es que
 
 Esto hara que en muchos chips no tengamos que pensar mucho para hallar su funcion boleana, sin embargo cabe decir que en chips mas complejos sera necesario el pensamiento.
 
-## La función Nand y sus superpoderes.
+## La función Nand y sus superpoderes
 La funcion **Nand** (al igual que la **Xor**) tiene una importancia teorica y practica, a partir de ella podemos construir la compuerta **And** la **Or** y la **Not**, ademas teniendo en cuenta que apartir de estas tres podemos implementar cualquier otra compuerta boleana sin importar su complejidad, encontramos por lo tanto que a partir de la **Nand** se puede construir cualquier otra compuerta boleana.
 
-## ¿Donde esta el bit menos significativo?
+## ¿Donde esta el bit menos significativo?-concepto8d-concepto8e
 
 ![Significative bit](https://cdn.rawgit.com/jorovipe97/computer_science_code/master/projects_resources/01/significative-bits.png)
-Es importante tener en cuenta que cuando trabajemos con entradas o salidas multi-bit el bit menos significativo estara ubicado en el indice 0, tal como se muestra en la imagen anterior, esto se menciona porque se puede por habíto del programador creer que el bit ubicado en el indice 0 es el bit mas significativo cuando en realidad no lo es, esta confusión puede llevar a problemas inesperados a la hora de implementar algun chip.
+Es importante tener en cuenta que cuando trabajemos con entradas o salidas multi-bit el bit menos significativo estara ubicado en el indice 0, tal como se muestra en la imagen anterior, esto se menciona porque se puede por habíto del programador creer que el bit ubicado en el indice 0 es el bit mas significativo cuando en realidad no lo es, esta confusión puede llevar a problemas inesperados a la hora de implementar algun chip, por consiguiente el bit mas significativo estara en el indice n-1, donde n es el numero de bits del bus en cuestion.
 
+## Orden de declaracion en HDL-concepto1
+Se debe tener en cuenta que HDL es un lenguaje de descripción en el que lo que importa es la forma en que se conectan los componentes y no el orden en el que se conectan.
+
+Para poner un ejemplo, imaginemos que estamos conectando el cargador de nuestro dispositivo movil, en principio da igual si primero conectamos el cable al celular y despues al toma de corriente o si primero conectamos el cable al toma y despues al celular, el resultado obtenido con ambos procedimientos es el mismo: **un dispositivo movil conectado al toma de corriente**.
 
 # Implementando el chip Not con chips Nand
 A continuación muestro el diagrama del CHIP
