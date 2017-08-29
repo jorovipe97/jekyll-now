@@ -14,8 +14,7 @@ NOTA: Todas las propiedades de un LED especifico estan detalladas en su respecti
 
 ## El brillo
 ¿Que tan brillante es un LED? esto generalmente esta en el *datasheet* y se expresa en candelas (cd), la cual es en terminos generales una unidad para medir la intensidad luminica de una fuente de luz.
-
-> Poner imagen: brillo_del_led.png
+![](http://imgur.com/0Ylb6mV.gif)
 
 Por ejemplo, con el LED que estamos usando de ejemplo, se ve en su datasheet, que a 20mA tiene una intensidad luminica de 250 mcd (mili candelas), aunque debido a que nada es perfecto en el mundo real, el fabricante nos advierte que es posible que el LED que le compremos tenga una intensidad luminica de entre 180 cd a 250 cd.
 
@@ -27,22 +26,39 @@ Si hacemos una analogia con el agua los Diffused LEDs son como aspersores (de ag
 ## El color
 Este factor es obvio y es quizas uno de los que intuitivamente tenemos en cuenta a la hora de seleccionar LEDs en la tienda de electronicos, lo unico complicado es que en el datasheet de un LED el color esta dado en una <a href="http://lsrtools.1apps.com/wavetorgb/index.asp?wavelength=640" target="_blank">longitud de onda</a> electromagnetica, por ejemplo la del LED que estamos analizando es de 640 la cual nuestro ojo percibe como un color rojo.
 
-> longitud_onda.png
+![](http://imgur.com/SWFC4nH.gif)
 
 
-## Package size
+## Package dimensions
+![](http://imgur.com/m3pfTqq.gif)
+
+NOTA: Unidades estan en milimetros, en parentecis esta la misma unidad pero en pulgadas.
+
+Este se refiere al tamaño de la capsula que protege el interior del LED, generalmente hay 3 tamaños muy usados, el de 3mm, el de 5mm y el de 10mm, generalmente el de 10mm es un diodo de 5mm con una capsula mas grande, por tanto se puede llegar a ser incluso menos brillante que un led de 5mm, esto deja en evidencia que no necesariamente es cierto que a mas grande la capsulta protectora del LED mas brillo obtendremos.
+
 
 ## Angulo de vision de la luz
+![](http://imgur.com/om9jSid.gif)
 
-## Forward current
+No todos los LEDs se ven igual de brillantes desde todos los angulos, esto es especialmente notorio en los **clear LED** que solo se ven super brillantes si los miramos desde unos puntos, y se ven mas opacos si los vemos desde otros puntos, es decir el brillo percibido depende del angulo de vision desde el que se ve el LED.
 
-## Reverse current
+## Forward voltage
+Este se refiere a la caida de voltaje que produce el LED, en la datasheet que estamos viendo cuando la corriente es de 20 mA.
 
 # Posibles usos de los LED en aplicaciones interactivas
-¿Qué aplicaciones pueden tener los LED en aplicaciones interactivas? (se vale buscar referentes diferente a los de las lecturas)
+Existen muchos (infinitos), pero mencionare solo algunos:
+1. Como ojos en un mecatronico.
+2. Como indicador de fuerza en un juego de fuerza (poniendo muchos leds en linea y prendiendo solo una cantidad relativa a la fuerza del golpe)
+3. Para indicar que un boton fue precioniado.
 
 # Circuito de acondicionamiento de un LED
 ¿Cómo es el circuito de acondicionamiento de un LED a un microcontrolador?. EXPLICAR y mostrar un ejemplo donde se calcule el circuito de acondicionamiento. Seleccione un LED (de algún fabricante) y busque la hoja de datos del mismo. Utilice los datos de la hoja de datos para realizar los cálculos. Señale exactamente qué parte de la hoja de datos consultó para extraer los datos del LED.
+
+Es un circuito basico que consiste en conectar en serie una resistencia a un LED para garantizar una corriente (I) maxima en el LED.
+
+Pero como podemos calcular una resistencia que permita que nuestro LED brille lo suficiente.
+
+> poner calculos aqui.
 
 ## Riesgos de conectar un LED directamente a un microcontrolador sin un circuito de acondicionamiento
 ¿Por qué no se debería conectar un LED directamente a un microcontrolador sin un circuito de acondicionamiento?
