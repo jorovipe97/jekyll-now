@@ -126,6 +126,8 @@ En base a la respuesta anterior qué debe considerar al conectar, por medio de u
 
 
 # Referencias
+<a href="https://www.luisllamas.es/salidas-analogicas-pwm-en-arduino/" target="_blank">Salidas analogicas PWM</a>
+
 <a href="https://en.wikipedia.org/wiki/Duty_cycle" target="_blank">Duty cycle</a>
 
 <a href="https://learn.adafruit.com/all-about-leds/" target="_blank">All about LEDs</a>
