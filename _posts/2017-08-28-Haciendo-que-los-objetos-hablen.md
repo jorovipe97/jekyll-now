@@ -105,6 +105,36 @@ La forma de calcularlo es la siguiente:
 ![](https://latex.codecogs.com/gif.latex?DutyCycle=\frac{AnchoDePulso}{Periodo})
 
 # Calculando el periodo y la frecuencia de una señal de PWM en el Arduino - 10
+Para calcular esto primero debemos tener en cuenta que el Arduino utiliza unos "dispositivos internos" llamados timers, estos determinan la frecuencia de la señal PWM, en total el Arduino UNO (ATmega328P) tiene 3 timers:
+
+1. timer0 hace PWM para pines 5,6 a una frecuencia base de 62500Hz
+2. timer1 hace PWM para pines 9,10 a una frecuencia base de 31250Hz
+3. timer2 hace PWM para pines 11,3 a una frecuencia base de 31250Hz
+
+Cada una de las frecuencias bases de estos timers se puede dividir por un **registro de preescalado** para obtener una frecuencia determinada, los posibles divisores para cada timer estan detallados a continuación.
+
+1. timer0 se puede dividir frecuencia base por: 1, 8, 64, 256 y 1024.
+2. timer1 se puede dividir frecuencia base por: 1, 8, 64, 256 y 1024.
+3. timer2 se puede dividir frecuencia base por: 1, 8, 32, 64, 256 y 1024.
+
+Por defecto el registro de preescalado para el timer0 es de 64:
+![](https://latex.codecogs.com/gif.latex?\frac{62500Hz}{64}\approx&space;980Hz)
+
+Por tanto la frecuencia del PWM en los pines 5 y 6 es por defecto de 980Hz.
+
+Asi, la frecuencia por defecto en los pines 9, 10, 11 y 3 se puede calcular de forma similar:
+![](https://latex.codecogs.com/gif.latex?\frac{31250}{64}\approx490Hz)
+
+(Teniendo en cuenta que el registro de preescalado por defecto es de 490Hz)
+
+Conociendo la frecuencia podemos calcular el periodo, es decir el tiempo que tarda un ciclo en completarse, usando una sencilla formula:
+![](https://latex.codecogs.com/gif.latex?Periodo=\frac{1}{Frecuencia})
+
+Usando la formula anterior, deducimos que el periodo en los pines 9, 10, 11 y 3 por defecto es de:
+![](https://latex.codecogs.com/gif.latex?Periodo=\frac{1}{980Hz}\approx0.001020s\approx1020&space;us)
+
+
+
 ¿Cómo se calcula el periodo y la frecuencia de una señal de PWM?
 
 # Implicaciones de frecuencias altas o bajas en la señal PWM que controla un LED - 11
@@ -124,8 +154,13 @@ En base a la respuesta anterior qué debe considerar al conectar, por medio de u
 
 
 
-
 # Referencias
+<a href="https://forum.arduino.cc/index.php?topic=341196.0" target="_blank">Understanding timers Arduino UNO</a>
+
+<a href="https://playground.arduino.cc/Code/PwmFrequency" target="_blank">Setting PWM Frequency</a>
+
+<a href="https://playground.arduino.cc/Main/TimerPWMCheatsheet" target="_blank">Timer PWM Cheatsheet</a>
+
 <a href="https://www.luisllamas.es/salidas-analogicas-pwm-en-arduino/" target="_blank">Salidas analogicas PWM</a>
 
 <a href="https://en.wikipedia.org/wiki/Duty_cycle" target="_blank">Duty cycle</a>
