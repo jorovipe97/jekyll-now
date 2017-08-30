@@ -96,6 +96,7 @@ En este punto ya debe ser trivial ver que cuando el duty cycle sea del 100% el L
 Es por tanto trivial darse cuenta que el programa del microcontrolador que escribamos cambiara dependiendo del tipo de LED RGB que queramos controlar.
 
 # El duty cycle - 9
+Es el ratio entre el pulse width y el periodo de la señal PWM, el pulse width es el tiempo que mantiene la señal en el estado logico true durante un ciclo.
 ¿Qué es el duty cycle de una señal de PWM?
 
 # Calculando el periodo y la frecuencia de una señal de PWM en el Arduino - 10
