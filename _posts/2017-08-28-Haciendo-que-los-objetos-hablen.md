@@ -4,7 +4,7 @@ title: Lampara RGB controlada desde aplicación Andoid
 published: false
 ---
 
-# Consideraciones a tener en cuenta a la hora de seleccionar un LED
+# Consideraciones a tener en cuenta a la hora de seleccionar un LED - 1
 ¿Qué consideraciones debe tener en cuenta para seleccionar un LED?
 A primera vista puede parecer que un LED es el dispositivo mas facíl de comprar, solo es cuestion de ir a la tienda y pedir un LED, el vendedor escojera un LED entre los miles de LEDs "iguales" que tiene en la bodega y nos lo entregara.
 
@@ -45,13 +45,13 @@ No todos los LEDs se ven igual de brillantes desde todos los angulos, esto es es
 ## Forward voltage
 Este se refiere a la caida de voltaje que produce el LED, en la datasheet que estamos viendo cuando la corriente es de 20 mA.
 
-# Posibles usos de los LED en aplicaciones interactivas
+# Posibles usos de los LED en aplicaciones interactivas - 2
 Existen muchos (infinitos), pero mencionare solo algunos:
 1. Como ojos en un mecatronico.
 2. Como indicador de fuerza en un juego de fuerza (poniendo muchos leds en linea y prendiendo solo una cantidad relativa a la fuerza del golpe)
 3. Para indicar que un boton fue precioniado.
 
-# Circuito de acondicionamiento de un LED
+# Circuito de acondicionamiento de un LED - 3
 ¿Cómo es el circuito de acondicionamiento de un LED a un microcontrolador?. EXPLICAR y mostrar un ejemplo donde se calcule el circuito de acondicionamiento. Seleccione un LED (de algún fabricante) y busque la hoja de datos del mismo. Utilice los datos de la hoja de datos para realizar los cálculos. Señale exactamente qué parte de la hoja de datos consultó para extraer los datos del LED.
 
 Es un circuito basico que consiste en conectar en serie una resistencia a un LED para garantizar una corriente (I) maxima en el LED.
@@ -60,23 +60,68 @@ Pero como podemos calcular una resistencia que permita que nuestro LED brille lo
 
 > poner calculos aqui.
 
-## Riesgos de conectar un LED directamente a un microcontrolador sin un circuito de acondicionamiento
-¿Por qué no se debería conectar un LED directamente a un microcontrolador sin un circuito de acondicionamiento?
+## Riesgos de conectar un LED directamente a un microcontrolador sin un circuito de acondicionamiento - 4
+La resistencia en un circuito de acondicionamiento de un LED nos garantiza una corriente maxima que no queme el le LED.
 
-# Variando el brillo de un LED utilizando una resistencia variable
-¿Cómo es posible variar el brillo de un LED utilizando resistencias variables?
+# Variando el brillo de un LED utilizando una resistencia variable - 5
+Mediante un circuito simple, como por ejemplo conectar en serie al (catodo o anodo) LED una resistencia variable, y luego conectandolos a los pines +5v y GND obtendriamos un brillo en el LED que depende de la resistencia variable.
 
-# Variando el brillo de un LED utilizando una señal PWM
-¿Cómo es posible variar el brillo o la intensidad de un LED utilizando una señal de PWM?
+> mostrar circuito
 
-# Generando distintos colores utilizando señales de PWM
-¿Cómo es posible generar diferentes colores utilizando señales de PWM? 
-Aqui se refieren a un diodo RGB? o se refieren a un diodo emisor de luz tipico.
+# Variando el brillo de un LED utilizando una señal PWM - 6
+Para variar el brillo de un LED usando señales PWM, el truco consiste en cambiar el duty cycle en la señal PWM.
+![](https://en.wikipedia.org/wiki/Duty_cycle#/media/File:PWM_duty_cycle_with_label.gif)
+(Imagen de Eighthave, modified by Teslaton, wikimedia commons)
 
-# Implicacion de los diodos RGB de anodo comun y catodo comun en el programa del microcontrolador.
-¿El programa del microcontrolador es igual sin importar que el LED sea de cátodo o ánodo común? Explique claramente.
+NOTA: Mas adelante se explicara en detalle como calcular el duty cycle.
+
+Si el duty cycle es de 50%, entonces al LED le llegara el 10% del voltaje maximo que puede suministrar el PIN, en nuestro caso 5v, entonces el voltaje que llegaria al LED seria de: 2.5v
+
+# Generando distintos colores utilizando señales de PWM - 7
+Para lograr esto primero necesitamos un LED RGB (en nuestro caso un catodo comun), luego procedemos a conectar cada anodo a un pin PWM distinto del Arduino, asi cambiamos la intensidad de cada color separadamente y mediante la combinacioón de dichos brillos se pueden producir diferentes brillos. 
+
+# Implicacion de los diodos RGB de anodo comun y catodo comun en el programa del microcontrolador - 8
+El programa que escribamos para el microcontrolador cambiara dependiendo de si el LED RGB es de cátodo o ánodo común, por un lado el programa para un LED de cátodo comun es muy intuitivo ya que hay una relación directamente proporcional entre el brillo del LED y el valor del duty cycle, a mayor sea el duty cycle mayor sera el brillo y a menor duty cycle menor brillo.
+
+Por otra parte en el LED de ánodo comun el programa puede llegar a ser un poco anti-intuitivo, porque la relación entre el duty cycle y el brillo del LED es inversamente proporcional, pero esto tiene una explicación que hace que este comportamiento sea intuitivo:
+
+Hay que decir que lo que importa en el circuito es la caida de voltaje entre los dos terminales (de la fuente) y no los valores de voltaje que hay en cada terminal especifico, por ejemplo es lo mismo para el voltaje (y la corriente) del circuito que un terminal de la bateria este a +5v y el otro a 0v, a tener, un terminal a +10v y el otro a +5v, en ambos casos la diferencia de voltaje entre ambos terminales es de 5v, donde el terminal con el valor de voltaje mas pequeño se comporta como el lado negativo de la fuente.
+
+Dicho lo anterior se puede explicar la relación inversamente proporcional entre el brillo del LED RGB de ánodo común y el duty cycle, el anodo comun del LED RGB (el mismo anodo para los tres LEDs internos) esta siempre a +5v mientras el cátodo de cada led esta conectado a un pin PWM distinto del Arduino, este actuara como el terminal negativo de la bateria, por tanto, cuando un duty cycle sea del 0% la diferencia de voltaje entre los pines del Arduino sera de: 5v-dutyCyle*5v = 5v-0=5v, lo cual nos indica que hay una alimentación de 5v en el circuito.
+
+Si cambiamos el duty cycle a 50%, 5v-0.5*5v=2.5v, es decir, ahora la alimentacion del circuito es de 2.5v lo cual producirá menos corriente y por consiguiente el LED brillará menos.
+
+En este punto ya debe ser trivial ver que cuando el duty cycle sea del 100% el LED no prendera en absoluto, y debe ser fácil ver y comprender la relación inversamente proporcional entre el duty cycle y el brillo del LED RGB.
+
+Es por tanto trivial darse cuenta que el programa del microcontrolador que escribamos cambiara dependiendo del tipo de LED RGB que queramos controlar.
+
+# El duty cycle - 9
+¿Qué es el duty cycle de una señal de PWM?
+
+# Calculando el periodo y la frecuencia de una señal de PWM en el Arduino - 10
+¿Cómo se calcula el periodo y la frecuencia de una señal de PWM?
+
+# Implicaciones de frecuencias altas o bajas en la señal PWM que controla un LED - 11
+¿Qué pasa si la frecuencia del PWM con la que se controla el LED es muy alta o muy baja?
+
+# Diferencia entre una interfaz paralela y una interfaz serial - 12
+¿Cuál es la diferencia entre una interfaz paralela y una interfaz serial?
+
+# Diferencia entre una comunicación serial sincrona y una asincrona - 13
+¿Cuál es la diferencia entre una comunicación serial síncrono y asíncrona?
+
+# Niveles logicos del microcontrolador ATmega328P - 14
+¿Cuáles son los niveles lógicos del microcontrolador ATmega328P (arduino UNO)?
+
+# Consideraciones a tener en cuenta al conectar por medio de una interfaz serial un microcontrolador que opera a 5v con un sensor o actuador que opera a 3v o 3.3v - 15
+En base a la respuesta anterior qué debe considerar al conectar, por medio de una interfaz serial, un microcontrolador que opera a 5V con un sensor o actuador que opera a 3V o 3.3V
+
+
+
 
 # Referencias
+<a href="https://en.wikipedia.org/wiki/Duty_cycle" target="_blank">Duty cycle</a>
+
 <a href="https://learn.adafruit.com/all-about-leds/" target="_blank">All about LEDs</a>
 
 <a href="https://electronics.stackexchange.com/questions/10962/what-is-forward-and-reverse-voltage-when-working-with-diodes" target="_blank">What is “forward” and “reverse” voltage when working with diodes?</a>
