@@ -134,27 +134,28 @@ Usando la formula anterior, deducimos que el periodo en los pines 9, 10, 11 y 3 
 ![](https://latex.codecogs.com/gif.latex?Periodo=\frac{1}{980Hz}\approx0.001020s\approx1020&space;us)
 
 
-
-¿Cómo se calcula el periodo y la frecuencia de una señal de PWM?
-
 # Implicaciones de frecuencias altas o bajas en la señal PWM que controla un LED - 11
-¿Qué pasa si la frecuencia del PWM con la que se controla el LED es muy alta o muy baja?
+Si usamos los timers la frecuencia mas alta que podriamos lograr con el Arduino UNO seria una de 62500Hz, esto quiere decir que cada ciclo dura 0.000016s, lo cual quiere decir que estamos prendiendo y apagando el LED cada 0.00016s, pero en la practica, al menos con el LED que estamos usando, esto no es posible, porque el LED tarda un tiempo en encenderse, y lo estamos apagando antes de que logre encenderse completamente, por lo tanto lo que obtendriamos seria un led en dos estados, medio brillante y apagado.
+
+En el caso contrario, es decir si le enviamos una señal de PWM con una frecuencia muy baja, lo que obtendremos será un LED parpadiando posiblemente, puesto que tendriamos un periodo muy largo, que nuestro ojo podria percibir, en este punto es dificil decir a partir de que frecuencia el parpadeo del LED es visible por el ojo humano al natural debido a que en los humanos hay ojos que funcionan mejor que otros.
 
 # Diferencia entre una interfaz paralela y una interfaz serial - 12
-¿Cuál es la diferencia entre una interfaz paralela y una interfaz serial?
+En una interfaz paralela, varios BITS de informacion pasan al mismo tiempo (paralelamente) por la interfaz de comunicación en cambio en una interfaz serial, en un momento de tiempo dado solo pasa un unico bit de información, obligando asi a enviar la información en una especie de cadena (chain).
 
 # Diferencia entre una comunicación serial sincrona y una asincrona - 13
-¿Cuál es la diferencia entre una comunicación serial síncrono y asíncrona?
+En una comunicación serial sincrona los dispositivos que se estan comunicando comparten la misma señal de reloj, esto quiere decir que se necesita de un segundo cable a parte del cable de datos para poder trasmitir esta información, en cambio, en una comunicación ásincrona los dispositivos que se estan comunicando tienen cada uno se propio reloj, pero deben antes de iniciar la comunicación acordar un tiempo de reloj común entre ellos, para evitar perdida de información o resultados inesperados.
 
 # Niveles logicos del microcontrolador ATmega328P - 14
-¿Cuáles son los niveles lógicos del microcontrolador ATmega328P (arduino UNO)?
+En el microcontrolador del Arduino un +5v es considerado un true y un 0v es considerado un false.
 
 # Consideraciones a tener en cuenta al conectar por medio de una interfaz serial un microcontrolador que opera a 5v con un sensor o actuador que opera a 3v o 3.3v - 15
-En base a la respuesta anterior qué debe considerar al conectar, por medio de una interfaz serial, un microcontrolador que opera a 5V con un sensor o actuador que opera a 3V o 3.3V
+Si vamos a conectar por medio de una interfaz serial un sensor al microcontrolador que opera a 5V es altamente recomendable hacer primero un circuito acondicionador que evite que el sensor se queme por un sobrevoltaje y al mismo tiempo otro circuito acondicionador que transforme los valores de voltaje para que sea el apropiado para la comunicacion entre los dispositivos.
 
-
+Es decir, si el sensor envia una señal de 3.3v ¿como deberia ser interpretada por el arduino? ¿como un true o como un false? para solucionar este problema se podria usar algun tipo de circuito acondicionador que mapee el voltaje de salida del sensor al voltaje de entrada del arduino.
 
 # Referencias
+<a href="https://electronics.stackexchange.com/questions/79373/how-to-choose-right-pwm-frequency-for-led" target="_blank">How to choose right PWM frequency for a LED</a>
+
 <a href="https://forum.arduino.cc/index.php?topic=341196.0" target="_blank">Understanding timers Arduino UNO</a>
 
 <a href="https://playground.arduino.cc/Code/PwmFrequency" target="_blank">Setting PWM Frequency</a>
