@@ -181,9 +181,13 @@ Tambien debes tener en cuenta que el hecho de que una comunicación sea litle en
 
 La función print/println en Arduino envia el valor ASCII que representa la letra/palabra/numero escrita en su argumento. 
 
-![](http://imgur.com/77IeB8w.gif)
+![](http://imgur.com/b8OEgaC.gif)
 
 NOTA: Imagina que el end de cada letra esta conectado al start de la siguiente.
+
+NOTA2: Mira que el primer bit de todos los packets es false siempre y el ultimo es true siempre, estos son el bit de inicio y el bit de fin respectivamente, los 8 bits intermedios tienen el valor valor numero en binario que representa cada una de las respectivas letras en el Array.
+
+NOTA3: El numero se envia litte-endian, es decir si se quiere enviar 2 (0b10), por el puerto serial se envia el numero "al revez", es decir: (0b01)
 
 Realice un diagrama de tiempo donde muestre cómo se vería el mensaje hola mundo enviado desde el Arduino UNO con la función Serial.println(“Hola Mundo”) a otro arduino UNO.
 
