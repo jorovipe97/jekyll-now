@@ -155,19 +155,42 @@ Es decir, si el sensor envia una señal de 3.3v ¿como deberia ser interpretada 
 # Bits de sincronizacion, datos y paridad en una comincacion serial - 16
 Los bits de sincronización en un mensaje serial son generalmente los que indican donde empieza y donde terminan los bits que representan la información que se quiere transmitir, por otra parte, los datos son los bits que representan la información que se desea trasmitir, generalmente y el bit de paridad es un bit que sirve para deteccion de errores en la transmición del mensaje, generalmente esta ubicado entre el ultimo bit de datos y el primer bit indicador de finalización.
 
+![](http://imgur.com/YgQzQMK.gif)
 
+1. El start bit indica que los siguientes bits hacen parte de un mensaje.
+2. Los 8 siguientes bits contienen la información que se quiere enviar, podria ser un caracter ASCII o simplemente un numero representado en binario.
+3. En este caso se define una paridad par, por tanto el parity bit sera true solo cuando en los 8 bits que contienen la información haya una cantidad inpar de true, de esta forma se garantiza que siempre deberia haber una cantidad par de true, si habiendo definido una paridad par, no llega una cantidad par de true podemos concluir que la información fue corrompida o modificada en la comunicación, esta no es una tecnica muy efectiva para la detección de errores, pero mejor algo que nada.
+4. El end bit indica que el mensaje que se queria enviar ya se envio.
 
-¿Qué son los bits de sincronización, datos y paridad en una comunicación serial? Explique y muestre además un diagrama de tiempos que ilustre su respuesta.
 
 # El baud rate - 17
-¿Qué es y ejemplifique el baud rate?
+Segun la wikipedia, es el número de unidades de señal trasmitidos por segundo, en nuestro caso el baud rate es el igual al bit per second (bps) pero estos dos valores no son siempre iguales.
+
+Por ejemplo cuando implementemos mas adelante la lampara RGB a control remoto veremos que se define un baud rate de 9600, esto es, que en un segundo se van a enviar 9600 bits del control remoto a la lampara.
 
 # El concepto de endian en comunicaciones seriales - 18
-¿Cómo se aplica el concepto de endian cuando se realiza una comunicación serial?
+El concepto de endian es importante para saber si el primer bit del dato es el bit mas significativo o el menos significativo, por ejemplo vamos a un numero mediante una comunicación serial entre un arduino hipotetico A y otro arduino hipotetico B.
+
+Por defecto se envia el bit menos significativo primero (Little-Endian).
+
+# Enviando caracteres ASCII por el serial del arudino - 19
+¿Que viaja por el cable si escribimos en el arduino A Serial.println(“Hola Mundo”)?
+Se debe tener en cuenta que cuando se envia un array de chars lo que ocurre es que se envia cada char en un packet diferente, es decir, si tenemos un array de 10 chars, se enviarian 10 packets cada uno conteniendo cada char del array cada packet detras del otro.
+
+Tambien debes tener en cuenta que el hecho de que una comunicación sea litle endian no significa que al enviar "Hola Mundo" se va a enviar primero la 'o' de mundo.
+
+La función print/println en Arduino envia el valor ASCII que representa la letra/palabra/numero escrita en su argumento. 
+
+![](http://imgur.com/77IeB8w.gif)
+
+NOTA: Imagina que el end de cada letra esta conectado al start de la siguiente.
+
 Realice un diagrama de tiempo donde muestre cómo se vería el mensaje hola mundo enviado desde el Arduino UNO con la función Serial.println(“Hola Mundo”) a otro arduino UNO.
 
 
 # Referencias
+<a href="https://es.wikipedia.org/wiki/Tasa_de_baudios" target="_blank">Baud rate</a>
+
 <a href="https://electronics.stackexchange.com/questions/79373/how-to-choose-right-pwm-frequency-for-led" target="_blank">How to choose right PWM frequency for a LED</a>
 
 <a href="https://forum.arduino.cc/index.php?topic=341196.0" target="_blank">Understanding timers Arduino UNO</a>
