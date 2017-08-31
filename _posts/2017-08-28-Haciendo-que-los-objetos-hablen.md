@@ -5,7 +5,6 @@ published: false
 ---
 
 # Consideraciones a tener en cuenta a la hora de seleccionar un LED - 1
-¿Qué consideraciones debe tener en cuenta para seleccionar un LED?
 A primera vista puede parecer que un LED es el dispositivo mas facíl de comprar, solo es cuestion de ir a la tienda y pedir un LED, el vendedor escojera un LED entre los miles de LEDs "iguales" que tiene en la bodega y nos lo entregara.
 
 Pero esto no es correcto, un LED puede brillar mas que otro, su package puede ser mas grande o pequeño en incluso el angulo de vision de la luz que emite puede variar, a continuación se explicaran con un poco mas de detalle algunos factores a tener en cuenta en un LED para seleccionarlo.
@@ -52,21 +51,21 @@ Existen muchos (infinitos), pero mencionare solo algunos:
 3. Para indicar que un boton fue precioniado.
 
 # Circuito de acondicionamiento de un LED - 3
-¿Cómo es el circuito de acondicionamiento de un LED a un microcontrolador?. EXPLICAR y mostrar un ejemplo donde se calcule el circuito de acondicionamiento. Seleccione un LED (de algún fabricante) y busque la hoja de datos del mismo. Utilice los datos de la hoja de datos para realizar los cálculos. Señale exactamente qué parte de la hoja de datos consultó para extraer los datos del LED.
-
 Es un circuito basico que consiste en conectar en serie una resistencia a un LED para garantizar una corriente (I) maxima en el LED.
 
 Pero como podemos calcular una resistencia que permita que nuestro LED brille lo suficiente.
 
-> poner calculos aqui.
+![](http://imgur.com/rbaRV5e.gif)
+
+Mirando el datasheet del LED que estamos analizando vemos que soporta hasta 30mA y en esa corriente su voltaje es de 1.9v aproximadamente, asi podemos proceder a calcular una resistencia que permita el maximo paso de corriente posible a travez del LED suponiendo que alimentamos el circuito con una fuente de 5v.
+
+![](https://latex.codecogs.com/gif.latex?R=\frac{V_r}{I}=\frac{3.1v}{0.03A}\approx104\Omega)
 
 ## Riesgos de conectar un LED directamente a un microcontrolador sin un circuito de acondicionamiento - 4
 La resistencia en un circuito de acondicionamiento de un LED nos garantiza una corriente maxima que no queme el le LED.
 
 # Variando el brillo de un LED utilizando una resistencia variable - 5
 Mediante un circuito simple, como por ejemplo conectar en serie al (catodo o anodo) LED una resistencia variable, y luego conectandolos a los pines +5v y GND obtendriamos un brillo en el LED que depende de la resistencia variable.
-
-> mostrar circuito
 
 # Variando el brillo de un LED utilizando una señal PWM - 6
 Para variar el brillo de un LED usando señales PWM, el truco consiste en cambiar el duty cycle en la señal PWM.
@@ -78,7 +77,7 @@ NOTA: Mas adelante se explicara en detalle como calcular el duty cycle.
 Si el duty cycle es de 50%, entonces al LED le llegara el 10% del voltaje maximo que puede suministrar el PIN, en nuestro caso 5v, entonces el voltaje que llegaria al LED seria de: 2.5v
 
 # Generando distintos colores utilizando señales de PWM - 7
-Para lograr esto primero necesitamos un LED RGB (en nuestro caso un catodo comun), luego procedemos a conectar cada anodo a un pin PWM distinto del Arduino, asi cambiamos la intensidad de cada color separadamente y mediante la combinacioón de dichos brillos se pueden producir diferentes brillos. 
+Para lograr esto, primero necesitamos un LED RGB (en nuestro caso un catodo comun), luego procedemos a conectar cada anodo a un pin PWM distinto del Arduino, asi cambiamos la intensidad de cada color separadamente y mediante la combinacioón de dichos brillos se pueden producir diferentes brillos. 
 
 # Implicacion de los diodos RGB de anodo comun y catodo comun en el programa del microcontrolador - 8
 El programa que escribamos para el microcontrolador cambiara dependiendo de si el LED RGB es de cátodo o ánodo común, por un lado el programa para un LED de cátodo comun es muy intuitivo ya que hay una relación directamente proporcional entre el brillo del LED y el valor del duty cycle, a mayor sea el duty cycle mayor sera el brillo y a menor duty cycle menor brillo.
@@ -152,6 +151,21 @@ En el microcontrolador del Arduino un +5v es considerado un true y un 0v es cons
 Si vamos a conectar por medio de una interfaz serial un sensor al microcontrolador que opera a 5V es altamente recomendable hacer primero un circuito acondicionador que evite que el sensor se queme por un sobrevoltaje y al mismo tiempo otro circuito acondicionador que transforme los valores de voltaje para que sea el apropiado para la comunicacion entre los dispositivos.
 
 Es decir, si el sensor envia una señal de 3.3v ¿como deberia ser interpretada por el arduino? ¿como un true o como un false? para solucionar este problema se podria usar algun tipo de circuito acondicionador que mapee el voltaje de salida del sensor al voltaje de entrada del arduino.
+
+# Bits de sincronizacion, datos y paridad en una comincacion serial - 16
+Los bits de sincronización en un mensaje serial son generalmente los que indican donde empieza y donde terminan los bits que representan la información que se quiere transmitir, por otra parte, los datos son los bits que representan la información que se desea trasmitir, generalmente y el bit de paridad es un bit que sirve para deteccion de errores en la transmición del mensaje, generalmente esta ubicado entre el ultimo bit de datos y el primer bit indicador de finalización.
+
+
+
+¿Qué son los bits de sincronización, datos y paridad en una comunicación serial? Explique y muestre además un diagrama de tiempos que ilustre su respuesta.
+
+# El baud rate - 17
+¿Qué es y ejemplifique el baud rate?
+
+# El concepto de endian en comunicaciones seriales - 18
+¿Cómo se aplica el concepto de endian cuando se realiza una comunicación serial?
+Realice un diagrama de tiempo donde muestre cómo se vería el mensaje hola mundo enviado desde el Arduino UNO con la función Serial.println(“Hola Mundo”) a otro arduino UNO.
+
 
 # Referencias
 <a href="https://electronics.stackexchange.com/questions/79373/how-to-choose-right-pwm-frequency-for-led" target="_blank">How to choose right PWM frequency for a LED</a>
