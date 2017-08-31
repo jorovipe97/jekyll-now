@@ -174,7 +174,9 @@ El concepto de endian es importante para saber si el primer bit del dato es el b
 Por defecto se envia el bit menos significativo primero (Little-Endian).
 
 # Enviando caracteres ASCII por el serial del arudino - 19
-¿Que viaja por el cable si escribimos en el arduino A Serial.println(“Hola Mundo”)?
+Imaginemos que tenemos un Arduino UNO A y otro Arduino UNO B
+
+¿Que viaja por el cable si escribimos desde el arduino A Serial.println(“Hola Mundo”)?
 Se debe tener en cuenta que cuando se envia un array de chars lo que ocurre es que se envia cada char en un packet diferente, es decir, si tenemos un array de 10 chars, se enviarian 10 packets cada uno conteniendo cada char del array cada packet detras del otro.
 
 Tambien debes tener en cuenta que el hecho de que una comunicación sea litle endian no significa que al enviar "Hola Mundo" se va a enviar primero la 'o' de mundo.
@@ -189,7 +191,23 @@ NOTA2: Mira que el primer bit de todos los packets es false siempre y el ultimo 
 
 NOTA3: El numero se envia litte-endian, es decir si se quiere enviar 2 (0b10), por el puerto serial se envia el numero "al revez", es decir: (0b01)
 
-Realice un diagrama de tiempo donde muestre cómo se vería el mensaje hola mundo enviado desde el Arduino UNO con la función Serial.println(“Hola Mundo”) a otro arduino UNO.
+# Conexion para comunicación serial entre dos Arduino UNO
+![](http://imgur.com/IH2rQ9X.gif)
+
+Se conecnta el pin de trasmición del Arduino UNO A al pin de recepción del Arduino UNO B, y se ponen los dos arduinos a una tierra comun para evitar accidentes inesperados.
+
+# Como se conecta un Arduino UNO al PC
+Descargue el diagrama esquemático de un arduino UNO R3. Identifique: cómo se conecta al computador, cómo se conectan el puerto serial a los conectores externos de la tarjeta.
+
+# Diferencias entre comunicaciónes seriales TTL y comunicaciones seriales RS232
+¿Cuál es la diferencia entre comunicaciones seriales TTL y comunicaciones seriales RS232?
+
+# La UART
+¿Qué es una UART?
+
+# Errores comunes al conectar dispositivos por el puerto serial
+Explique ¿Cuáles son los errores más comunes a la hora de conectar dispositivos por puerto serial?
+
 
 
 # Referencias
