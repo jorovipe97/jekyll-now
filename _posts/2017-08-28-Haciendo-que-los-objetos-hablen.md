@@ -193,6 +193,8 @@ Realice un diagrama de tiempo donde muestre cómo se vería el mensaje hola mund
 
 
 # Referencias
+<a href="http://www.asciitable.com/" target="_blank">Ascii table</a>
+
 <a href="https://es.wikipedia.org/wiki/Tasa_de_baudios" target="_blank">Baud rate</a>
 
 <a href="https://electronics.stackexchange.com/questions/79373/how-to-choose-right-pwm-frequency-for-led" target="_blank">How to choose right PWM frequency for a LED</a>
