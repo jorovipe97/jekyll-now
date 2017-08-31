@@ -185,7 +185,7 @@ La función print/println en Arduino envia el valor ASCII que representa la letr
 
 NOTA: Imagina que el end de cada letra esta conectado al start de la siguiente.
 
-NOTA2: Mira que el primer bit de todos los packets es false siempre y el ultimo es true siempre, estos son el bit de inicio y el bit de fin respectivamente, los 8 bits intermedios tienen el valor valor numero en binario que representa cada una de las respectivas letras en el Array.
+NOTA2: Mira que el primer bit de todos los packets es false siempre y el ultimo es true siempre, estos son el bit de inicio y el bit de fin respectivamente, los 8 bits intermedios tienen el numero en binario que representa cada una de las respectivas letras en la codificación ASCII.
 
 NOTA3: El numero se envia litte-endian, es decir si se quiere enviar 2 (0b10), por el puerto serial se envia el numero "al revez", es decir: (0b01)
 
