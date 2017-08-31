@@ -192,20 +192,36 @@ NOTA2: Mira que el primer bit de todos los packets es false siempre y el ultimo 
 NOTA3: El numero se envia litte-endian, es decir si se quiere enviar 2 (0b10), por el puerto serial se envia el numero "al revez", es decir: (0b01)
 
 # Conexion para comunicación serial entre dos Arduino UNO
-![](http://imgur.com/IH2rQ9X.gif)
+![](http://imgur.com/eLpgASm.gif)
 
 Se conecnta el pin de trasmición del Arduino UNO A al pin de recepción del Arduino UNO B, y se ponen los dos arduinos a una tierra comun para evitar accidentes inesperados.
 
 # Como se conecta un Arduino UNO al PC
+![](http://imgur.com/a0K4ngB.gif)
+
+El puerto USB tipo B tiene tres calbes, 2 de alimentación, y 2 de datos, +D y -D, donde D es el dato a trasmitir y -D debe ser el valor tal que +D-D=0.
+
+Vemos que el +D y el -D del USB tipo B entra en el microncontrolador ATmega16U2-MU, el cual es un microcontrolador al que alguien programo para que convierta la señal de la USB a una señal serial que sea entendible por el 328P, luego esta señal se envia al 328P.
+
+Notemos que el TX del 16u2 se conecta al RX del 328p y el RX del 16u2 se conecta al TX del 328p.
+
 Descargue el diagrama esquemático de un arduino UNO R3. Identifique: cómo se conecta al computador, cómo se conectan el puerto serial a los conectores externos de la tarjeta.
 
+Al mismo tiempo se observa que los pines I/O 0 y 1 del Arduino estan conectados directamente a los mismos pines RX y TX del 328p a los que esta conectado el RX y TX del 16u2.
+
+Asi, podemos por ejemplo leer desde otro Arduino B un dato que llegue al 328p desde la USB de Arduino A.
+
 # Diferencias entre comunicaciónes seriales TTL y comunicaciones seriales RS232
+Hablar de los niveles logicos
+
 ¿Cuál es la diferencia entre comunicaciones seriales TTL y comunicaciones seriales RS232?
 
 # La UART
+Investigar que es la UART
 ¿Qué es una UART?
 
 # Errores comunes al conectar dispositivos por el puerto serial
+Esta en el post de sparkfun.
 Explique ¿Cuáles son los errores más comunes a la hora de conectar dispositivos por puerto serial?
 
 
