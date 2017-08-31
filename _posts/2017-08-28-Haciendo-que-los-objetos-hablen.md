@@ -147,6 +147,8 @@ En una comunicación serial sincrona los dispositivos que se estan comunicando c
 # Niveles logicos del microcontrolador ATmega328P - 14
 En el microcontrolador del Arduino un +5v es considerado un true y un 0v es considerado un false.
 
+> leer lectura complementaria sparkfun logic-levels
+
 # Consideraciones a tener en cuenta al conectar por medio de una interfaz serial un microcontrolador que opera a 5v con un sensor o actuador que opera a 3v o 3.3v - 15
 Si vamos a conectar por medio de una interfaz serial un sensor al microcontrolador que opera a 5V es altamente recomendable hacer primero un circuito acondicionador que evite que el sensor se queme por un sobrevoltaje y al mismo tiempo otro circuito acondicionador que transforme los valores de voltaje para que sea el apropiado para la comunicacion entre los dispositivos.
 
