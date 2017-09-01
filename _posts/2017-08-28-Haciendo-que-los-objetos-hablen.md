@@ -214,21 +214,43 @@ Al mismo tiempo se observa que los pines I/O 0 y 1 del Arduino estan conectados 
 Asi, podemos por ejemplo leer desde otro Arduino B un dato que llegue al 328p desde la USB de Arduino A.
 
 # Diferencias entre comunicaciónes seriales TTL y comunicaciones seriales RS232
-Hablar de los niveles logicos
+Una de las principales diferencias son los niveles logicos de ambos tipos de comunicación, idealmente, en una comunicación TTL el valor logico true es representado con un voltaje de 5v, y el valor logico falso es representado con un 0v.
 
-¿Cuál es la diferencia entre comunicaciones seriales TTL y comunicaciones seriales RS232?
+Por otro lado una comuniación RS232 los niveles son como los del TTL pero volteados (fliped) y escalados, es decir, una señal alta representa un valor logico falso, y una señal baja representa un valor logico true, en este tipo de comunicación los voltajes van entre -13v y 13v.
 
 # La UART
+
 Investigar que es la UART
-¿Qué es una UART?
+La UART es un microchip que se ha programado para que se encarge de controlar las transmiciones entre el puerto USB y el puesto Serial, entre las funciones de la UART estan:
+
+1. Convierte los Bytes que recibe del computador a un stream serial que pueda ser interpretado por los otros chips del microcontrolador.
+2. Para hacer transmisiones al PC convierte los bytes que vienen del microcontrolador a unos Bytes que puedan ser leidos por el PC.
+3. Agrega los bits de start y end en las transmisiones y los quita en los packets entrantes para que solo quede el dato.
+4. Si se desea agrega el bit de parity y realiza la verificación.
+6. Se encarga de trasmitir datos en el baud rate especificado, es decir si el baud rate es de 9600Hz, entonces la UART transmitirá una señal cada 1042 micro segundos (1/9600Hz).
 
 # Errores comunes al conectar dispositivos por el puerto serial
-Esta en el post de sparkfun.
-Explique ¿Cuáles son los errores más comunes a la hora de conectar dispositivos por puerto serial?
+A conrinuación se enumeraran algunos errores comunes a la hora de hacer comunicaciones por puerto serial:
+1. No conectar RX a TX y TX a RX a la hora de hacer las conexiones seriales entre dos dispositivos seriales.
+2. Baud rate incompatible, cuando el baud rate de los dos dispositivos seriales no es el mismo, provocando errores inesperados.
+3. Conectar el TX de dos dispositivos seriales al mismo RX del receptor, cuando conectamos dos dispositivos al mismo RX, por ejemplo si conectamos el TX de un GPS al pin 1 (RX) de un Arduino UNO  y luego intentamos hacer un Serial.read() muy posiblemente obtendremos un comportamiento erratico por parte del Arduino ya que estamos intentando escuchando por un mismo RX dos dispositivos distintos, es como si muchas personas te hablaran al mismo tiempo, se hace mucho mas dificil entender sus mensajes, lo contrario es posible sin obtener errores, es decir desde un ArduinoUNO hablarle a varios dispositivos, siguiendo con la analogia anterior, tu puedes hablarle a varias personas al mismo tiempo y lograr que todas te entiendan, sin embargo esto puede tener implicaciones en seguridad a tener en cuenta en algunos escenarios.
 
+¿Qué sensores utiliza el proyecto 2 del texto guía?
+
+¿Cómo funcionan los sensores del punto anterior? (https://learn.sparkfun.com/tutorials/flex-sensor-hookup-guide)
+
+¿Qué usos pueden tener los sensores del punto anterior en aplicaciones de interacción? 
+
+Explique ¿Cuál es la diferencia entre los métodos println y write utilizados con el objetos Serial? Muestre ejemplos con código que ilustren la diferencia.
+
+Explique el protocolo de comunicación, utilizado en el proyecto 2 del texto guía, para comunicar el arduino con processing.
 
 
 # Referencias
+<a href="http://whatis.techtarget.com/definition/UART-Universal-Asynchronous-Receiver-Transmitter" target="_blank">What is the UART</a>
+
+<a href="https://es.wikipedia.org/wiki/Universal_Asynchronous_Receiver-Transmitter" target="_blank">UART, Wikipedia</a>
+
 <a href="http://www.asciitable.com/" target="_blank">Ascii table</a>
 
 <a href="https://es.wikipedia.org/wiki/Tasa_de_baudios" target="_blank">Baud rate</a>
