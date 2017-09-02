@@ -193,12 +193,12 @@ NOTA2: Mira que el primer bit de todos los packets es false siempre y el ultimo 
 
 NOTA3: El numero se envia litte-endian, es decir si se quiere enviar 2 (0b10), por el puerto serial se envia el numero "al revez", es decir: (0b01)
 
-# Conexion para comunicación serial entre dos Arduino UNO
+# Conexion para comunicación serial entre dos Arduino UNO - 20
 ![](http://imgur.com/eLpgASm.gif)
 
 Se conecnta el pin de trasmición del Arduino UNO A al pin de recepción del Arduino UNO B, y se ponen los dos arduinos a una tierra comun para evitar accidentes inesperados.
 
-# Como se conecta un Arduino UNO al PC
+# Como se conecta un Arduino UNO al PC - 21
 ![](http://imgur.com/a0K4ngB.gif)
 
 El puerto USB tipo B tiene tres calbes, 2 de alimentación, y 2 de datos, +D y -D, donde D es el dato a trasmitir y -D debe ser el valor tal que +D-D=0.
@@ -213,12 +213,12 @@ Al mismo tiempo se observa que los pines I/O 0 y 1 del Arduino estan conectados 
 
 Asi, podemos por ejemplo leer desde otro Arduino B un dato que llegue al 328p desde la USB de Arduino A.
 
-# Diferencias entre comunicaciónes seriales TTL y comunicaciones seriales RS232
+# Diferencias entre comunicaciónes seriales TTL y comunicaciones seriales RS232 - 22
 Una de las principales diferencias son los niveles logicos de ambos tipos de comunicación, idealmente, en una comunicación TTL el valor logico true es representado con un voltaje de 5v, y el valor logico falso es representado con un 0v.
 
 Por otro lado una comuniación RS232 los niveles son como los del TTL pero volteados (fliped) y escalados, es decir, una señal alta representa un valor logico falso, y una señal baja representa un valor logico true, en este tipo de comunicación los voltajes van entre -13v y 13v.
 
-# La UART
+# La UART - 23
 
 Investigar que es la UART
 La UART es un microchip que se ha programado para que se encarge de controlar las transmiciones entre el puerto USB y el puesto Serial, entre las funciones de la UART estan:
@@ -229,24 +229,89 @@ La UART es un microchip que se ha programado para que se encarge de controlar la
 4. Si se desea agrega el bit de parity y realiza la verificación.
 6. Se encarga de trasmitir datos en el baud rate especificado, es decir si el baud rate es de 9600Hz, entonces la UART transmitirá una señal cada 1042 micro segundos (1/9600Hz).
 
-# Errores comunes al conectar dispositivos por el puerto serial
+# Errores comunes al conectar dispositivos por el puerto serial - 24
 A conrinuación se enumeraran algunos errores comunes a la hora de hacer comunicaciones por puerto serial:
 1. No conectar RX a TX y TX a RX a la hora de hacer las conexiones seriales entre dos dispositivos seriales.
 2. Baud rate incompatible, cuando el baud rate de los dos dispositivos seriales no es el mismo, provocando errores inesperados.
 3. Conectar el TX de dos dispositivos seriales al mismo RX del receptor, cuando conectamos dos dispositivos al mismo RX, por ejemplo si conectamos el TX de un GPS al pin 1 (RX) de un Arduino UNO  y luego intentamos hacer un Serial.read() muy posiblemente obtendremos un comportamiento erratico por parte del Arduino ya que estamos intentando escuchando por un mismo RX dos dispositivos distintos, es como si muchas personas te hablaran al mismo tiempo, se hace mucho mas dificil entender sus mensajes, lo contrario es posible sin obtener errores, es decir desde un ArduinoUNO hablarle a varios dispositivos, siguiendo con la analogia anterior, tu puedes hablarle a varias personas al mismo tiempo y lograr que todas te entiendan, sin embargo esto puede tener implicaciones en seguridad a tener en cuenta en algunos escenarios.
 
-¿Qué sensores utiliza el proyecto 2 del texto guía?
+# Sensores utilizados en el proyecto 2 del texto guia - Making Things Talk - 25
+1. Flex sensor resistor (Sensor de flexion), 
+2. Momentary switches (Un boton), es un simple boton.
 
-¿Cómo funcionan los sensores del punto anterior? (https://learn.sparkfun.com/tutorials/flex-sensor-hookup-guide)
+# Funcionamiento de los sensores mencionados - 26
+El flex sensor resistor es una resistencia que cambia en función de que tan flexionada este, generalmente si dejamos el sensor totalmente recto la resistencia es de 30KOhm y a medida que la vayamos flexionando se va incrementando la resistencia hata los 70KOhm, esta resistencia se puede conectar con una resistencia fija para hacer un divisor de voltaje y enviarle esta señal a un convertidor analogo-digital como el del Arduino por ejemplo.
 
-¿Qué usos pueden tener los sensores del punto anterior en aplicaciones de interacción? 
+Por otra parte el Momentary switch es un boton, en este caso, normalmente abierto, que se cierra mientras se mantiene pulsado y se vuelve a abrir cuando se suelta.
 
-Explique ¿Cuál es la diferencia entre los métodos println y write utilizados con el objetos Serial? Muestre ejemplos con código que ilustren la diferencia.
+# Algunos usos de los sensores mencionados - 27
+Podemos usar un Flex Resistor como sensor en una puerta para saber ¿que tan abierta o cerrada se encuentra? o quizas como un sensor para crear animales de peluche sensibles a ciertos movimientos.
 
-Explique el protocolo de comunicación, utilizado en el proyecto 2 del texto guía, para comunicar el arduino con processing.
+¿Y que usos podriamos darle a unos botones? Los botones estan en todos lados, teclados de computadora, ascensores, puertas, cajas, buses, automoviles, semaforos, entre otros.
 
+# Diferencia entre el metodo println y el write del objeto Serial de Arduino - 28
+Serial.println() envia por el serial el codigo ASCII que representa lo que recibe el parametro s, que puede ser un char, string o incluso un numero, y agrega al final el caracter de salto de linea.
+
+´´´c++
+Serial.println("Hola Mundo");
+/* ENVIA los siguientes datos uno tras otro.
+'H' (0x48)
+'o' (0x6F)
+'l' (0x6C)
+'a' (0x61)
+' ' (0x20)
+'M' (0x4D)
+'u' (0x75)
+'n' (0x6E)
+'d' (0x64)
+'o' (0x6F)
+'\n' (0xA)
+*/
+´´´
+
+NOTA: En parentesis se pone el ASCII code en hexagesimal que representa el char correspondiente.
+
+En cambio con el metodo write, se envia el dato que se recibe por el argumento, tal cual, es decir, el metodo no se encarga de hacer un procesamiento para hallar el caracter ASCII que representa el argumento, en su lugar simplemente envia lo que recibe, la diferencia entre el metodo write y el print se hace notoria cuando queremos enviar numeros, veamos el siguiente ejemplo:
+´´´c++
+Serial.print(45);
+/* ENVIA
+'4' (0x34)
+'5' (0x35)
+*/
+
+Serial.write(45);
+/* ENVIA
+45
+*/
+´´´
+
+NOTA: La diferencia entre print y println es que esta ultima agrega un caracter de salto de linea al final del mensaje.
+
+Como se puede ver en el ejemplo anterior el write envio el valor 45, el cual en un simulador de terminal como CoolTerm sera interpretado como un caracter ASCII, como el numero 45 (decimal) representa la letra 'E' en el codigo ASCII, lo que veremos en el CoolTerm sera una letra E.
+
+Si al metodo write pasamos como argumento un array de chars como "Hola Mundo", el metodo procedara enviando el valor de cada char uno tras otro y no agregara el caracter de salto de linea al final del array de chars, en este caso veremos en CooLTerm HolaMundo.
+
+Para concluir el metodo print envia el codigo ASCII que representa lo que sea que se le pase como argumento, mientras el metodo write enviará exactamente el dato que reciba como argumento, esta diferencia se hace notoria cuando queremos imprimir numeros en la terminal serial del computador.
+
+# Protocolo de comunicacion usado en el proyecto 2 del texto guia - 29
+El Arduino envia al computador el valor recibido de los sensores que tiene conectados mediante un protocolo ASCII, a continuación se muestra la estructura del mensaje:
+
+"leftArmFlexValue,rightArmFlexValue,resetButtonState,serveButtonState\n"
+
+En otras palabras el Arduino envia al programa de processing un string que contiene el valor de cada uno de los sensores en el momento actual, tengase en cuenta, que el Arduino envia esto usando el metodo print, por lo tanto lo que en realidad envia es la representación en ASCII de los valores de los sensores, como se explico anteriormente, ejemplo de envio:
+
+"284,284,1,1\n"
+"285,283,1,1\n"
+"286,284,1,1\n"
+"289,283,1,1\n"
+
+Luego en Java (o cualquier lenguaje que estes usando para construir el server) es elemental procesar el string que se va recibiendo y convertir los valores ASCII que representan numeros a un int.
 
 # Referencias
+<a href="https://en.wikipedia.org/wiki/Voltage_divider" target="_blank">Voltage divider</a>
+
+<a href="https://learn.sparkfun.com/tutorials/flex-sensor-hookup-guide" target="_blank">Flex Sensor Resistor</a>
+
 <a href="http://whatis.techtarget.com/definition/UART-Universal-Asynchronous-Receiver-Transmitter" target="_blank">What is the UART</a>
 
 <a href="https://es.wikipedia.org/wiki/Universal_Asynchronous_Receiver-Transmitter" target="_blank">UART, Wikipedia</a>
