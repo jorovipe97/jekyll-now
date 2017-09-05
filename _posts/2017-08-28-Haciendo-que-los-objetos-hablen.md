@@ -307,6 +307,12 @@ En otras palabras el Arduino envia al programa de processing un string que conti
 
 Luego en Java (o cualquier lenguaje que estes usando para construir el server) es elemental procesar el string que se va recibiendo y convertir los valores ASCII que representan numeros a un int.
 
+# Implementando una Lampara RGB a control remoto
+Vamos ahora a poner en practica algunos conceptos mencionados anteriormente, para ello vamos a implementar una lampara RGB cuyo color se pueda controlar desde un celular mediante Bluetooth.
+
+A continuación un diagrama en el que se muestra por encima como se conectara todo.
+
+
 # Referencias
 <a href="https://en.wikipedia.org/wiki/Voltage_divider" target="_blank">Voltage divider</a>
 
