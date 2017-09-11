@@ -310,7 +310,77 @@ Luego en Java (o cualquier lenguaje que estes usando para construir el server) e
 # Implementando una Lampara RGB a control remoto
 Vamos ahora a poner en practica algunos conceptos mencionados anteriormente, para ello vamos a implementar una lampara RGB cuyo color se pueda controlar desde un celular mediante Bluetooth.
 
-A continuación un diagrama en el que se muestra por encima como se conectara todo.
+A continuación un diagrama en el que se muestra por encima como encajara todo.
+![](https://imgur.com/HkO7hlh.gif)
+
+A continuación muestro en un video el resultado final. (Disculpen la mala calidad)
+<iframe width="560" height="315" src="https://www.youtube.com/embed/xHAPReRyei8?rel=0" frameborder="0" allowfullscreen></iframe>
+
+Se explicara el proyecto empezando por la capa del hardware y finalizando con los protocolos de comunicación y capa de software diseñados.
+![](https://imgur.com/e72lTZu.gif)
+
+## Circuito
+![](https://imgur.com/07e4lAG.gif)
+El circuito completo esta dividido en 2 partes, un encargada de gestionar el LED RGB y otra encargada de gestionar el modulo Bluetooth, empecemos analizando la que se encarga del RGB.
+
+En nuestro casos usaremos un led RGB de catodo comun, es decir los tres led del RGB estan conectados a la misma tierra y a fuentes de voltaje "separadas", cuanto mas voltaje reciba un LED mas brillante sera su color, la suma de los tres niveles de brillo de los LEDs del RGB producen el efecto de LED multicolor.
+
+La fuente de los leds R, G y B son los pines PWM 5, 6 y 9 respectivamente, los cuales se conectan con una resistencia de 250Ohm para garantizar que el LED no se quemara, ademas cabe mencionar, que se conectan a pines PWM para poder variar "programatisticamente" desde el Arduino el voltaje que recibe cada LED usando el metodo analogWrite(pin, intensity).
+
+Por otra parte si analizamos el circuito encargado de gestionar el modulo Bluetooth HC-05 vemos un divisor de voltaje conectado al pin RX del HC-05, esto debido a que las señales que envia el TX del ArduinoLeonardo van de 0 a 5v, mientras que el RX del HC-05 requiere niveles de voltaje de 0v a 3.3v
+
+![](https://imgur.com/sxTrkdR.gif)
+(Fuente: wikipedia)
+
+Si hacemos:
+
+![](https://latex.codecogs.com/gif.latex?V_{in}=5v)
+
+![](https://latex.codecogs.com/gif.latex?R_{2}=2k\Omega)
+
+Y suponemos que queremos un voltaje de salida de:
+
+![](https://latex.codecogs.com/gif.latex?V_{out}=3.3v)
+
+Despejando R1 en:
+
+![](https://latex.codecogs.com/gif.latex?V_{out}=V_{in}*\frac{R_2}{R_1&plus;R_2})
+
+Obtenemos la ecuación:
+
+![](https://latex.codecogs.com/gif.latex?R_1=\frac{V_{in}*R_2}{V_{out}}&space;-&space;R_2)
+
+En la cual, si reemplazamos obtenemos el valor que deberia tener R1
+
+![](https://latex.codecogs.com/gif.latex?R_{1}=1k\Omega)
+
+Con lo cual se explica el valor de la resistencias en el divisor de voltaje.
+
+## Protocolos de comunicación
+Ahora vamos a definir unas reglas de comunicación entre el Arduino y la Aplicación Android para que se puedan entender.
+
+Haremos que se comuniquen mediante caracteres ASCII serialmente, asincronamente y a una velocidad de 9600 Bauds
+
+La estructura de los mensajes que podra escuchar el Arduino son:
+
+> "RGB=rrr,ggg,bbb;"
+¿Que hace este comando?
+- Asigna la intensidad luminica indicada por rrr al LED R.
+- Asigna la intensidad luminica indicada por ggg al LED G.
+- Asigna la intensidad luminica indicada por bbb al led B.
+
+NOTA: Los valor rrr, ggg y bbb son un numero de 0 a 255.
+
+> "C"
+¿Que hace este comando?
+Trasmite desde el modulo Bluetooth a la aplicación Android el ultimo color guardado en la EEPROM del arduino, el mensaje trasmitido tiene la siguiente estructura: "rrr,ggg,bbb\n"
+
+Mensajes que podra escuchar la aplicación Android:
+> "rrr,ggg,bbb\n"
+¿Que hace este comando?
+"Setea" los sliders r, g, b de la interfaz grafica al valor correspondiente indicado por rrr, ggg y bbb respectivamente.
+
+Tengase en cuenta que el mensaje "C" se envia de la Aplicación al Arduino, para de alguna forma decirle al Arduino: "Oye, dime cual fue el ultimo color que guardaste en tu EEPROM para yo poner ese color en mi interfaz de usuario" a lo que el arduino responde algo como: "Claro, fue rrr,ggg,bbb\n gracias por preguntarme".
 
 
 # Referencias
