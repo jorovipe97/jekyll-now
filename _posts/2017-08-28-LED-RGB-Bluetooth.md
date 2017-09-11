@@ -252,7 +252,7 @@ Podemos usar un Flex Resistor como sensor en una puerta para saber ¿que tan abi
 # Diferencia entre el metodo println y el write del objeto Serial de Arduino - 28
 Serial.println() envia por el serial el codigo ASCII que representa lo que recibe el parametro s, que puede ser un char, string o incluso un numero, y agrega al final el caracter de salto de linea.
 
-´´´c++
+```c++
 Serial.println("Hola Mundo");
 /* ENVIA los siguientes datos uno tras otro.
 'H' (0x48)
@@ -267,12 +267,12 @@ Serial.println("Hola Mundo");
 'o' (0x6F)
 '\n' (0xA)
 */
-´´´
+```
 
 NOTA: En parentesis se pone el ASCII code en hexagesimal que representa el char correspondiente.
 
 En cambio con el metodo write, se envia el dato que se recibe por el argumento, tal cual, es decir, el metodo no se encarga de hacer un procesamiento para hallar el caracter ASCII que representa el argumento, en su lugar simplemente envia lo que recibe, la diferencia entre el metodo write y el print se hace notoria cuando queremos enviar numeros, veamos el siguiente ejemplo:
-´´´c++
+```c++
 Serial.print(45);
 /* ENVIA
 '4' (0x34)
@@ -283,7 +283,7 @@ Serial.write(45);
 /* ENVIA
 45
 */
-´´´
+```
 
 NOTA: La diferencia entre print y println es que esta ultima agrega un caracter de salto de linea al final del mensaje.
 
@@ -400,7 +400,7 @@ El programa que escribamos para el Arduino debe realizar las siguientes tareas:
 
 Para recibir y procesar los mensajes entrantes se usó un enfoque de maquina de estados, muy parecido al explicado [en este foro](https://www.gammon.com.au/serial)
 
-´´´c++
+```c++
 
 void processIncomingnByte(const char character) {
     /*
@@ -419,12 +419,12 @@ void processIncomingnByte(const char character) {
     }
 }
 
-´´´
+```
 
 La parte del codigo mostrada arriba se encarga de escuchar y responder al comando "C".
 
 
-´´´c++
+```c++
 void processR (const unsigned int val) {
   if (val > 255) {
     Serial.println("R value max val is 255");
@@ -440,23 +440,23 @@ void processR (const unsigned int val) {
   Serial.println(val);
   actualValue = 0;
 }
-´´´
+```
 
 Cada canal de color tiene una funcion similar a la anterior, que se encarga de tomar el valor del canal de color correspondiente y guardarlo en una variable que luego sera utilizada para enviar mediante PWM un voltaje al LED, la función EEPROM.update(dir, val) se encarga de escribir en la direccion *dir* de la EEPROM el valor *val*, si y solo si *val* es diferente al valor que hay actualmente en dicha dirección, esto sirve como medida de protección a la EEPROM, ya cada registro de la misma se dañara luego de 100000 operaciones de escritura, de esta forma se puede aumentar la vida util de los registros de la EEPROM.
 
-´´´c++
+```c++
 void showRGBLed() {
   analogWrite(rLedPin, r);
   analogWrite(gLedPin, g);
   analogWrite(bLedPin, b);
 }
-´´´
+```
 
 Por ultimo esta función se encarga enviar un voltaje al led correspondiente del RGB.
 
 NOTA: Las funciones mencionadas anteriormente se ejecutan en cada ciclo de la funcion loop()
 
-´´´c++
+```c++
 void loop() {
   // Protocolo
   // RGB=val0,val1,val2\n
@@ -465,7 +465,7 @@ void loop() {
   }
   showRGBLed();
 }
-´´´
+```
 
 ### Software para la aplicación
 La aplicación que envia mensajes al Arduino se escribió en app inventor, y consiste basicamente de dos pantallas, una para conectarse a un dispositivo bluetooth y la otra para enviar un color RGB al Arduino mediante una interfaz de usuario comoda.
