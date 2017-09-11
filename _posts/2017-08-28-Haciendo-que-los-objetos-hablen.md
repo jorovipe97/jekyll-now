@@ -314,7 +314,9 @@ A continuación un diagrama en el que se muestra por encima como encajara todo.
 ![](https://imgur.com/HkO7hlh.gif)
 
 A continuación muestro en un video el resultado final. (Disculpen la mala calidad)
+
 <iframe width="560" height="315" src="https://www.youtube.com/embed/xHAPReRyei8?rel=0" frameborder="0" allowfullscreen></iframe>
+
 
 Se explicara el proyecto empezando por la capa del hardware y finalizando con los protocolos de comunicación y capa de software diseñados.
 ![](https://imgur.com/e72lTZu.gif)
@@ -356,13 +358,14 @@ En la cual, si reemplazamos obtenemos el valor que deberia tener R1
 
 Con lo cual se explica el valor de la resistencias en el divisor de voltaje.
 
-## Protocolos de comunicación
+## Protocolos de comunicacion
 Ahora vamos a definir unas reglas de comunicación entre el Arduino y la Aplicación Android para que se puedan entender.
 
 Haremos que se comuniquen mediante caracteres ASCII serialmente, asincronamente y a una velocidad de 9600 Bauds
 
 La estructura de los mensajes que podra escuchar el Arduino son:
 
+### Comando RGB
 > "RGB=rrr,ggg,bbb;"
 ¿Que hace este comando?
 - Asigna la intensidad luminica indicada por rrr al LED R.
@@ -371,17 +374,126 @@ La estructura de los mensajes que podra escuchar el Arduino son:
 
 NOTA: Los valor rrr, ggg y bbb son un numero de 0 a 255.
 
+### Comando C
 > "C"
 ¿Que hace este comando?
 Trasmite desde el modulo Bluetooth a la aplicación Android el ultimo color guardado en la EEPROM del arduino, el mensaje trasmitido tiene la siguiente estructura: "rrr,ggg,bbb\n"
 
 Mensajes que podra escuchar la aplicación Android:
+### Comando Cresponse
 > "rrr,ggg,bbb\n"
 ¿Que hace este comando?
 "Setea" los sliders r, g, b de la interfaz grafica al valor correspondiente indicado por rrr, ggg y bbb respectivamente.
 
 Tengase en cuenta que el mensaje "C" se envia de la Aplicación al Arduino, para de alguna forma decirle al Arduino: "Oye, dime cual fue el ultimo color que guardaste en tu EEPROM para yo poner ese color en mi interfaz de usuario" a lo que el arduino responde algo como: "Claro, fue rrr,ggg,bbb\n gracias por preguntarme".
 
+## Software
+En este punto ya tenemos el hardware preparado y hemos definido un protocolo a seguir por el Arduino y la aplicación para comunicarse, pero el sistema no tomara vida hasta que escribamos el software que controle Al Arduino y la Aplicación.
+
+### Software para el arduino
+El programa que escribamos para el Arduino debe realizar las siguientes tareas:
+1. Recibir los mensajes entrantes por el pin RX.
+2. Interpretar los mensajes, es decir "RGB=55,20,100;" de un mensaje como el anterior almacenar los valores r, g y b en variables separadas como enteros y no como strings.
+3. Usar el mensaje interpretado para controlar el LED RGB.
+4. Responder a las solicitudes de información por parte de la Aplicación (Por ejemplo el comando "C").
+5. Guardar persistentemente (En la EEPROM) los colores resultantes del mensaje interpretado, para que al apagar y volver a prender el circuito, no se pierda el ultimo color asignado.
+
+Para recibir y procesar los mensajes entrantes se usó un enfoque de maquina de estados, muy parecido al explicado [en este foro](https://www.gammon.com.au/serial)
+
+´´´c++
+
+void processIncomingnByte(const char character) {
+    /*
+     * Envia el ultimo color almacenado en la EEPROM
+    */
+    if (character == 'C') {
+      EEPROM.get(rEEDir, r);
+      EEPROM.get(gEEDir, g);
+      EEPROM.get(bEEDir, b);
+      Serial1.print(r);
+      Serial1.write(',');
+      Serial1.print(g);
+      Serial1.write(',');
+      Serial1.print(b);
+      Serial1.write('\n');
+    }
+}
+
+´´´
+
+La parte del codigo mostrada arriba se encarga de escuchar y responder al comando "C".
+
+
+´´´c++
+void processR (const unsigned int val) {
+  if (val > 255) {
+    Serial.println("R value max val is 255");
+    actualValue = 0;
+    return;
+  }
+  r = val;
+  /*
+   * The purpose of this example is to show the EEPROM.update() method that writes data only if it is different from the previous content of the locations to be written. This solution may save execution time because every write operation takes 3.3 ms; the EEPROM has also a limit of 100,000 write cycles per single location, therefore avoiding rewriting the same value in any location will increase the EEPROM overall life.
+  */
+  EEPROM.update(rEEDir, r);
+  Serial.print("R= ");
+  Serial.println(val);
+  actualValue = 0;
+}
+´´´
+
+Cada canal de color tiene una funcion similar a la anterior, que se encarga de tomar el valor del canal de color correspondiente y guardarlo en una variable que luego sera utilizada para enviar mediante PWM un voltaje al LED, la función EEPROM.update(dir, val) se encarga de escribir en la direccion *dir* de la EEPROM el valor *val*, si y solo si *val* es diferente al valor que hay actualmente en dicha dirección, esto sirve como medida de protección a la EEPROM, ya cada registro de la misma se dañara luego de 100000 operaciones de escritura, de esta forma se puede aumentar la vida util de los registros de la EEPROM.
+
+´´´c++
+void showRGBLed() {
+  analogWrite(rLedPin, r);
+  analogWrite(gLedPin, g);
+  analogWrite(bLedPin, b);
+}
+´´´
+
+Por ultimo esta función se encarga enviar un voltaje al led correspondiente del RGB.
+
+NOTA: Las funciones mencionadas anteriormente se ejecutan en cada ciclo de la funcion loop()
+
+´´´c++
+void loop() {
+  // Protocolo
+  // RGB=val0,val1,val2\n
+  if (Serial1.available()) {    
+    processIncomingnByte(Serial1.read());    
+  }
+  showRGBLed();
+}
+´´´
+
+### Software para la aplicación
+La aplicación que envia mensajes al Arduino se escribió en app inventor, y consiste basicamente de dos pantallas, una para conectarse a un dispositivo bluetooth y la otra para enviar un color RGB al Arduino mediante una interfaz de usuario comoda.
+![](https://imgur.com/wO68yrZ.gif)
+
+El resultado final de la pantalla de envio de color fue el siguiente:
+![](https://imgur.com/ybitFnH.gif)
+El "255,63,0" es la respuesta que se recibio del Arduino luego de enviarle el comando "C", a continuación se muestra el bloque de codigo en la aplicación que se encarga de hacer la solicitud y procesar la respuesta.
+
+![](https://imgur.com/RCGpnQJ.gif)
+En resumidas palabras, la funcion getLatestColor() se encarga de enviar el mensaje "C" al arduino, procesarlo para guardar cada componente de color como una lista de integers que almacena el color, pone la cabeza de los sliders en el valor indicado por dicho mensaje y setea el color del cuadro verde y por ultimo hace true una variable global tipo bandera que permite que el codigo dentro de los eventos onSliderPositionChanged() de los sliders se pueda ejecutar, esto es necesario porque cambiar la cabeza del slider desde el codigo hara que dichos eventos se ejecuten produciendo como resultados dos piezas de codiga que intentan modificar la lista actualColor al mismo tiempo.
+
+NOTA: La funcion getLatestColor() es llamada tan pronto la aplicación se conecta al HC-05. 
+
+![](https://imgur.com/Vjz3G1G.gif)
+Cuando cambia la posicion de la cabeza de un slider, se actualiza la variable que almacena el colorActual (que se enviara como mensaje ASCII al arduino) y se actualiza el color del cuadro verde al nuevo color, por ultimo se procede a empaquetar la información del nuevo color y enviarsela siguiendo el protocolo establecido al Arduino.
+
+![](https://imgur.com/RyeM33w.gif)
+Se usa el metodo join(str1, str2, str3, ...), que es una especie de concatenador de strings en appinventor, con el objetivo de crear un string que siga la sintaxis establecida por el protocolo discutido previamente que trasmita al Arduino el color seleccionado actualmente en la interfaz de usuario para que este se encargue de ponerle dicho color al led RGB, este string cambia cada vez que se mueve un slider, asi que se esta trasmitiendo una cantidad razonable de datos.
+
+Aqui seria bueno decir que se puede usar una aplicacion como Bluetooth Terminal para enviar los comandos RGB al arduino, sin embargo tocaria escirbir manualmente todo el comando.
+![](https://imgur.com/JrlDubV.gif)
+
+Mientras que la aplicación desarrollada "escribe" automaticamente el comando RGB y lo envia al arduino a la velocidad a la que movemos los sliders de la interfaz de usuario, sin necesidad de que tengamos que escribir en el teclado del Arduino el comando manualmente.
+
+Dicho lo anterior, se puede resumir la funcion de la Aplicacion Android desarrollada a:
+
+> Una aplicación que escribe y envia comandos RGB muy rapidamente sin necesidad de escribirlos manualmente con el teclado.
 
 # Referencias
 <a href="https://en.wikipedia.org/wiki/Voltage_divider" target="_blank">Voltage divider</a>
