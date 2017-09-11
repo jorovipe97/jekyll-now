@@ -4,6 +4,57 @@ title: Lampara RGB controlada desde aplicación Andoid
 published: true
 ---
 
+El objetivo de este post es implementar una lampara RGB controlada desde una aplicación Android a la vez que se repasan conceptos importantes para lograr una implementación exitosa y bien entendida.
+
+- [Consideraciones a tener en cuenta a la hora de seleccionar un LED - 1](#consideraciones-a-tener-en-cuenta-a-la-hora-de-seleccionar-un-led---1)
+  * [El brillo](#el-brillo)
+  * [Tipo de brillo](#tipo-de-brillo)
+  * [El color](#el-color)
+  * [Package dimensions](#package-dimensions)
+  * [Angulo de vision de la luz](#angulo-de-vision-de-la-luz)
+  * [Forward voltage](#forward-voltage)
+- [Posibles usos de los LED en aplicaciones interactivas - 2](#posibles-usos-de-los-led-en-aplicaciones-interactivas---2)
+- [Circuito de acondicionamiento de un LED - 3](#circuito-de-acondicionamiento-de-un-led---3)
+  * [Riesgos de conectar un LED directamente a un microcontrolador sin un circuito de acondicionamiento - 4](#riesgos-de-conectar-un-led-directamente-a-un-microcontrolador-sin-un-circuito-de-acondicionamiento---4)
+- [Variando el brillo de un LED utilizando una resistencia variable - 5](#variando-el-brillo-de-un-led-utilizando-una-resistencia-variable---5)
+- [Variando el brillo de un LED utilizando una señal PWM - 6](#variando-el-brillo-de-un-led-utilizando-una-se-al-pwm---6)
+- [Generando distintos colores utilizando señales de PWM - 7](#generando-distintos-colores-utilizando-se-ales-de-pwm---7)
+- [Implicacion de los diodos RGB de anodo comun y catodo comun en el programa del microcontrolador - 8](#implicacion-de-los-diodos-rgb-de-anodo-comun-y-catodo-comun-en-el-programa-del-microcontrolador---8)
+- [El duty cycle - 9](#el-duty-cycle---9)
+- [Calculando el periodo y la frecuencia de una señal de PWM en el Arduino - 10](#calculando-el-periodo-y-la-frecuencia-de-una-se-al-de-pwm-en-el-arduino---10)
+- [Implicaciones de frecuencias altas o bajas en la señal PWM que controla un LED - 11](#implicaciones-de-frecuencias-altas-o-bajas-en-la-se-al-pwm-que-controla-un-led---11)
+- [Diferencia entre una interfaz paralela y una interfaz serial - 12](#diferencia-entre-una-interfaz-paralela-y-una-interfaz-serial---12)
+- [Diferencia entre una comunicación serial sincrona y una asincrona - 13](#diferencia-entre-una-comunicaci-n-serial-sincrona-y-una-asincrona---13)
+- [Niveles logicos del microcontrolador ATmega328P - 14](#niveles-logicos-del-microcontrolador-atmega328p---14)
+- [Consideraciones a tener en cuenta al conectar por medio de una interfaz serial un microcontrolador que opera a 5v con un sensor o actuador que opera a 3v o 3.3v - 15](#consideraciones-a-tener-en-cuenta-al-conectar-por-medio-de-una-interfaz-serial-un-microcontrolador-que-opera-a-5v-con-un-sensor-o-actuador-que-opera-a-3v-o-33v---15)
+- [Bits de sincronizacion, datos y paridad en una comincacion serial - 16](#bits-de-sincronizacion--datos-y-paridad-en-una-comincacion-serial---16)
+- [El baud rate - 17](#el-baud-rate---17)
+- [El concepto de endian en comunicaciones seriales - 18](#el-concepto-de-endian-en-comunicaciones-seriales---18)
+- [Enviando caracteres ASCII por el serial del arudino - 19](#enviando-caracteres-ascii-por-el-serial-del-arudino---19)
+- [Conexion para comunicación serial entre dos Arduino UNO - 20](#conexion-para-comunicaci-n-serial-entre-dos-arduino-uno---20)
+- [Como se conecta un Arduino UNO al PC - 21](#como-se-conecta-un-arduino-uno-al-pc---21)
+- [Diferencias entre comunicaciónes seriales TTL y comunicaciones seriales RS232 - 22](#diferencias-entre-comunicaci-nes-seriales-ttl-y-comunicaciones-seriales-rs232---22)
+- [La UART - 23](#la-uart---23)
+- [Errores comunes al conectar dispositivos por el puerto serial - 24](#errores-comunes-al-conectar-dispositivos-por-el-puerto-serial---24)
+- [Sensores utilizados en el proyecto 2 del texto guia - Making Things Talk - 25](#sensores-utilizados-en-el-proyecto-2-del-texto-guia---making-things-talk---25)
+- [Funcionamiento de los sensores mencionados - 26](#funcionamiento-de-los-sensores-mencionados---26)
+- [Algunos usos de los sensores mencionados - 27](#algunos-usos-de-los-sensores-mencionados---27)
+- [Diferencia entre el metodo println y el write del objeto Serial de Arduino - 28](#diferencia-entre-el-metodo-println-y-el-write-del-objeto-serial-de-arduino---28)
+- [Protocolo de comunicacion usado en el proyecto 2 del texto guia - 29](#protocolo-de-comunicacion-usado-en-el-proyecto-2-del-texto-guia---29)
+- [Implementando una Lampara RGB a control remoto](#implementando-una-lampara-rgb-a-control-remoto)
+  * [Circuito](#circuito)
+  * [Protocolos de comunicacion](#protocolos-de-comunicacion)
+    + [Comando RGB](#comando-rgb)
+    + [Comando C](#comando-c)
+    + [Comando Cresponse](#comando-cresponse)
+  * [Software](#software)
+    + [Software para el arduino](#software-para-el-arduino)
+    + [Software para la aplicación](#software-para-la-aplicaci-n)
+- [Referencias](#referencias)
+
+<small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
+
+
 # Consideraciones a tener en cuenta a la hora de seleccionar un LED - 1
 A primera vista puede parecer que un LED es el dispositivo mas facíl de comprar, solo es cuestion de ir a la tienda y pedir un LED, el vendedor escojera un LED entre los miles de LEDs "iguales" que tiene en la bodega y nos lo entregara.
 
@@ -367,6 +418,7 @@ La estructura de los mensajes que podra escuchar el Arduino son:
 
 ### Comando RGB
 > "RGB=rrr,ggg,bbb;"
+
 ¿Que hace este comando?
 - Asigna la intensidad luminica indicada por rrr al LED R.
 - Asigna la intensidad luminica indicada por ggg al LED G.
@@ -376,12 +428,14 @@ NOTA: Los valor rrr, ggg y bbb son un numero de 0 a 255.
 
 ### Comando C
 > "C"
+
 ¿Que hace este comando?
 Trasmite desde el modulo Bluetooth a la aplicación Android el ultimo color guardado en la EEPROM del arduino, el mensaje trasmitido tiene la siguiente estructura: "rrr,ggg,bbb\n"
 
 Mensajes que podra escuchar la aplicación Android:
 ### Comando Cresponse
 > "rrr,ggg,bbb\n"
+
 ¿Que hace este comando?
 "Setea" los sliders r, g, b de la interfaz grafica al valor correspondiente indicado por rrr, ggg y bbb respectivamente.
 
@@ -494,6 +548,8 @@ Mientras que la aplicación desarrollada "escribe" automaticamente el comando RG
 Dicho lo anterior, se puede resumir la funcion de la Aplicacion Android desarrollada a:
 
 > Una aplicación que escribe y envia comandos RGB muy rapidamente sin necesidad de escribirlos manualmente con el teclado.
+
+Hasta pronto.
 
 # Referencias
 <a href="https://en.wikipedia.org/wiki/Voltage_divider" target="_blank">Voltage divider</a>
