@@ -1,0 +1,253 @@
+---
+layout: post
+title: El computador - CS04/CS05
+---
+
+En esta ocación se implementara un computador siguiendo una arquitectura Von Neumann, se irá gradualmente desde implementar un mapa de memoria, pasando por la CPU y concluyendo finalmente con la combinación de todas las piezas para llegar a una computador basico.
+
+Esta capitulo no contara con muchos diagramas, pero se espera que el HDL se lo suficientemente auto-explicativo.
+
+# Las piezas que se necesitaran
+Para construir el computador basico necesitaremos tres chips:
+1. Una memoria ROM que almacenara las instrucciones a ejecutar por la CPU.
+2. Una CPU que ejecutara las instrucciones almacenadas en la ROM.
+3. Una memoria RAM que nos permitira guardar "variables" y datos.
+
+Nosotros unicamente implementaremos la CPU y la RAM ya que usaremos una built-in ROM previamente desarrollada por los autores del curso <a href="www.nand2tetris.org" target="_blank">nand2tetris</a>.
+
+![](https://imgur.com/2Fylwdr.gif)
+
+
+# Implementando la Memoria
+
+![](https://imgur.com/YOLCysg.gif)
+Conviene aclarar que en nuestra arquitectura la memoria y la RAM no son lo mismo, la memoria es un dispositivo que mapea otros dispositivos incluido la RAM para que puedan ser accedidos y modificados por la CPU. 
+
+Para su implementación se siguio una idea similar a la seguida para implementar la RAM, usando los bits mas significativos como bits selectores de dispositivos.
+
+Por ejemplo, nuestra memoria es de 32K registros, y nuestra RAM es de 16K, se ve entonces que con un bus de direcciones de 15 bits los primeros 16k direcciones empiezan en 0.
+
+```
+CHIP Memory {
+    IN in[16], load, address[15];
+    OUT out[16];
+
+    PARTS:
+    // Put your code here:
+    DMux(in=load, sel=address[14], a=selram, b=selscrorkbd);
+    DMux(in=selscrorkbd, sel=address[13], a=selscr, b=selkbd);
+
+    RAM16K(in=in, load=selram, address=address[0..13], out=a);
+	  Screen(in=in, load=selscr, address=address[0..12], out=b);
+	  Keyboard(out=c);
+
+    Mux16(a=b, b=c, sel=address[13], out=d);
+    Mux16(a=a, b=d, sel=address[14], out=out);
+
+}
+```
+
+# Implementando la CPU - reto2-1
+![](https://imgur.com/0YsmIOW.gif)
+
+La parte del circuito encargada de decodificar las condiciones de salto en la CPU
+![](https://imgur.com/WhQacxQ.gif)
+
+```
+CHIP CPU {
+
+    IN  inM[16],         // M value input  (M = contents of RAM[A])
+        instruction[16], // Instruction for execution
+        reset;           // Signals whether to re-start the current
+                         // program (reset==1) or continue executing
+                         // the current program (reset==0).
+
+    OUT outM[16],        // M value output
+        writeM,          // Write to M? 
+        addressM[15],    // Address in data memory (of M)
+        pc[15];          // address of next instruction
+
+    PARTS:
+    //i xx a c1c2c3c4c5c6 d1d2d3 j1j2j3
+
+    // Is C instruction?
+    And(a=instruction[15], b=instruction[14], out=and1);
+    And(a=and1, b=instruction[13], out=isCInstruction);
+
+    // Put your code here:
+    Mux16(a=instruction, b=aluout, sel=isCInstruction, out=val); // NOTICE
+    // i
+    Not(in=instruction[15], out=noti);
+    
+    // Can write on A register?
+    Mux(a=false, b=instruction[5], sel=isCInstruction, out=saveOnA);
+    Or(a=noti, b=saveOnA, out=canWriteARegister); //NOTICE, DONE
+    ARegister(in=val, load=canWriteARegister, out=aOut, out[0..14]=addressM[0..14]);
+
+    // sel=a
+    Mux16(a=aOut, b=inM, sel=instruction[12], out=A-M);
+
+    Mux(a=false, b=instruction[4], sel=isCInstruction, out=canWriteDRegister);
+    DRegister(in=aluout, load=canWriteDRegister, out=dOut); // NOTICE
+
+    // Si i==1, los c deben entrar a la ALU
+    // Si i==0, debe entrar 0 a la ALU
+    
+    //Mux16(a[6..15]=false, a[5]=true, a[4]=false, a[3]=true, a[2]=false, a[1]=true, a[0]=false, b[6..15]=false, b[0..5]=instruction[6..11], out=computation);
+
+    // @32767
+    // 0 111111111111111
+    // si i==0, instruction[6..11] no entran en la ALU
+    ALU(x=dOut, y=A-M, zx=instruction[11], nx=instruction[10], zy=instruction[9], ny=instruction[8], f=instruction[7], no=instruction[6], zr=isZero, ng=isNotGreatThanZero, out=outM, out=aluout);
+    //ALU(x= ,y= ,zx= ,nx= ,zy= ,ny= ,f= ,no= ,out= ,zr= ,ng= );
+
+    // JJJ Condition (Jump condition)
+    Mux(a=false, b=isNotGreatThanZero, sel=instruction[2], out=isNotGreatThanZeroMux);
+    Mux(a=false, b=isZero, sel=instruction[1], out=isZeroMux);
+    // si isZero == true
+    // entonces isZeroMux == true, si instruction[1] == true
+
+    Not(in=isNotGreatThanZero, out=isGreatThanZero);
+    Not(in=isZero, out=isNotZero);
+    And(a=isNotZero, b=instruction[0], out=instr);
+    Mux(a=false, b=isGreatThanZero, sel=instr, out=isGreatThanZeroMux);
+
+    // Instrucciones tipo-c deben chequear que los tres bits mas significativos sean == 1
+    Or(a=isZeroMux, b=isNotGreatThanZeroMux, out=isLessOrEqualZero);
+    Or(a=isLessOrEqualZero, b=isGreatThanZeroMux, out=JJJCondition);
+    And(a=JJJCondition, b=isCInstruction, out=JJJConditionC);
+
+    Not(in=reset, out=resetNeg);
+    Not(in=JJJConditionC, out=condNeg); // NOTICE, if condition is true, no increment
+    Or(a=resetNeg, b=condNeg, out=canInc);
+    PC(in=aOut, reset=reset, inc=canInc, load=JJJConditionC, out[0..14]=pc);
+
+    And(a=instruction[3], b=isCInstruction, out=writeM);
+    //Mux(a=false, b=instruction[4], sel=instruction[15], out=writeM);
+
+    //CPU line 29 error
+}
+```
+
+# Combinando las piezas
+Ahora ya podemos unir las piezas y darle vida al Computer:
+
+```
+CHIP Computer {
+
+    IN reset;
+
+    PARTS:
+    // Put your code here:
+    CPU(inM=outMMemory, instruction=actualInstruction, reset=reset, outM=outMCpu, writeM=canWriteM, addressM=addressMCpu, pc=nextInstruction);
+    ROM32K(address=nextInstruction, out=actualInstruction);
+    Memory(in=outMCpu, load=canWriteM, address=addressMCpu, out=outMMemory);
+}
+```
+
+# Agregando bugs obligatorios a la CPU - reto2-2 - reto2-3
+Vamos ahora a realizar un ejercicio extraño, introducir un error en la CPU para mejorar nuestro entendimiento de la misma.
+
+Supongase que el bug que se quiere introducr es como se describe a continuación:
+
+Considere que la implementación de la CPU tiene un error. Dicho error ocurre
+al ejecutar la instrucción 0000 0011 0000 0110 que está almacenada en la posición
+de memoria 16. Luego de ejecutar la instrucción el programa continúa en la posición
+de memoria 32. Indique qué valores podrían tener los registros A, D y PC justo antes
+y justo después de ejecutar la instrucción.
+
+Al decodificar manualmente la instrucción vemos que deberia hacer la instruccion:
+0 00 0 001100 000 110
+Funcionamiento correcto: @774
+
+Funcionamiento con bug: D;JLE
+
+Esto nos dice que el problema viene de no validar que la instruccion sea tipo C en el decodificador JJJ de salto.
+```
+CHIP CPUerror2 {
+
+    IN  inM[16],         // M value input  (M = contents of RAM[A])
+        instruction[16], // Instruction for execution
+        reset;           // Signals whether to re-start the current
+                         // program (reset==1) or continue executing
+                         // the current program (reset==0).
+
+    OUT outM[16],        // M value output
+        writeM,          // Write to M? 
+        addressM[15],    // Address in data memory (of M)
+        pc[15];          // address of next instruction
+
+    PARTS:
+    //i xx a c1c2c3c4c5c6 d1d2d3 j1j2j3
+
+    // Is C instruction?
+    And(a=instruction[15], b=instruction[14], out=and1);
+    And(a=and1, b=instruction[13], out=isCInstruction);
+
+    // Put your code here:
+    Mux16(a=instruction, b=aluout, sel=isCInstruction, out=val); // NOTICE
+    // i
+    Not(in=isCInstruction, out=noti);
+    
+    // d1
+    Mux(a=false, b=instruction[5], sel=isCInstruction, out=saveOnA);
+    Or(a=noti, b=saveOnA, out=canWriteARegister); //NOTICE, DONE
+    ARegister(in=val, load=canWriteARegister, out=aOut, out[0..14]=addressM[0..14]);
+
+    // sel=a
+    Mux16(a=aOut, b=inM, sel=instruction[12], out=A-M);
+
+    Mux(a=false, b=instruction[4], sel=isCInstruction, out=canWriteDRegister);
+    DRegister(in=aluout, load=canWriteDRegister, out=dOut); // NOTICE
+
+    // Si i==1, los c deben entrar a la ALU
+    // Si i==0, debe entrar 0 a la ALU
+    
+    //Mux16(a[6..15]=false, a[5]=true, a[4]=false, a[3]=true, a[2]=false, a[1]=true, a[0]=false, b[6..15]=false, b[0..5]=instruction[6..11], out=computation);
+
+    // @32767
+    // 0 111111111111111
+    // si i==0, instruction[6..11] no entran en la ALU
+    ALU(x=dOut, y=A-M, zx=instruction[11], nx=instruction[10], zy=instruction[9], ny=instruction[8], f=instruction[7], no=instruction[6], zr=isZero, ng=isNotGreatThanZero, out=outM, out=aluout);
+    //ALU(x= ,y= ,zx= ,nx= ,zy= ,ny= ,f= ,no= ,out= ,zr= ,ng= );
+
+    // JJJ Condition (Jump condition)
+    Mux(a=false, b=isNotGreatThanZero, sel=instruction[0], out=isNotGreatThanZeroMux);
+    Mux(a=false, b=isZero, sel=instruction[1], out=isZeroMux);
+    // si isZero == true
+    // entonces isZeroMux == true, si instruction[1] == true
+
+    Not(in=isNotGreatThanZero, out=isGreatThanZero);
+    Not(in=isZero, out=isNotZero);
+    And(a=isNotZero, b=instruction[2], out=instr); // Se swap j3 y j1
+    Mux(a=false, b=isGreatThanZero, sel=instr, out=isGreatThanZeroMux);
+
+    // Instrucciones tipo-c deben chequear que los tres bits mas significativos sean == 1
+    Or(a=isZeroMux, b=isNotGreatThanZeroMux, out=isLessOrEqualZero);
+    Or(a=isLessOrEqualZero, b=isGreatThanZeroMux, out=JJJConditionC);
+    //Not(in=foo, out=JJJConditionC);
+    //And(a=JJJCondition, b=isCInstruction, out=JJJConditionC);
+
+    Not(in=reset, out=resetNeg);
+    Not(in=JJJConditionC, out=condNeg); // NOTICE, if condition is true, no increment
+    Or(a=resetNeg, b=condNeg, out=canInc);
+    PC(in=aOut, reset=reset, inc=canInc, load=JJJConditionC, out[0..14]=pc);
+
+    And(a=instruction[3], b=isCInstruction, out=writeM);
+    //Mux(a=false, b=instruction[4], sel=instruction[15], out=writeM);
+
+    //CPU line 29 error
+}
+```
+Para resumir, los cambios que se efecuaron en la CPU original fueron los siguientes:
+1. Se quito la comprobacion de intruccion tipo C en la seccion del circuito dedicada a las 
+condiciones JJJ
+
+2. Se hizo un swap en la seccion del circuito dedidacada a las condiciones JJJ entre el cable
+j1 (instruction[2]) y j3 (instruction[0]), es decir, donde estaba conectado j1 se conecto j3 y viceversa.
+
+
+# Des-ensamblando codigo - reto1
+
+
+Creando un nuevo tipo de instrucciones para la CPU - reto3
