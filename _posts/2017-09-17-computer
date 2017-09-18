@@ -239,6 +239,7 @@ CHIP CPUerror2 {
     //CPU line 29 error
 }
 ```
+
 Para resumir, los cambios que se efecuaron en la CPU original fueron los siguientes:
 1. Se quito la comprobacion de intruccion tipo C en la seccion del circuito dedicada a las 
 condiciones JJJ
@@ -248,6 +249,160 @@ j1 (instruction[2]) y j3 (instruction[0]), es decir, donde estaba conectado j1 s
 
 
 # Des-ensamblando codigo - reto1
+```
+// A instruction
+0 11 1 111111 111 111 // @32767
+
+// C instruction
+1 11 0 110000 010 000 // D=A
+// var foo = 32767
+
+// A instruction
+0 00 0 000000 000 001 // @1
+
+// C instruction
+1 11 0 000010 010 000 // D=D+A
+// foo = foo + 1
+
+// A instruction
+0 00 0 000000 000 000 // @0
+
+// C instruction
+1 11 0 001100 001 000 // M=D
+// RAM[0]=foo
+
+```
+
+Comportamiento esperado, ilustrado en un lenguaje de alto nivel:
+```javascript
+var foo = 32767;
+foo = foo + 1; // 32768
+RAM[0] = foo;
+```
+Se espera que el codigo binario dado guarde en el primer registro de la RAM el resultado de sumar 32767 + 1 y por lo tanto que se guarde el numero 32768 en el registro RAM[0], sin embargo esto no es lo que pasa, cuando ponemos el codigo en el HardwareSimulator, obtenemos un -32768 en RAM[0] en lugar de 32768, lo cual debe su explicación a que hack supone que el numero esta en complemento a 2 de 16 bits (cuando en realidad no es asi), razon por la cual interpreta el *100 0 000000 000 000* como un -32768.
 
 
-Creando un nuevo tipo de instrucciones para la CPU - reto3
+# Creando un nuevo tipo de instrucciones para la CPU - reto3
+Vamos a definir un nuevo tipo de instruccion:
+Instrucciones tipo-E:
+E de eraser, este tipo de instrucciones borra (setea a 0) el contenido en un registro determinado a continuacion se especifica la sintaxis:
+
+101 0000000 000 ADC
+A: Si A==true: registro A se setea a 0
+D: Si D==true: registro D se setea a 0
+P: Si P==true: ProgramCounter register se setea a 0
+
+Se inventara la siguiente sintazis en el lenguaje de ensamblador para este tipo de instrucciones
+
+EADC: Borra el valor en A, D y C.
+EA: Borra el valor en A.
+ED: Borra el valor en D.
+EAC: Borra el valor en A y el program counter.
+
+Programa de ejemplo en assembly:
+```asm
+@55
+D=A+1
+EAD // Setea a 0 los registros A y D.
+```
+![](https://imgur.com/1fnHy3l.gif)
+Este mismo enfoque se siguio para setear el registro A.
+
+![](https://imgur.com/3biKxxF.gif)
+
+A continuación se muestra la implementación de la CPU con la E instruction:
+```
+CHIP CPUNewInstruction {
+
+    IN  inM[16],         // M value input  (M = contents of RAM[A])
+        instruction[16], // Instruction for execution
+        reset;           // Signals whether to re-start the current
+                         // program (reset==1) or continue executing
+                         // the current program (reset==0).
+
+    OUT outM[16],        // M value output
+        writeM,          // Write to M? 
+        addressM[15],    // Address in data memory (of M)
+        pc[15];          // address of next instruction
+
+    PARTS:
+    //i xx a c1c2c3c4c5c6 d1d2d3 j1j2j3
+
+    // Is an E instruction?
+    Not(in=instruction[14], out=notinstr14);
+    And(a=instruction[15], b=notinstr14, out=ande1);
+    And(a=ande1, b=instruction[13], out=isEInstruction);
+
+    // Is an C instruction?
+    And(a=instruction[15], b=instruction[14], out=and1);
+    And(a=and1, b=instruction[13], out=isCInstruction);
+
+    // Input to A register:
+    Mux16(a=instruction, b=aluout, sel=isCInstruction, out=val1); // NOTICE
+    Mux16(a[0..15]=val1, b[0..15]=false, sel=canWriteARegister2, out=ainput);
+    // not(i)
+    Not(in=instruction[15], out=noti);
+    
+    // Can write on A Register? d1
+    Mux(a=false, b=instruction[5], sel=isCInstruction, out=saveOnA);
+    Or(a=noti, b=saveOnA, out=canWriteARegister1); //NOTICE, DONE
+    And(a=instruction[2], b=isEInstruction, out=canWriteARegister2);
+    Or(a=canWriteARegister1, b=canWriteARegister2, out=canWriteARegister);
+    ARegister(in=ainput, load=canWriteARegister, out=aOut, out[0..14]=addressM[0..14]);
+
+    // Input Y to ALU
+    Mux16(a=aOut, b=inM, sel=instruction[12], out=A-M);
+
+    // Can write on D Register?
+    Mux(a=false, b=instruction[4], sel=isCInstruction, out=canWriteDRegister1);
+    And(a=isEInstruction, b=instruction[1], out=canWriteDRegister2);
+    Or(a=canWriteDRegister1, b=canWriteDRegister2, out=canWriteDRegister);
+
+    // Input to D register
+    Mux16(a=aluout, b[0..15]=false, sel=canWriteDRegister2, out=dinput);
+
+    DRegister(in=dinput, load=canWriteDRegister, out=dOut); // NOTICE
+
+    // Si i==1, los c deben entrar a la ALU
+    // Si i==0, debe entrar 0 a la ALU
+    
+    //Mux16(a[6..15]=false, a[5]=true, a[4]=false, a[3]=true, a[2]=false, a[1]=true, a[0]=false, b[6..15]=false, b[0..5]=instruction[6..11], out=computation);
+
+    // @32767
+    // 0 111111111111111
+    // si i==0, instruction[6..11] no entran en la ALU
+    ALU(x=dOut, y=A-M, zx=instruction[11], nx=instruction[10], zy=instruction[9], ny=instruction[8], f=instruction[7], no=instruction[6], zr=isZero, ng=isNotGreatThanZero, out=outM, out=aluout);
+    //ALU(x= ,y= ,zx= ,nx= ,zy= ,ny= ,f= ,no= ,out= ,zr= ,ng= );
+
+    // JJJ Condition (Jump condition)
+    Mux(a=false, b=isNotGreatThanZero, sel=instruction[2], out=isNotGreatThanZeroMux);
+    Mux(a=false, b=isZero, sel=instruction[1], out=isZeroMux);
+    // si isZero == true
+    // entonces isZeroMux == true, si instruction[1] == true
+
+    Not(in=isNotGreatThanZero, out=isGreatThanZero);
+    Not(in=isZero, out=isNotZero);
+    And(a=isNotZero, b=instruction[0], out=instr);
+    Mux(a=false, b=isGreatThanZero, sel=instr, out=isGreatThanZeroMux);
+
+    // Instrucciones tipo-c deben chequear que los tres bits mas significativos sean == 1
+    Or(a=isZeroMux, b=isNotGreatThanZeroMux, out=isLessOrEqualZero);
+    Or(a=isLessOrEqualZero, b=isGreatThanZeroMux, out=JJJCondition);
+    And(a=JJJCondition, b=isCInstruction, out=JJJConditionC);
+
+    // 
+    And(a=isEInstruction, b=instruction[0], out=resetPCEinstruction);
+
+    Not(in=reset, out=resetNeg);
+    Not(in=JJJConditionC, out=condNeg); // NOTICE, if condition is true, no increment
+    Or(a=resetNeg, b=condNeg, out=canInc);
+
+    Or(a=resetPCEinstruction, b=reset, out=restartPC);
+    PC(in=aOut, reset=restartPC, inc=canInc, load=JJJConditionC, out[0..14]=pc);
+
+    And(a=instruction[3], b=isCInstruction, out=writeM);
+    //Mux(a=false, b=instruction[4], sel=instruction[15], out=writeM);
+
+    //CPU line 29 error
+}
+```
