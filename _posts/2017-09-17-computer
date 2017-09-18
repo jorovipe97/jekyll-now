@@ -15,7 +15,7 @@ Para construir el computador basico necesitaremos tres chips:
 
 Nosotros unicamente implementaremos la CPU y la RAM ya que usaremos una built-in ROM previamente desarrollada por los autores del curso <a href="www.nand2tetris.org" target="_blank">nand2tetris</a>.
 
-![](https://imgur.com/2Fylwdr.gif)
+!()[https://imgur.com/2Fylwdr.gif]
 
 
 # Implementando la Memoria
