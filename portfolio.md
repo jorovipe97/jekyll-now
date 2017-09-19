@@ -72,7 +72,7 @@ Iniciar sesion en un computador A con los siguientes datos de autenticación, em
 
 DISCLAIMER: Este proyecto tiene varios bugs que no fueron corregidos.
 
-**Mi rol:** Implementar todo lo relacionado con la web app.
+**Mi rol:** Implementar todo.
 
 **Compañeros de trabajo:**
 1. <a href="https://romualdo97.github.io/" target="_blank">@romualdo97</a>
