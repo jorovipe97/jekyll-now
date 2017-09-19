@@ -4,7 +4,11 @@ title: Portfolio
 permalink: /portfolio/
 ---
 
-Hola, aqui puedes conocer algunos de los trabajos que he realizado, si eres un stalker y lo quieres saber todo de mi, en mi <a href="https://github.com/jorovipe97?tab=repositories" target="_blank">repositorio de Github</a> puedes encontrar mas:
+Hola, si te da pereza ojear en mi repositorio, te resumo en esta imagen las tecnologias con las cuales tengo experiencia, oredenandola desde las que mas domino a las que menos domino en mi opinion personal.
+
+> mostrar en un infografico, las tecnologias que domino / o tengo experiencia (C#/C++/MySql/PHP/Node) donde muestre de arriba abajo: desde las que mas domino o tengo confianza hasta las que menos domino o tengo desconfianza.
+
+Por otra parte a continuación puedes conocer algunos de los trabajos que he realizado, si eres un stalker y lo quieres saber todo de mi, en mi <a href="https://github.com/jorovipe97?tab=repositories" target="_blank">repositorio de Github</a> puedes encontrar mas:
 
 # Vision invertida
 <a href="https://play.google.com/store/apps/details?id=com.gamebite10.VisionInvertida&hl=es" target="_blank">Descargala y pruebala desde tu celular.</a>
@@ -86,3 +90,4 @@ DISCLAIMER: Este proyecto tiene varios bugs que no fueron corregidos.
 5. Bootstrap
 6. Yeoman (Angular single page app scaffolding)
 
+# Otros proyectos interesantes
