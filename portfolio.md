@@ -50,7 +50,7 @@ Esta es una aplicación pensada para funcionar con unas google cardboard, fue or
 **Mi rol**:
 1. Implementación scripts control de personaje
 2. Implementación sistema de pooling para las balas de los enemigos.
-3. Diseño e implmentación algoritmos de control de los enemigos (¿Cuando esta el personaje en el alcance de la torreta?)
+3. Diseño e implementación algoritmos de control de los enemigos (¿Cuando esta el personaje en el alcance de la torreta?)
 4. Implementación logica de cambios de escenas
 5. Implementación sistema de control de efectos sonoros
 6. Implementación artefactos/zonas accionables en la escena.
