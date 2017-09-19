@@ -64,13 +64,19 @@ Esta es una aplicación pensada para funcionar con unas google cardboard, fue or
 # jelou.io
 <a href="https://jelou-cb899.firebaseapp.com/" target="_blank">Mira la web app</a>
 
-Esta es una aplicación web single page cuyo objetivo fue ser empleada en una experiencia interactiva que ayudo a que personas desconocidas se conocieran basado en sus gustos personales, para poderla usar debes hacer lo siguiente:
+![](https://imgur.com/QZtMRiL.gif)
+
+Esta es una aplicación web single page que comunica en tiempo real a dos personas cuyo objetivo fue ser empleada en una experiencia interactiva que ayudo a que personas desconocidas se conocieran basado en sus gustos personales, para poderla usar debes hacer lo siguiente:
 
 Iniciar sesion en un computador A con los siguientes datos de autenticación, email: a@email.com y pass: 123456, luego en otro computador inicia sesion con los siguientes datos, email: b@email.com y pass: 123465
 
 DISCLAIMER: Este proyecto tiene varios bugs que no fueron corregidos.
 
 **Mi rol:** Implementar todo lo relacionado con la web app.
+
+**Compañeros de trabajo:**
+1. <a href="https://romualdo97.github.io/" target="_blank">@romualdo97</a>
+2. <a href="https://juanalvarezm.github.io/vrExperiences/portafolio.html" target="_blank">@juanalvarezm</a>
 
 **Tecnologias aplicadas:**
 1. Firebase CLI
