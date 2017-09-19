@@ -44,3 +44,39 @@ Esta es una aplicación pensada para funcionar con unas google cardboard, fue or
 # N200
 <a href="https://gamejolt.com/games/n200/145477" target="_blank">Descargalo y juegalo en tu computador windows</a>
 
+![](https://imgur.com/xahmluv.gif)
+![](https://imgur.com/PKNL0iM.gif)
+
+**Mi rol**:
+1. Implementación scripts control de personaje
+2. Implementación sistema de pooling para las balas de los enemigos.
+3. Diseño e implmentación algoritmos de control de los enemigos (¿Cuando esta el personaje en el alcance de la torreta?)
+4. Implementación logica de cambios de escenas
+5. Implementación sistema de control de efectos sonoros
+6. Implementación artefactos/zonas accionables en la escena.
+
+**Compañero de trabajo:** <a href="https://juanalvarezm.github.io/vrExperiences/portafolio.html" target="_blank">@juanalvarezm</a>
+
+**Tecnologias aplicadas:**
+1. C#
+2. Unity
+
+# jelou.io
+<a href="https://jelou-cb899.firebaseapp.com/" target="_blank">Mira la web app</a>
+
+Esta es una aplicación web single page cuyo objetivo fue ser empleada en una experiencia interactiva que ayudo a que personas desconocidas se conocieran basado en sus gustos personales, para poderla usar debes hacer lo siguiente:
+
+Iniciar sesion en un computador A con los siguientes datos de autenticación, email: a@email.com y pass: 123456, luego en otro computador inicia sesion con los siguientes datos, email: b@email.com y pass: 123465
+
+DISCLAIMER: Este proyecto tiene varios bugs que no fueron corregidos.
+
+**Mi rol:** Implementar todo lo relacionado con la web app.
+
+**Tecnologias aplicadas:**
+1. Firebase CLI
+2. Firebase javascript RealTimeDB/Hosting/Authentication API
+3. AngularJS
+4. AngularFire (FirebaseAPI module for AngularJS)
+5. Bootstrap
+6. Yeoman (Angular single page app scaffolding)
+
