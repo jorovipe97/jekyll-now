@@ -44,6 +44,7 @@ Esta es una aplicación pensada para funcionar con unas google cardboard, fue or
 # N200
 <a href="https://gamejolt.com/games/n200/145477" target="_blank">Descargalo y juegalo en tu computador windows</a>
 
+![](http://i.giphy.com/3o7qDQ0TDGNjMZzQSA.gif)
 ![](https://imgur.com/xahmluv.gif)
 ![](https://imgur.com/PKNL0iM.gif)
 
