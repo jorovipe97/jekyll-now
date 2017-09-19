@@ -42,5 +42,5 @@ Esta es una aplicación pensada para funcionar con unas google cardboard, fue or
 3. ShaderLab
 
 # N200
-< href="https://gamejolt.com/games/n200/145477" target="_blank">Descargalo y juegalo en tu computador windows</a>
+<a href="https://gamejolt.com/games/n200/145477" target="_blank">Descargalo y juegalo en tu computador windows</a>
 
