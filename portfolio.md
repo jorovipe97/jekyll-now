@@ -91,3 +91,27 @@ DISCLAIMER: Este proyecto tiene varios bugs que no fueron corregidos.
 6. Yeoman (Angular single page app scaffolding)
 
 # Otros proyectos interesantes
+
+## Volcano Demo
+[Descarga la demo](https://github.com/jorovipe97/VolcanoDemo/releases)
+
+**Tecnologias aplicadas:**
+1. OSC Protocol
+2. Firmata Protocol
+3. OpenFrameworks
+4. C++
+
+## Bot twitter en python
+[Link del repositorio](https://github.com/jorovipe97/UnFollow)
+Bot para Twitter escrito en python para dejar de seguir al 80% de los usuarios que no me siguen de vuelta.
+
+**Tecnologias aplicadas:**
+1. Python
+2. Tweepy
+
+## Random walker demo
+[](https://github.com/jorovipe97/RandomWalker)
+
+**Tecnologias aplicadas:**
+1. Java
+2. Processing
