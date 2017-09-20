@@ -91,11 +91,14 @@ DISCLAIMER: Este proyecto tiene varios bugs que no fueron corregidos.
 ## Volcano Demo
 [Descarga la demo](https://github.com/jorovipe97/VolcanoDemo/releases)
 
+NOTA: Para hacer funcionar este programa correctamente se debe implementar un circuito electronico, que se explicara en un post del blog.
+
 **Tecnologias aplicadas:**
 1. OSC Protocol
 2. Firmata Protocol
 3. OpenFrameworks
 4. C++
+5. GLSL (EL shader esta basado en el trabajo de Weyland Yutani)
 
 ## Bot twitter en python
 [Link del repositorio](https://github.com/jorovipe97/UnFollow)
