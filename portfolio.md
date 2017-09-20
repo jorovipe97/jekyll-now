@@ -4,7 +4,7 @@ title: Portfolio
 permalink: /portfolio/
 ---
 
-A continuación puedes conocer algunos de los trabajos que he realizado, si eres un stalker y lo quieres saber todo de mi, en mi <a href="https://github.com/jorovipe97?tab=repositories" target="_blank">repositorio de Github</a> puedes encontrar mas:
+A continuación puedes conocer algunos de los trabajos que he realizado, si eres un stalker y lo quieres saber todo de mi, en mi <a href="https://github.com/jorovipe97?tab=repositories" target="_blank">repositorio de Github</a> puedes encontrar mas, por otra parte puedes ver una <a href="https://cdn.rawgit.com/jorovipe97/jorovipe97.github.io/c340fbd1/images/hoja%20vida.pdf" target="_blank">hoja de vida mas formal aqui</a>.
 
 # Vision invertida
 <a href="https://play.google.com/store/apps/details?id=com.gamebite10.VisionInvertida&hl=es" target="_blank">Descargala y pruebala desde tu celular.</a>
