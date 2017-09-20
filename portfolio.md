@@ -110,7 +110,7 @@ Bot para Twitter escrito en python para dejar de seguir al 80% de los usuarios q
 2. Tweepy
 
 ## Random walker demo
-[](https://github.com/jorovipe97/RandomWalker)
+[Link del repositorio](https://github.com/jorovipe97/RandomWalker)
 
 **Tecnologias aplicadas:**
 1. Java
