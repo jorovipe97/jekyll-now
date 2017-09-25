@@ -107,11 +107,11 @@ Volviendo a aplicar la ley distributiva en su forma **or**:
 
 ![](https://latex.codecogs.com/gif.latex?\overline{a}&space;\cdot&space;[\overline{m}&space;\cdot&space;w&space;&plus;&space;m&space;\cdot&space;(\overline{w}&plus;&space;w)])
 
-Aplicando la ley inversa en su fora **or**:
+Aplicando la ley inversa en su forma **or**:
 
 ![](https://latex.codecogs.com/gif.latex?\overline{a}&space;\cdot&space;[\overline{m}&space;\cdot&space;w&space;&plus;&space;m&space;\cdot&space;1])
 
-Por ultimo, volviendo a aplicar la ley distributiva en su forma **or** obtenemos:
+Por ultimo, aplicando la ley distributiva en su forma **or** obtenemos:
 
 ![](https://latex.codecogs.com/gif.latex?\overline{a}&space;\cdot&space;\overline{m}&space;\cdot&space;w&space;&plus;&space;\overline{a}&space;\cdot&space;m)
 
