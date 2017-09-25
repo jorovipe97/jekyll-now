@@ -126,7 +126,7 @@ Procederemos ahora a demostrar los dos ultimos teoremas de la tabla anterior uti
 ![](https://latex.codecogs.com/gif.latex?A(A&plus;B)=A)
 
 Tabla de verdad de A(A+B)
-<table style="width: 100%">
+<table>
 	<tr>
 		<th>A</th>
 		<th>B</th>
