@@ -79,12 +79,18 @@ Esto hara que en muchos chips no tengamos que pensar mucho para hallar su funcio
 
 **Ejemplo**
 Vamos a representar como suma de miniterminos la siguiente funcion booleana:
+
 ![](https://imgur.com/6DFrPss.gif)
 
 Lo primero que debemos hacer es observar los casos en los que la salida de la funcion es **true** para agruparlos con el operador Or.
+
 ![](https://imgur.com/W7Eadeo.gif)
 
 Vemos que hay 3 entradas que hacen la salida de la funcion booleana **true**, asi que procedemos a sumar (agrupar con el operador or) dichos miniterminos:
+
+![](https://latex.codecogs.com/gif.latex?m_1&plus;m_2&plus;m_3=\overline{a}&space;\cdot&space;\overline{m}&space;\cdot&space;w&plus;\overline{a}&space;\cdot&space;m&space;\cdot&space;\overline{w}&plus;\overline{a}\cdot&space;m&space;\cdot&space;w)
+
+Y con esta sencilla tecnica tendriamos una función que puede ser representada con la anterior tabla de verdad.
 
 ## La función Nand y sus superpoderes
 La funcion **Nand** (al igual que la **Xor**) tiene una importancia teorica y practica, a partir de ella podemos construir la compuerta **And** la **Or** y la **Not**, ademas teniendo en cuenta que apartir de estas tres podemos implementar cualquier otra compuerta boleana sin importar su complejidad, encontramos por lo tanto que a partir de la **Nand** se puede construir cualquier otra compuerta boleana.
