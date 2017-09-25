@@ -92,6 +92,28 @@ Vemos que hay 3 entradas que hacen la salida de la funcion booleana **true**, as
 
 Y con esta sencilla tecnica tendriamos una función que puede ser representada con la anterior tabla de verdad.
 
+## Simplificando función boleana - concepto4
+![](https://imgur.com/SOGv8Lw.gif)
+
+Para simplificar funciones booleanas vamos a ayudarnos de la anterior tabla de teoremas del algebra de boole, y supongamos que queremos simplificar la función obtenida en el punto anterior con la suma de miniterminos:
+
+![](\overline{a}&space;\cdot&space;\overline{m}&space;\cdot&space;w&plus;\overline{a}&space;\cdot&space;m&space;\cdot&space;\overline{w}&plus;\overline{a}\cdot&space;m&space;\cdot&space;w)
+
+Aplicando la ley distributiva en su forma **or**:
+![](https://latex.codecogs.com/gif.latex?\overline{a}&space;\cdot&space;[\overline{m}&space;\cdot&space;w&space;&plus;&space;m&space;\cdot&space;\overline{w}&plus;&space;m&space;\cdot&space;w])
+
+Volviendo a aplicar la ley distributiva en su forma **or**:
+![](https://latex.codecogs.com/gif.latex?\overline{a}&space;\cdot&space;[\overline{m}&space;\cdot&space;w&space;&plus;&space;m&space;\cdot&space;(\overline{w}&plus;&space;w)])
+
+Aplicando la ley inversa en su fora **or**:
+![](https://latex.codecogs.com/gif.latex?\overline{a}&space;\cdot&space;[\overline{m}&space;\cdot&space;w&space;&plus;&space;m&space;\cdot&space;1])
+
+Por ultimo, volviendo a aplicar la ley distributiva en su forma **or** obtenemos:
+![](https://latex.codecogs.com/gif.latex?\overline{a}&space;\cdot&space;\overline{m}&space;\cdot&space;w&space;&plus;&space;\overline{a}&space;\cdot&space;m)
+
+La cual como podemos ver es una version simplificada de la funcion que obtuvimos originalmente usando la tecnica de los miniterminos.
+
+
 ## La función Nand y sus superpoderes
 La funcion **Nand** (al igual que la **Xor**) tiene una importancia teorica y practica, a partir de ella podemos construir la compuerta **And** la **Or** y la **Not**, ademas teniendo en cuenta que apartir de estas tres podemos implementar cualquier otra compuerta boleana sin importar su complejidad, encontramos por lo tanto que a partir de la **Nand** se puede construir cualquier otra compuerta boleana.
 
