@@ -97,7 +97,7 @@ Y con esta sencilla tecnica tendriamos una función que puede ser representada c
 
 Para simplificar funciones booleanas vamos a ayudarnos de la anterior tabla de teoremas del algebra de boole, y supongamos que queremos simplificar la función obtenida en el punto anterior con la suma de miniterminos:
 
-![](\overline{a}&space;\cdot&space;\overline{m}&space;\cdot&space;w&plus;\overline{a}&space;\cdot&space;m&space;\cdot&space;\overline{w}&plus;\overline{a}\cdot&space;m&space;\cdot&space;w)
+![](https://latex.codecogs.com/gif.latex?\overline{a}&space;\cdot&space;\overline{m}&space;\cdot&space;w&plus;\overline{a}&space;\cdot&space;m&space;\cdot&space;\overline{w}&plus;\overline{a}\cdot&space;m&space;\cdot&space;w)
 
 Aplicando la ley distributiva en su forma **or**:
 
