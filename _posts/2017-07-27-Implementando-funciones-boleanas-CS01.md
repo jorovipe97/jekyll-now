@@ -100,15 +100,19 @@ Para simplificar funciones booleanas vamos a ayudarnos de la anterior tabla de t
 ![](\overline{a}&space;\cdot&space;\overline{m}&space;\cdot&space;w&plus;\overline{a}&space;\cdot&space;m&space;\cdot&space;\overline{w}&plus;\overline{a}\cdot&space;m&space;\cdot&space;w)
 
 Aplicando la ley distributiva en su forma **or**:
+
 ![](https://latex.codecogs.com/gif.latex?\overline{a}&space;\cdot&space;[\overline{m}&space;\cdot&space;w&space;&plus;&space;m&space;\cdot&space;\overline{w}&plus;&space;m&space;\cdot&space;w])
 
 Volviendo a aplicar la ley distributiva en su forma **or**:
+
 ![](https://latex.codecogs.com/gif.latex?\overline{a}&space;\cdot&space;[\overline{m}&space;\cdot&space;w&space;&plus;&space;m&space;\cdot&space;(\overline{w}&plus;&space;w)])
 
 Aplicando la ley inversa en su fora **or**:
+
 ![](https://latex.codecogs.com/gif.latex?\overline{a}&space;\cdot&space;[\overline{m}&space;\cdot&space;w&space;&plus;&space;m&space;\cdot&space;1])
 
 Por ultimo, volviendo a aplicar la ley distributiva en su forma **or** obtenemos:
+
 ![](https://latex.codecogs.com/gif.latex?\overline{a}&space;\cdot&space;\overline{m}&space;\cdot&space;w&space;&plus;&space;\overline{a}&space;\cdot&space;m)
 
 La cual como podemos ver es una version simplificada de la funcion que obtuvimos originalmente usando la tecnica de los miniterminos.
