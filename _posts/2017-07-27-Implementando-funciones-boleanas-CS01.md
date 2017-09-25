@@ -88,11 +88,33 @@ Es importante tener en cuenta que cuando trabajemos con entradas o salidas multi
 ## Pines desconectados - concepto8c
 ![](https://imgur.com/skMDoSv.gif)
 
-Si por ejemplo tenemos un bus de entrada con 8 bits y solo conectamos 4 pines de dicho bus, los pines que queden desconectados tomaran por defecto el valor logico false, con esto podemos concluir que cualquier pin no conectado tomara el valor logico false.
+Si por ejemplo tenemos un bus de entrada con 8 bits y solo conectamos 4 pines de dicho bus, los pines que queden desconectados tendran un valor indeterminado, es decir, pueden ser true o falso pero no se sabe en que estado estan.
 
 ## Valor de los pines de entrada y salida - concepto8f
-![](https://imgur.com/skMDoSv.fig)
+![](https://imgur.com/skMDoSv.gif)
+
 Para asegurarnos de haber entendido el concepto anterior vamos a intentar predecir los valores de los pines **in**, **out**, **x** e **y**. respectivamente, se debe tener en cuenta que **v** es un bus de 3 bits, *v=100*, es decir **v[0]=0**, **v[1]=0** y **v[2]=1**.
+
+- **in**:
+in[7] = true
+in[6] = true
+in[5] = ? **// desconectado, valor indeterminado** 
+in[4] = v[2] = true
+in[3] = v[1] = false
+in[2] = v[0] = false
+in[1] = ? **// desconectado, valor indeterminado** 
+in[0] = ? **// desconectado, valor indeterminado**
+
+- **out**:
+Ahora supongamos que la logica del Chip Foo nos da el siguiente output.
+out[7] = true
+out[6] = true
+out[5] = false **// Notese que el hecho de que in[5] fuera indeterminado, no significa que el valor que habia alli era false, pues esto asume que en la logica del chip Foo in[5]=out[5] y esto no es necesariamente cierto**
+out[4] = false
+out[3] = true
+out[2] = true
+out[1] = true
+out[0] = false
 
 ## Orden de declaracion en HDL - concepto1
 Se debe tener en cuenta que HDL es un lenguaje de descripción en el que lo que importa es la forma en que se conectan los componentes y no el orden en el que se conectan.
