@@ -143,42 +143,12 @@ Procederemos ahora a demostrar los dos ultimos teoremas de la tabla anterior uti
 
 Tabla de verdad de A(A+B)
 
-| PS doc dpi* | PS doc res | designing FOR Android density | PS Pt size | Formula            | Android Dp/Sp  |
-|-------------|------------|-------------------------------|------------|--------------------|----------------|
-| 72dpi       | 320x480    | MD (160 dpi) 1x               | 10         | (72/72) * 1 * 10   | 10             |
-| 72dpi       | 480x720    | HD (240 dpi) 1.5x             | 15         | (72/72) / 1.5 * 15 | 10             |
-| 72dpi       | 480x960    | XHD (320 dpi) 2x              | 20         | (72/72) / 2 * 20   | 10             |
-| 160dpi      | 320x480    | MD (160dpi) 1x                | 10         | (160/72) / 1 * 10  | 22.2           |
-| 320dpi      | 640x960    | XHD (320dpi) 2x               | 10         | (320/72) / 2 * 10  | 22.2           |
-
-<table>
-	<tr>
-		<th>A</th>
-		<th>B</th>
-		<th>A(A+B)</th>
-	<tr>
-	<tr>
-		<td>0</td>
-		<td>0</td>
-		<td>0</td>
-	<tr>
-	<tr>
-		<td>0</td>
-		<td>1</td>
-		<td>0</td>
-	<tr>
-	<tr>
-		<td>1</td>
-		<td>0</td>
-		<td>1</td>
-	<tr>
-	<tr>
-		<td>1</td>
-		<td>1</td>
-		<td>1</td>
-	<tr>
-	
-</table>
+| A | B | A(A+B) |
+|---|---|--------|
+| 0 | 0 |   0    |
+| 0 | 1 |   0    |
+| 1 | 0 |   1    |
+| 1 | 1 |   1    |
 
 Podemos apreciar que la salida de la función A(A+B) siempre es igual al valor que tiene la entrada A.
 
@@ -186,33 +156,12 @@ Podemos apreciar que la salida de la función A(A+B) siempre es igual al valor q
 
 Tabla de verdad de A+AB
 
-<table>
-	<tr>
-		<th>A</th>
-		<th>B</th>
-		<th>A+AB</th>
-	<tr>
-	<tr>
-		<td>0</td>
-		<td>0</td>
-		<td>0</td>
-	<tr>
-	<tr>
-		<td>0</td>
-		<td>1</td>
-		<td>0</td>
-	<tr>
-	<tr>
-		<td>1</td>
-		<td>0</td>
-		<td>1</td>
-	<tr>
-	<tr>
-		<td>1</td>
-		<td>1</td>
-		<td>1</td>
-	<tr>
-</table>
+| A | B |  A+AB  |
+|---|---|--------|
+| 0 | 0 |   0    |
+| 0 | 1 |   0    |
+| 1 | 0 |   1    |
+| 1 | 1 |   1    |
 
 Igual que en el caso anterior, se observa que la salida de la funcion siempre es igual a la entrada A
 
@@ -221,63 +170,21 @@ Igual que en el caso anterior, se observa que la salida de la funcion siempre es
 
 Tabla de verdad de ![](https://latex.codecogs.com/gif.latex?\overline{AB})
 
-<table>
-	<tr>
-		<th>A</th>
-		<th>B</th>
-		<th>Not(AB)</th>
-	<tr>
-	<tr>
-		<td>0</td>
-		<td>0</td>
-		<td>1</td>
-	<tr>
-	<tr>
-		<td>0</td>
-		<td>1</td>
-		<td>1</td>
-	<tr>
-	<tr>
-		<td>1</td>
-		<td>0</td>
-		<td>1</td>
-	<tr>
-	<tr>
-		<td>1</td>
-		<td>1</td>
-		<td>0</td>
-	<tr>
-</table>
+| A | B | Not(AB) |
+|---|---|---------|
+| 0 | 0 |    1    |
+| 0 | 1 |    1    |
+| 1 | 0 |    1    |
+| 1 | 1 |    0    |
 
 Tabla de verdad de ![](https://latex.codecogs.com/gif.latex?\overline{A}&plus;\overline{B})
 
-<table>
-	<tr>
-		<th>A</th>
-		<th>B</th>
-		<th>Not(A) + Not(B)</th>
-	<tr>
-	<tr>
-		<td>0</td>
-		<td>0</td>
-		<td>1</td>
-	<tr>
-	<tr>
-		<td>0</td>
-		<td>1</td>
-		<td>1</td>
-	<tr>
-	<tr>
-		<td>1</td>
-		<td>0</td>
-		<td>1</td>
-	<tr>
-	<tr>
-		<td>1</td>
-		<td>1</td>
-		<td>0</td>
-	<tr>
-</table>
+| A | B | Not(A) + Not(B) |
+|---|---|-----------------|
+| 0 | 0 |        1        |
+| 0 | 1 |        1        |
+| 1 | 0 |        1        |
+| 1 | 1 |        0        |
 
 Con lo cual podemos concluir que las dos funciones en funcion de A y B dan salidas iguales, por lo tanto se puede afirmar correctamente que: ![](https://latex.codecogs.com/gif.latex?\overline{AB}=\overline{A}&plus;\overline{B})
 
