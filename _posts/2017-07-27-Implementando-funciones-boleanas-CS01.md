@@ -251,7 +251,7 @@ Tabla de verdad de ![](https://latex.codecogs.com/gif.latex?\overline{A}&plus;\o
 	<tr>
 </table>
 
-Con lo cual podemos concluir que las dos funciones en funcion de A y B dan salidas iguales.
+Con lo cual podemos concluir que las dos funciones en funcion de A y B dan salidas iguales, por lo tanto se puede afirmar correctamente que: ![](https://latex.codecogs.com/gif.latex?\overline{AB}=\overline{A}&plus;\overline{B})
 
 
 ## La función Nand y sus superpoderes
