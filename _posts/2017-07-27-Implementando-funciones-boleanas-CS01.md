@@ -135,12 +135,14 @@ La cual como podemos ver es una version simplificada de la funcion que obtuvimos
 ## Demostrando teoremas utilizando tablas de verdad - concepto5
 
 ![](https://imgur.com/SOGv8Lw.gif)
+
 Procederemos ahora a demostrar los dos ultimos teoremas de la tabla anterior utilizando tablas de verdad:
 
 ### Absorption law AND form
 ![](https://latex.codecogs.com/gif.latex?A(A&plus;B)=A)
 
 Tabla de verdad de A(A+B)
+
 <table>
 	<tr>
 		<th>A</th>
@@ -175,6 +177,7 @@ Podemos apreciar que la salida de la función A(A+B) siempre es igual al valor q
 ### Absorption law OR form
 
 Tabla de verdad de A+AB
+
 <table>
 	<tr>
 		<th>A</th>
@@ -209,6 +212,7 @@ Igual que en el caso anterior, se observa que la salida de la funcion siempre es
 ![](https://latex.codecogs.com/gif.latex?\overline{AB}=\overline{A}&plus;\overline{B})
 
 Tabla de verdad de ![](https://latex.codecogs.com/gif.latex?\overline{AB})
+
 <table>
 	<tr>
 		<th>A</th>
@@ -238,6 +242,7 @@ Tabla de verdad de ![](https://latex.codecogs.com/gif.latex?\overline{AB})
 </table>
 
 Tabla de verdad de ![](https://latex.codecogs.com/gif.latex?\overline{A}&plus;\overline{B})
+
 <table>
 	<tr>
 		<th>A</th>
