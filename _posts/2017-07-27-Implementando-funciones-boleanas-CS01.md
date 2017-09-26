@@ -155,6 +155,105 @@ Tabla de verdad de A(A+B)
 	
 </table>
 
+Podemos apreciar que la salida de la función A(A+B) siempre es igual al valor que tiene la entrada A.
+
+### Absorption law OR form
+
+Tabla de verdad de A+AB
+<table>
+	<tr>
+		<th>A</th>
+		<th>B</th>
+		<th>A+AB</th>
+	<tr>
+	<tr>
+		<td>0</td>
+		<td>0</td>
+		<td>0</td>
+	<tr>
+	<tr>
+		<td>0</td>
+		<td>1</td>
+		<td>0</td>
+	<tr>
+	<tr>
+		<td>1</td>
+		<td>0</td>
+		<td>1</td>
+	<tr>
+	<tr>
+		<td>1</td>
+		<td>1</td>
+		<td>1</td>
+	<tr>
+</table>
+
+Igual que en el caso anterior, se observa que la salida de la funcion siempre es igual a la entrada A
+
+### La ley de morgan AND form
+![](https://latex.codecogs.com/gif.latex?\overline{AB}=\overline{A}&plus;\overline{B})
+
+Tabla de verdad de ![](https://latex.codecogs.com/gif.latex?\overline{AB})
+<table>
+	<tr>
+		<th>A</th>
+		<th>B</th>
+		<th>Not(AB)</th>
+	<tr>
+	<tr>
+		<td>0</td>
+		<td>0</td>
+		<td>1</td>
+	<tr>
+	<tr>
+		<td>0</td>
+		<td>1</td>
+		<td>1</td>
+	<tr>
+	<tr>
+		<td>1</td>
+		<td>0</td>
+		<td>1</td>
+	<tr>
+	<tr>
+		<td>1</td>
+		<td>1</td>
+		<td>0</td>
+	<tr>
+</table>
+
+Tabla de verdad de ![](https://latex.codecogs.com/gif.latex?\overline{A}&plus;\overline{B})
+<table>
+	<tr>
+		<th>A</th>
+		<th>B</th>
+		<th>Not(A) + Not(B)</th>
+	<tr>
+	<tr>
+		<td>0</td>
+		<td>0</td>
+		<td>1</td>
+	<tr>
+	<tr>
+		<td>0</td>
+		<td>1</td>
+		<td>1</td>
+	<tr>
+	<tr>
+		<td>1</td>
+		<td>0</td>
+		<td>1</td>
+	<tr>
+	<tr>
+		<td>1</td>
+		<td>1</td>
+		<td>0</td>
+	<tr>
+</table>
+
+Con lo cual podemos concluir que las dos funciones en funcion de A y B dan salidas iguales.
+
+
 ## La función Nand y sus superpoderes
 La funcion **Nand** (al igual que la **Xor**) tiene una importancia teorica y practica, a partir de ella podemos construir la compuerta **And** la **Or** y la **Not**, ademas teniendo en cuenta que apartir de estas tres podemos implementar cualquier otra compuerta boleana sin importar su complejidad, encontramos por lo tanto que a partir de la **Nand** se puede construir cualquier otra compuerta boleana.
 
