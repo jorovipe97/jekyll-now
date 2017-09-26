@@ -4,7 +4,7 @@ title: Lampara RGB controlada desde aplicación Andoid
 published: true
 ---
 
-El objetivo de este post es implementar una lampara RGB controlada desde una aplicación Android a la vez que se repasan conceptos importantes para lograr una implementación exitosa y bien entendida.
+El objetivo de este post es implementar una lampara RGB controlada desde una aplicación Android mediante Bluetooth a la vez que se repasan conceptos importantes para lograr una implementación exitosa y bien entendida.
 
 - [Consideraciones a tener en cuenta a la hora de seleccionar un LED - 1](#consideraciones-a-tener-en-cuenta-a-la-hora-de-seleccionar-un-led---1)
   * [El brillo](#el-brillo)
