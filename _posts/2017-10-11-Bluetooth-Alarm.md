@@ -36,11 +36,10 @@ La especificación de Bluetooth Low Energy define algunos servicios como (<a hre
 Un dispositivo bluetooth Low Energy generalmente puede tener mas de un servicio implementado.
 
 ## Characteristics
-Los servicios tienen literalmente ***characteristics***, es decir para acceder a una caracteristica debemos primero acceder al servicio que la contiene, por ejemplo entre las caracteristicas que ofrece el **Hearth Rate** service estan: **Heart Rate Measurement** que se usa para enviar un ritmo cardiaco, **Body Sensor Location** usada para describir la ubicación prevista en la que se pone el dispositivo.
-
-A su vez las ***charasteristics*** tienen ***Descriptors*** que se encargan 
+Es un valor de algun dato, como por ejemplo **Heart Rate Measurement** que se usa para enviar un ritmo cardiaco, **Body Sensor Location** usada para describir la ubicación prevista en la que se pone un dispositivo.
 
 ## Descriptors
+Provee información adicional acerca de una caracteristica, un descriptor muy comun es el **Client Characteristic Configuration Descriptor** que se puede usar para activar las notificaciones/indicaciones en el cliente, asi cada vez que el valor de una characteristic cambie el server le envia el nuevo valor.
 
 # Referencias
 <a href="http://ticketmastermobilestudio.com/blog/android-bluetooth-low-energy-tutorial" target="_blank">Android BLE tutorial</a>
