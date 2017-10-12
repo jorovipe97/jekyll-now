@@ -24,9 +24,11 @@ WARNING NOTICE: No doy garantias de que lo que diga a continuación es 100% prec
 Ahora si, despues de tanto rodeo empecemos
 
 ## GATT and GAP Profile
-Imaginemos que tenemos un **despertador de mesa** que podemos configurar inalambricamente desde una aplicación de smartphone, supongamos que dicho reloj usa un dispositivo Bluetooth Low Energy (BLE) para lograrlo, ¿como sabe el smartphone que cerca de el hay un reloj queriendo comunicarce mediante BLE? bien, resulta que para saberlo, el dispositivo BLE de nuestro despertador hipotetico esta gritandole al mundo cada cierta cantidad de tiempo que el esta ahi, listo a que cualquiera que sea capaz de entenderlo se conecte a el, cuando el dispositivo BLE del despertador se encuentra en este rol de publicista desesperado se dice que esta en el rol GAP (Generic Access Profile) y cuando alguien se conecta al despertador el BLE pasa al rol GATT (Generic Attribute Profile).
+Imaginemos que tenemos un **despertador de mesa** que podemos configurar inalambricamente desde una aplicación de smartphone, supongamos que dicho despertador usa un dispositivo Bluetooth Low Energy (BLE) para lograrlo, ¿como sabe el smartphone que cerca de el hay un reloj queriendo comunicarce mediante BLE? bien, resulta que para saberlo, el dispositivo BLE de nuestro despertador hipotetico esta gritandole al mundo cada cierta cantidad de tiempo que el esta ahi, listo a que cualquiera que sea capaz de entenderlo se conecte a el, cuando el dispositivo BLE del despertador se encuentra en este rol de publicista desesperado se dice que esta en el rol GAP (Generic Access Profile) y cuando alguien se conecta al despertador el BLE pasa al rol GATT (Generic Attribute Profile).
 
 Ademas existen los Services, Characteristics y Descriptors, que juegan un papel muy importante en el BLE cuando estamos en el rol GATT, pero ¿que son estas tres palabras tan raras?
+
+![](https://imgur.com/AMs7xuN.gif)
 
 ## Services
 Son un grupo de caracteristicas que cumplen una función especifica.
@@ -40,6 +42,8 @@ Es un valor de algun dato, como por ejemplo **Heart Rate Measurement** que se us
 
 ## Descriptors
 Provee información adicional acerca de una caracteristica, un descriptor muy comun es el **Client Characteristic Configuration Descriptor** que se puede usar para activar las notificaciones/indicaciones en el cliente, asi cada vez que el valor de una characteristic cambie el server le envia el nuevo valor.
+
+Cabe indicar que tanto Services como Characteristics y Descriptors tienen su una UUID que los identifica.
 
 # Referencias
 <a href="http://ticketmastermobilestudio.com/blog/android-bluetooth-low-energy-tutorial" target="_blank">Android BLE tutorial</a>
