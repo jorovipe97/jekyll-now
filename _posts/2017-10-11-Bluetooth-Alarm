@@ -1,4 +1,10 @@
-En esta ocación vamos a realizar una alarma en una aplicación Android que mediante Bluetooth Low Energy encendera un led conectado a un Simblee, con esto queremos lograr una primera introducción a Bluetooth Low Energy.
+---
+layout: post
+title: Primeros pasos con Bluetooth Low Energy
+published: false
+---
+
+En esta ocación vamos a realizar una alarma en una aplicación Android que mediante Bluetooth Low Energy encendera un led conectado a un dispositivo wearable, con esto queremos lograr una primera introducción practica a Bluetooth Low Energy.
 
 Antes de entrar en detalles vamos a definir el problema que queremos solucionar con todo lo que aqui se va a explicar:
 
