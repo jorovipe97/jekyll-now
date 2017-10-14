@@ -6,11 +6,21 @@ published: false
 
 En esta ocación vamos a realizar una alarma en una aplicación Android que mediante Bluetooth Low Energy encendera un led conectado a un dispositivo wearable, con esto queremos lograr una primera introducción practica a Bluetooth Low Energy.
 
+Para este tutorial nececitaras los siguientes materiales:
+
+# Materiales
+
+- 1 Simblee (RFD77203 Simblee 29-pin GPIO Breakout)
+- 1 Simblee interfaz USB (RFD22121 USB Programming Shield)
+- 1 Placa RGB led/button (RFD22122 RGB LED/Button Shield)
+- 1 Celular Android con version 4.1 o superior (Por compatibilidad con Bluetooth Low Energy)
+
 Antes de entrar en detalles vamos a definir el problema que queremos solucionar con todo lo que aqui se va a explicar:
 
 - Se requiere desarrollar un dispositivo wearable que puedan utilizar las personas al dormir con su pareja. La función del dispositivo será implementar una alarma que sólo despierte a la persona que lleva puesto el dispositivo.
 
 El sistema constara de dos partes, la primera es una aplicación móvil que nos permitirá programar la hora de la alarma y la segunda parte importante es el hardware que hará el papel de Wearable que sera lo que el usuario se pondrá en el cuerpo (Brazalete) para que lo despierte solo a el.
+
 
 ![](https://imgur.com/IxMHB4R.gif)
 
@@ -45,6 +55,32 @@ Provee información adicional acerca de una caracteristica, un descriptor muy co
 
 Cabe indicar que tanto los Services como las Characteristics y Descriptors son identificados con un ID unico (UUID) que es determinado por el **Bluetooth Special Interest Group**, sin embargo no estamos limitados a los UUID que ellos definieron ya que podemos crear los propios sin ningun problema.
 
+# Los componentes del despertador
+Te quiero mostrar ahora mediante un sencillo diagrama los componentes que conforman el Despertador prototipo que hemos usado:
+
+![](https://imgur.com/dQ3WmtV.gif)
+
+El simblee juega un papel principal, en nuestro prototipo ya que es el dispositivo que cuenta con un radio Bluetooth Low Energy y es el corazón del hardware de nuestro Despertador, la placa RGB se encargara de encender un LED cuando la alrma sea disparada, por cuestiones de disponibilidad no usaremos un dispositivo que haga ruido.
+
+Por otra parte el conector USB simblee se usará solo para cargar el codigo al Simblee y como fuente de alimentación de voltaje.
+
+# Comunicando el Hardware del despertador con la app android
+Es necesario ahora definir un protocolo de comunicación que nos permitirá controlar el despertador desde la aplicación android, ademas tambien debemos definir las responsabilidades de cada elemento en todo el sistema
+
+## Responsabilidades de la app android
+La aplicación android se encargara de:
+- Permitir al usuario configurar la hora y fecha de la alarma
+- Guardar la fecha y hora de la alarma
+- Encender el celular y enviar un mensaje al Simblee para que se encienda el LED del despertador cuando sea el momento de disparar la alarma.
+- Escuchar si el usuario presiono el boton del RGB shield para apagar la alarma.
+
+## Responsabilidades del Hardware del despertador (Simblee)
+El simblee sera responsable de:
+- Escuchar si la aplicación android envio el mensaje de encender la alarma.
+- Decirle a la aplicación android si el usuario presiono el boton del RGB Led shield.
+- Encender el LED del RGB led shield cuando la aplicación android envie el mensaje de encender.
+
+## Protocolos de comunicación
 
 
 # Referencias
