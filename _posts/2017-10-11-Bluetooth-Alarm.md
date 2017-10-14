@@ -101,14 +101,18 @@ Cundo terminemos la aplicación android tendremos algo como esto:
 La aplicación tiene un boton de conectar y otro de desconectar que nos permitiran establecer una conexion BluetoothLE con el Simblee, cuando la aplicación se abre automaticamente se conecta pero en caso de que falle la conexion se puede intentar hacer una conexion manual usando el boton de conectar, luego pusimos 2 botones uno para configurar la fecha de la alarma y otro para configurar la hora de la alarma, la fecha de la alarma por defecto sera la fecha del dia de hoy asi que no es obligatorio seleccionar una fecha, en cambio, la hora de la alarma si debe ser seleccionada para poder setear la alarma, como habiamos dicho en la seccion de **protocolo** cuando esta fecha y hora lleguen la aplicación se encargara de enviar un 0x01 al Simblee, la anterior es la función fundamental de la aplicación.
 
 DatePicker dialog
+
 ![](https://imgur.com/SkFQvkd.gif)
 
 TimePicker dialog
+
 ![](https://imgur.com/27NgIGc.gif)
 
 Una vez hemos seleccionado una hora a la cual queremos activar nuestra alarma el boton **set alarm** se activa para que pueda ser presionado por el usuario.
 
 ![](https://imgur.com/LaHvLhy.gif)
+
+Y por último cuando el usuario presione el boton **set alarm** se usarán los servicios de alarmas del sistema operativo para encender la aplicación cuando la hora de sonar la alarma suene, cuando la aplicación es abierta desde los servicios de alarmas envia automaticamente un 0x01 al Simblee, logrando de este modo que nuestro preciado despertador (Luz LED) se pueda encender y empiece a parpadear.
 
 ## El codigo
 
