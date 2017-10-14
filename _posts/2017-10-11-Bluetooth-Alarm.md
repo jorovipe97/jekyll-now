@@ -341,6 +341,35 @@ if (mBluetoothAdapter == null || !mBluetoothAdapter.isEnabled()) {
 }
 ```
 
+Cuando el usuario halla decidido permitir o no permitir encender el bluetooth se llamara el siguiente metodo de la MainActivity
+
+```java
+@Override
+protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    // Check which request we're responding to
+    // just UI topics
+    if (requestCode == REQUEST_ENABLE_BT) {
+        if (resultCode == RESULT_OK) {
+            Log.w(TAG, "Bluetooth enabled");
+            Toast.makeText(this, "Bluetooth enabled", Toast.LENGTH_SHORT).show();
+            connectBtn.setVisibility(View.VISIBLE);
+            disconectBtn.setVisibility(View.VISIBLE);
+        }
+        else {
+            // Si no se pudo enceder el bluetooth o el usuario no lo permitio, desactivar los botones de conectar y de desconectar.
+            connectBtn.setVisibility(View.VISIBLE);
+            disconectBtn.setVisibility(View.VISIBLE);
+            connectBtn.setEnabled(false);
+            disconectBtn.setEnabled(false);
+            Toast.makeText(this, "Bluetooth not enabled, closing app...", Toast.LENGTH_SHORT).show();
+            // TODO: Catch exceptions if bluetooth is not available on device.
+        }
+    }
+}
+```
+
+Para la fecha de la alarma
+
 **Hechale un vistazo al codigo fuente completo** [Link repositorio](https://github.com/jorovipe97/AlarmBLE)
 
 
