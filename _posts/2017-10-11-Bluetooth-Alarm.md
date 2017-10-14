@@ -88,7 +88,11 @@ El simblee sera responsable de:
 
 Dicho lo anterior la aplicación que vamos a desarrollar consistira basicamente en programar cuando se debe enviar un 0x01 al Simblee mediante la conexion Bluetooth Low Energy, siguiendo este enfoque el protocolo de comunicación es muy sencillo, ten en cuenta que pudimos haber decidido que el simblee tuviera la logica necesaria para recibir un tiempo en el cual activarse pero no lo haremos de esa forma para mantener el protocolo lo mas sencillo posible.
 
+# Programando el Simblee
 
+
+
+# Programando la aplicacion Android
 
 # Referencias
 <a href="http://ticketmastermobilestudio.com/blog/android-bluetooth-low-energy-tutorial" target="_blank">Android BLE tutorial</a>
