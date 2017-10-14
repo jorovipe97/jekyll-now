@@ -530,7 +530,61 @@ public class MainActivity extends AppCompatActivity  implements
 }
 ```
 
-Ten en cuenta que el boton **set alarm** no se activa hasta que el usuario haya seleccionado una hora con el TimePicker, una v ez esto ocurra
+Ten en cuenta que el boton **set alarm** no se activa hasta que el usuario haya seleccionado una hora con el TimePicker, una vez esto ocurra se llamara el siguiente metodo cuando se presione dicho boton.
+
+```java
+
+public void setAlarm(View view) {
+    // When user clicks setAlarmButton, button get disabled inmediatelly.
+    btnSetAlarm.setEnabled(false);
+
+    // AlarmReceiver is an Android Broadcast Receiver that will have called if alarm get fired. 
+    Intent intent = new Intent(this, AlarmReceiver.class);
+
+    // If users has not specified the date of the alarm, app will use today date, so alarm date is optional
+    if (!isDateSeted) {
+        Calendar c = Calendar.getInstance(Locale.getDefault());
+        alarmOnDate.set(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DATE));
+    }
+
+    // Creating a pending intent to be called when alarm get fired.
+    PendingIntent pendingIntent = PendingIntent.getBroadcast(this, REQUEST_SET_ALARM, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+    
+    // Passing the pending intent to AlarmManager for get fired when actualTimeInMillis - alarmOnDate.getTimeInMilles() <= 0
+    alarmManager.set(AlarmManager.RTC_WAKEUP, alarmOnDate.getTimeInMillis(), pendingIntent);
+
+}
+
+```
+
+Es importante tener en cuenta que la presición de la alarma es un parametro configurable, en nuestro caso no es tan precisa lo que hara que la alarma no se dispara justo a las 14:22 si no, muy probablemente unos cuantos segundos despues.
+
+Cuando la alarma se llame desde el servicios de alarma del sistema operativo se llamara el siguiente codigo, el cual es el Broadcast Receiver que pasamos mediante la pending intent en el codigo anterior.
+
+```java
+public class AlarmReceiver extends BroadcastReceiver {
+
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        // TODO: This method is called when the BroadcastReceiver is receiving
+        // an Intent broadcast.
+
+        // This line ensures CPU is running as long as WakeLocker.release() dont get called.
+        WakeLocker.acquire(context.getApplicationContext());
+        
+        // An intent for open the MainActivity from the BroadcastReceiver
+        Intent i = new Intent(context.getApplicationContext(), MainActivity.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        // This extra later will have used for know if the activity was opened from Alarm manager or not.
+        i.putExtra(MainActivity.EXTRA_IS_FROM_ALARM, true);
+        
+        // Start the activity specified in the intent i
+        context.startActivity(i);
+
+    }
+}
+```
+
 
 **Hechale un vistazo al codigo fuente completo** [Link repositorio](https://github.com/jorovipe97/AlarmBLE)
 
