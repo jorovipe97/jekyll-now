@@ -368,7 +368,136 @@ protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 }
 ```
 
-Para la fecha de la alarma
+Para configurar el momento en el que se disparara la alarma usamos un DatePicker y un TimePicker para seleccionar la fecha y la hora respectivamente.
+
+```xml
+<Button
+    android:id="@+id/btnSetTime"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Hora alarma"
+    android:textSize="@dimen/h3"
+    android:onClick="showTimePickerDialog"/>
+```
+
+Lo que hace el boton **set time** es abrir un TimePickerDialog:
+
+```java
+public void showTimePickerDialog(View view) {
+    DialogFragment fragment = new SelectTimeFragment();
+    fragment.show(getSupportFragmentManager(), "TimePicker");
+}
+```
+
+La clase SelectTimeFragment es una custom class que es hija de DialogFragment e implementa TimePickerDialog.OnTimeSetListener para poder saber cuando el usuario a presionado el boton OK del time picker.
+
+```java
+public class SelectTimeFragment extends DialogFragment implements TimePickerDialog.OnTimeSetListener {
+    private OnFragmentInteractionListener mListener;
+
+    public SelectTimeFragment() {
+        // Required empty public constructor
+    }
+    
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstance) {
+        Calendar c = Calendar.getInstance();
+        int hour = c.get(Calendar.HOUR_OF_DAY);
+        int minute = c.get(Calendar.MINUTE);
+        
+        // Por defecto al abrirse esta en la hora actual.
+        return new TimePickerDialog(getActivity(), this, hour, minute, true);
+    }
+
+    // Called when user set a time
+    @Override
+    public void onTimeSet(TimePicker view, int hourOfDay, int minuteOfDay) {
+        if (mListener != null) {
+            // Toast.makeText(getActivity(), "Time seted", Toast.LENGTH_LONG).show();
+            mListener.onPickerTimeSet(hourOfDay, minuteOfDay);
+        }
+    }
+
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof OnFragmentInteractionListener) {
+            mListener = (OnFragmentInteractionListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnFragmentInteractionListener");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
+    }
+
+    /**
+     * This interface must be implemented by activities that contain this
+     * fragment to allow an interaction in this fragment to be communicated
+     * to the activity and potentially other fragments contained in that
+     * activity.
+     * <p>
+     * See the Android Training lesson <a href=
+     * "http://developer.android.com/training/basics/fragments/communicating.html"
+     * >Communicating with Other Fragments</a> for more information.
+     */
+    public interface OnFragmentInteractionListener {
+        void onPickerTimeSet(int hour, int minuts);
+    }
+}
+```
+
+Luego en el MainActivity implementamos la interfaz SelectTimeFragment.OnFragmentInteractionListener para poder ejecutar codigo cuando el momento en el que el usuario a seleccionado una hora.
+
+```java
+public class MainActivity extends AppCompatActivity  implements
+        SelectTimeFragment.OnFragmentInteractionListener {
+    
+    // class code here
+    // ...
+    
+    // Code to execute when user select a time from the TimePicker dialog box.
+    public void onPickerTimeSet(int hour, int minuts) {
+        isTimeSeted = true;
+        if (isTimeSeted) {
+            canSetAlarm = true;
+        }
+
+        // Se activa el boton set alarm.
+        btnSetAlarm.setEnabled(canSetAlarm);
+
+        // Se hace un formato manual de la fecha para que las horas/minutos menores a 10 aparezcan con un 0 antes.
+        String strhour = hour+"";
+        String strminute = minuts+"";
+
+        if (hour < 9) {
+            strhour = "0" + hour;
+        }
+        if (minuts < 9) {
+            strminute = "0" + minuts;
+        }
+
+        // Guarda la hora y el minuto de la alarma en un field tipo Calendar que sera usado para pasarlo como argumento al AlarmManager para disparar la alarma posteriormente.
+        alarmOnDate.set(Calendar.HOUR_OF_DAY, hour);
+        alarmOnDate.set(Calendar.MINUTE, minuts);
+        textClock.setText("");
+        
+        textClock.setText(strhour + ":" + strminute);
+    }
+    
+}
+```
 
 **Hechale un vistazo al codigo fuente completo** [Link repositorio](https://github.com/jorovipe97/AlarmBLE)
 
