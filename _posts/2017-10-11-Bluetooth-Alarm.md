@@ -115,7 +115,214 @@ Una vez hemos seleccionado una hora a la cual queremos activar nuestra alarma el
 Y por último cuando el usuario presione el boton **set alarm** se usarán los servicios de alarmas del sistema operativo para encender la aplicación cuando la hora de sonar la alarma suene, cuando la aplicación es abierta desde los servicios de alarmas envia automaticamente un 0x01 al Simblee, logrando de este modo que nuestro preciado despertador (Luz LED) se pueda encender y empiece a parpadear.
 
 ## El codigo
+Lo primero que debemos hacer es en el AndroidManifiest solicitar permisos para acceder al Blutooth y para encender el celular cuando este en modo dormido.
 
+```xml
+
+<uses-permission android:name="android.permission.BLUETOOTH" />
+<uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+<uses-permission android:name="android.permission.WAKE_LOCK" />
+
+```
+
+Ademas tambien seria buena idea hacer que sea obligatorio para el dispositible tener compatibilidad con Bluetooth Low Energy
+```xml
+
+<uses-feature android:name="android.hardware.bluetooth_le" android:required="true" />
+
+```
+
+Una vez hemos terminado con los permisos, vamos a trabajar la interfaz de usuario, nuestra aplicación tendra solo una activity (MainActivity), el XML del Layout luce parecido a lo siguiente:
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+Haremos una interfaz usando LinearLayouts porque resulta intuitivo de entender
+
+El gravity=center nos permite centrar los elementos hijos del ViewGroup vertical y horizontalmente.
+
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    tools:context="com.romualdo.ble.gattclient.MainActivity">
+
+    <LinearLayout
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/h6"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/buttonConnect"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Connect"
+            android:onClick="startClient"
+            android:enabled="true"/>
+
+        <Button
+            android:id="@+id/buttonDisconnect"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Disconnect"
+            android:onClick="disconnect"
+            android:enabled="false"/>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="80dp"
+        android:layout_height="10dp"
+        android:background="@color/clouds" />
+
+    <LinearLayout
+        android:gravity="center"
+        android:paddingTop="@dimen/h6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!--
+        showFatePickerDialog() es un metodo que hemos creado en el MainActivity y nos permite
+        abrir un DatePickerDialog.
+        -->
+        <Button
+            android:id="@+id/btnSetDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Fecha alarma"
+            android:textSize="@dimen/text_default"
+            android:onClick="showDatePickerDialog"/>
+
+        <Button
+            android:id="@+id/btnSetTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hora alarma"
+            android:textSize="@dimen/h3"
+            android:onClick="showTimePickerDialog"/>
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:gravity="center"
+        android:paddingTop="22sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/h6"
+            android:text="La alarma sonará el"/>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:gravity="center"
+        android:paddingTop="5sp"
+        android:paddingBottom="15sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/textDate"
+            android:textAlignment="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="year/mo/da"
+            android:textSize="@dimen/h5"/>
+
+        <TextView
+            android:textAlignment="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="a las"
+            android:paddingLeft="@dimen/h6"
+            android:paddingRight="@dimen/h6"
+            android:textSize="@dimen/h6"/>
+
+        <TextView
+            android:id="@+id/textClock"
+            android:textAlignment="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="hh:mm"
+            android:textSize="@dimen/h5"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+
+        <TextView
+            android:id="@+id/btnStatus"
+            android:textStyle="italic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Button up"
+            android:textSize="@dimen/text_small" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <!--
+        enabled="false" porque por defecto no queremos que el usuario pueda
+        setear la alarma hasta que no halla seleccionado una hora, mediante codigo
+        se cambia a enabled="true".
+        -->
+        <Button
+            android:id="@+id/btnSetAlarm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:text="Set Alarm"
+            android:onClick="setAlarm"
+            android:enabled="false"/>
+
+        <Button
+            android:id="@+id/btnOff"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Off Alarm"
+            android:textSize="18sp"
+            android:enabled="false"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+
+    </LinearLayout>
+
+</LinearLayout>
+
+```
+
+**Hechale un vistazo al codigo fuente completo** [](https://github.com/jorovipe97/AlarmBLE)
 
 
 # Referencias
