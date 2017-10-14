@@ -322,6 +322,25 @@ El gravity=center nos permite centrar los elementos hijos del ViewGroup vertical
 
 ```
 
+Ahora vamos con la lógica de la aplicación, lo primero de lo que nos tenemos que asegurar es que cuando el usuario abre la aplicación tenga encendido el bluetooth, y en caso de no tenerlo solicitarle que lo encienda.
+
+![](https://imgur.com/43qPJma.gif)
+
+Para lograr este comportamiento, en el onCreate() del activity preguntamos si el Bluetooth esta encendido, y si no, abrimos una activity por defecto que le solicitara al usuario encender el Bluetooth.
+
+```java
+// Ensures Bluetooth is available on the device and it is enabled. If not,
+// displays a dialog requesting user permission to enable Bluetooth.
+if (mBluetoothAdapter == null || !mBluetoothAdapter.isEnabled()) {
+    Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+    startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
+} else {
+    // Si el dispositivo tiene bluetooth o el bluetooth esta encendido, hacer visible el boton de conectar y de desconectar de la interfaz de usuario.
+    connectBtn.setVisibility(View.VISIBLE);
+    disconectBtn.setVisibility(View.VISIBLE);
+}
+```
+
 **Hechale un vistazo al codigo fuente completo** [Link repositorio](https://github.com/jorovipe97/AlarmBLE)
 
 
