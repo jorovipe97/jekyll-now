@@ -505,7 +505,7 @@ El mismo enfoque se sigue para ejecutar codigo en el MainActivity cuando el usua
 
 ```java
 public class MainActivity extends AppCompatActivity  implements
-        SelectTimeFragment.OnFragmentInteractionListener {
+        SelectDateFragment.OnFragmentInteractionListener {
     
     // class code here
     // ...
