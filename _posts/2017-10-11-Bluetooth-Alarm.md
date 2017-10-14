@@ -97,7 +97,10 @@ Cundo terminemos la aplicación android tendremos algo como esto:
 
 ![](https://imgur.com/tvgxrrl.gif)
 
-La alarma tiene un boton de conectar y otro de desconectar que nos permitiran establecer una conexion BluetoothLE con el Simblee, cuando la aplicación se abre, automaticamente se conecta, luego pusimos 2 botones una para configurar la fecha de la alarma y otro para configurar la hora de la alarma, la fecha de la alarma por defecto sera la fecha del dia de hoy asi que no es obligatorio seleccionar una fecha, en cambio, la hora de la alarma si debe ser seleccionada para poder setear la alarma.
+La aplicación tiene un boton de conectar y otro de desconectar que nos permitiran establecer una conexion BluetoothLE con el Simblee, cuando la aplicación se abre automaticamente se conecta pero en caso de que falle la conexion se puede intentar hacer una conexion manual usando el boton de conectar, luego pusimos 2 botones uno para configurar la fecha de la alarma y otro para configurar la hora de la alarma, la fecha de la alarma por defecto sera la fecha del dia de hoy asi que no es obligatorio seleccionar una fecha, en cambio, la hora de la alarma si debe ser seleccionada para poder setear la alarma, como habiamos dicho en la seccion de **protocolo** cuando esta fecha y hora lleguen la aplicación se encargara de enviar un 0x01 al Simblee, la anterior es la función fundamental de la aplicación.
+
+![](https://imgur.com/SkFQvkd.gif)
+![](https://imgur.com/27NgIGc.gif)
 
 # Referencias
 <a href="http://ticketmastermobilestudio.com/blog/android-bluetooth-low-energy-tutorial" target="_blank">Android BLE tutorial</a>
