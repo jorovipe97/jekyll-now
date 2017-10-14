@@ -322,7 +322,7 @@ El gravity=center nos permite centrar los elementos hijos del ViewGroup vertical
 
 ```
 
-**Hechale un vistazo al codigo fuente completo** [](https://github.com/jorovipe97/AlarmBLE)
+**Hechale un vistazo al codigo fuente completo** [Link repositorio](https://github.com/jorovipe97/AlarmBLE)
 
 
 # Referencias
