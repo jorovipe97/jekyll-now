@@ -82,11 +82,9 @@ El simblee sera responsable de:
 
 ## Protocolos de comunicación
 
-Cuando la aplicacion le envia un 0x01 al Simblee, este ultimo hara que el led RGB empiece a prender y apagar hasta que el usuario presione el boton del RGB shield.
-
-Cuando la aplicación le envia un 0x00 al Simblee este apagara el led RGB si este se encuentra encendido.
-
-Cuando el usuario presione el botton del RGB shield se enviara un 0x00 a la aplicación android.
+- Cuando la aplicacion le envia un 0x01 al Simblee, este ultimo hara que el led RGB empiece a prender y apagar hasta que el usuario presione el boton del RGB shield.
+- Cuando la aplicación le envia un 0x00 al Simblee este apagara el led RGB si este se encuentra encendido.
+- Cuando el usuario presione el botton del RGB shield se enviara un 0x00 a la aplicación android.
 
 Dicho lo anterior la aplicación que vamos a desarrollar consistira basicamente en programar cuando se debe enviar un 0x01 al Simblee mediante la conexion Bluetooth Low Energy, siguiendo este enfoque el protocolo de comunicación es muy sencillo, ten en cuenta que pudimos haber decidido que el simblee tuviera la logica necesaria para recibir un tiempo en el cual activarse pero no lo haremos de esa forma para mantener el protocolo lo mas sencillo posible.
 
