@@ -460,7 +460,7 @@ public class SelectTimeFragment extends DialogFragment implements TimePickerDial
 }
 ```
 
-Luego en el MainActivity implementamos la interfaz SelectTimeFragment.OnFragmentInteractionListener para poder ejecutar codigo cuando el momento en el que el usuario a seleccionado una hora.
+Luego en el MainActivity implementamos la interfaz SelectTimeFragment.OnFragmentInteractionListener para poder ejecutar codigo justo en el momento en el que el usuario a seleccionado una hora.
 
 ```java
 public class MainActivity extends AppCompatActivity  implements
@@ -529,6 +529,8 @@ public class MainActivity extends AppCompatActivity  implements
     
 }
 ```
+
+Ten en cuenta que el boton **set alarm** no se activa hasta que el usuario haya seleccionado una hora con el TimePicker, una v ez esto ocurra
 
 **Hechale un vistazo al codigo fuente completo** [Link repositorio](https://github.com/jorovipe97/AlarmBLE)
 
