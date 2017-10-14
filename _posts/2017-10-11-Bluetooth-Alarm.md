@@ -588,6 +588,9 @@ public class AlarmReceiver extends BroadcastReceiver {
 
 **Hechale un vistazo al codigo fuente completo** [Link repositorio](https://github.com/jorovipe97/AlarmBLE)
 
+# Notas finales
+El enfoque que hemos usado para solucionar el problema tiene falencias porque hace que los dos dispositivos sean muy dependientes uno del otro tanto el simblee de la aplicación como viceversa, ¿que pasaria si al momento de disparar la alarma el celular no puede conectarse al simblee? nunca sonaria la alarma, ¿que pasaria si por accidente el usuario dejo el celular en el baño y por tanto fuera del radio de alcance del radio bluetooth? nunca sonaria la alarma, ¿que pasaria si al usuario se le apaga el celular porque olvido dejarlo cargando? repitan conmigo: nunca sonaria la alarma, dicho esto te propongo una version 2.0 en la que el sistema de tiempo y alarma no sea manejado por el celular sino por el simblee, de tal modo que la aplicación solo sea utilizada para decirle al simblee cuando debe prender la alarma, esto haria el protocolo de comunicación un poco mas complejo pero el sistema en general quedaria mucho mas robusto y seguro.
 
 # Referencias
 <a href="http://ticketmastermobilestudio.com/blog/android-bluetooth-low-energy-tutorial" target="_blank">Android BLE tutorial</a>
+<a href="https://developer.android.com/guide/topics/connectivity/bluetooth-le.html" target="_blank">Android Developers, Bluetooth Low Energy</a>
