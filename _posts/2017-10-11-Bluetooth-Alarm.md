@@ -89,8 +89,136 @@ El simblee sera responsable de:
 Dicho lo anterior la aplicación que vamos a desarrollar consistira basicamente en programar cuando se debe enviar un 0x01 al Simblee mediante la conexion Bluetooth Low Energy, siguiendo este enfoque el protocolo de comunicación es muy sencillo, ten en cuenta que pudimos haber decidido que el simblee tuviera la logica necesaria para recibir un tiempo en el cual activarse pero no lo haremos de esa forma para mantener el protocolo lo mas sencillo posible.
 
 # Programando el Simblee
+## Explicacion funcionamiento
+El simblee solo debe encargarse de 3 asuntos.
+
+1. Enviar un 1 para encender la alarma
+2. Enviar un 0 para apagar la alarma
+3. La alarma se puede apagar presionando el bton A del semblee o enviando un cero desde la aplicacion
+
+## El codigo
+
+El setup() y el loop()
+
+```c++
+void setup()
+{
+  // led turned on/off from the iPhone app
+  pinMode(led, OUTPUT);
+
+  Serial.begin(9600);
+  
+  // button press will be shown on the iPhone app)
+  pinMode(button, INPUT);
+
+  // this is the data we want to appear in the advertisement
+  // (if the deviceName and advertisementData are too long to fix into the 31 byte
+  // ble advertisement packet, then the advertisementData is truncated first down to
+  // a single byte, then it will truncate the deviceName)
+  SimbleeBLE.advertisementData = "ledbtn";
+  SimbleeBLE.deviceName = "RoJo";
+
+  // start the BLE stack
+  SimbleeBLE.begin();
+}
+
+void loop() {
+  // Que pasa si el boton esta en LOW
+  // El Simblee se mantendra en estado dormido
+  delay_until_button(HIGH);
+  buttonStatus = true;
+  SimbleeBLE.send(1); // Por tanto este codigo no se ejecutara
+  // Cuando el digitalRead(ButtonA) == true por primera vez, se enviara el valor anterior.
 
 
+  /*
+     Ahora el Simblee quedara dormido mientras se mantiene precionado el botonA
+     Ya que digitalRead(ButtonA) es diferente de true
+  */
+  delay_until_button(LOW); // Cuando se deje de presionar el boton, se procedera a ejecutar la siguiente linea
+  //buttonStatus = false;
+  SimbleeBLE.send(0); // y por tanto se envia un 0 por BLE
+  // And we come back to the first line of the loop() function
+  // And consencuently Simblee keeps in ultra low power mode until buttonA will be pressed again.
+}
+```
+
+Cuando el simblee recibe datos se llama este metodo, procedemos a preguntar si el dato que llegó fue un 01x01, en caso afirmativo pone en true unas variables flag que se permitiran encender el led.
+
+En caso negativo se apaga el led.
+```c++
+void SimbleeBLE_onReceive(char *data, int len)
+{
+  // if the first byte is 0x01 or great than zero / on / true
+  if (data[0])
+  {
+    canTurnOnAlarm = (byte) 1;
+    buttonStatus = false;
+    //digitalWrite(led, HIGH);
+    //blinkLed(500);
+  }
+  else 
+  {
+    digitalWrite(led, LOW);
+    canTurnOnAlarm = (byte) 0;
+  }
+}
+```
+
+En este metodo hemos escrito el blink, que recibe como argumento el tiempo en milisegundos que durara el led prendido y apagado en el blink.
+```c++
+void blinkLed(int ms)
+{
+  digitalWrite(led, HIGH);
+  Simblee_ULPDelay(ms);
+  digitalWrite(led, LOW);
+  Simblee_ULPDelay(ms);
+}
+```
+
+```c++
+int delay_until_button(int state)
+{
+  // set button edge to wake up on
+  if (state)
+    Simblee_pinWake(button, HIGH); // Congifures pin button to wake up the device on a high signal
+  else
+    Simblee_pinWake(button, LOW); // Configures pin button to wake up the device on a LOW signal
+
+  do 
+  {
+    // switch to lower power mode until a button edge wakes us up
+    // The alarm keeps ringin as long as canTurnOnAlarm is equal to true and buttonA is not pressed.
+    if (!buttonStatus && canTurnOnAlarm)
+    {
+        blinkLed(500);
+    }
+    else
+    {
+      Simblee_ULPDelay(1000);
+    }
+  }
+  while (! debounce(state)); // Mantener dormido mientras debounce sea igual a false
+  // Si el simblee se duerme porque las condiciones del do..while siguen ejecutandose?
+  // que es exactamente lo que se duerme cuando el simblee se pone en modo ultra low power delay
+
+  // debounce(state) va a dar false mientras digitalRead() != state
+  // Cuando el programa inicia, queda bloqueado aca, hasta que halla una señal true en el buttonA
+  /* Cuando ocurre la señal true, la condicion del do..while se hace false
+     y se procede con la siguiente linea
+  */
+
+  // SIMBLEE framework stuffs
+  // if multiple buttons were configured, this is how you would determine what woke you up
+  if (Simblee_pinWoke(button))
+  {
+    // execute code here
+    Simblee_resetPinWake(button);
+  }
+}
+```
+
+**Mira el codigo fuente completo en ** [el repositorio](https://github.com/jorovipe97/GattServerSimblee).
 
 # Programando la aplicacion Android
 ## Explicacion funcionamiento
@@ -132,7 +260,7 @@ Ademas tambien seria buena idea hacer que sea obligatorio para el dispositible t
 
 ```
 
-Una vez hemos terminado con los permisos, vamos a trabajar la interfaz de usuario, nuestra aplicación tendra solo una activity (MainActivity), el XML del Layout luce parecido a lo siguiente:
+Una vez hemos terminado con los permisos, vamos a trabajar la interfaz de usuario, nuestra aplicación tendra solo una activity (MainActivity), el XML del Layout se ve parecido a lo siguiente:
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -343,7 +471,7 @@ if (mBluetoothAdapter == null || !mBluetoothAdapter.isEnabled()) {
 }
 ```
 
-Cuando el usuario halla decidido permitir o no permitir encender el bluetooth se llamara el siguiente metodo de la MainActivity
+Cuando el usuario haya decidido permitir o no permitir encender el bluetooth se llamara el siguiente metodo de la MainActivity
 
 ```java
 @Override
@@ -369,6 +497,174 @@ protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     }
 }
 ```
+Ademas debemos conectarnos mediante bluetooth al Simblee tan pronto la aplicación es abierta, para ello llamamos el metodo startClient() que hemos creado en el onCreate de la activity.
+
+```java
+public void startClient() {
+    try {
+        BluetoothDevice bluetoothDevice = mBluetoothAdapter.getRemoteDevice(MAC_ADDRESS);
+        mBluetoothGatt = bluetoothDevice.connectGatt(this, false, mGattCallback);
+
+        if (mBluetoothGatt == null) {
+            Log.w(TAG, "Unable to create GATT client");
+            Toast.makeText(this, "Cant connect to " + MAC_ADDRESS, Toast.LENGTH_SHORT).show();
+            return;
+        }
+    }
+    catch (Exception e) {
+        Log.w(TAG, e.toString());
+    }
+}
+```
+
+¿Recuerdas que habiamos dicho que cada service, characteristic o descriptor esta identificad con un ID unico (UUID)? que bien, resulta que en nuestra aplicación hemos sacado manualmente estos datos usando una aplicación llamada **nRF Connect**
+
+![](https://imgur.com/EKrhzpc.gif)
+
+```java
+
+public static final String MAC_ADDRESS = "CA:A5:4F:3A:A9:5C";
+public static final UUID UUID_SERVICE = UUID.fromString("0000fe84-0000-1000-8000-00805f9b34fb");
+public static final UUID UUID_CHARACTERISTIC_BUTTONSTATUS = UUID.fromString("2d30c082-f39f-4ce6-923f-3484ea480596");
+
+public static final UUID UUID_CHARACTERISTIC_LED = UUID.fromString("2d30c083-f39f-4ce6-923f-3484ea480596");
+
+// This is one of the most used descriptor: Client Characteristic Configuration Descriptor. 0x2902
+public static final UUID UUID_DESCRIPTOR = UUID.fromString("00002902-0000-1000-8000-00805f9b34fb");
+```
+
+En este codigo es muy importante el mGattCallback que basicamente nos permitira ejecutar codigo cuando ocurran eventos como: 1. Conexion establecida, 2. Servicios descubiertos, etc.
+
+```java
+private BluetoothGattCallback mGattCallback = new BluetoothGattCallback() {
+
+    private final String TAG = "mGattCallback";
+
+    @Override
+    public void onConnectionStateChange(BluetoothGatt gatt, int status, int newState) {
+
+        super.onConnectionStateChange(gatt, status, newState);
+        Log.i(TAG, status + " " + newState);
+        if (newState == BluetoothProfile.STATE_CONNECTED)
+        {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    connectBtn.setEnabled(false);
+                    disconectBtn.setEnabled(true);
+                }
+            });
+            mBluetoothGatt.discoverServices();
+        } else if (newState == BluetoothProfile.STATE_DISCONNECTED)
+        {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    connectBtn.setEnabled(true);
+                    disconectBtn.setEnabled(false);
+                }
+            });
+        }
+    }
+
+
+    @Override
+    public void onServicesDiscovered(BluetoothGatt gatt, int status) {
+        //Log.i(TAG, "Service discovered");
+
+        if (status == gatt.GATT_SUCCESS) {
+            BluetoothGattService service = gatt.getService(UUID_SERVICE);
+            if (service != null) {
+                Log.i(TAG, "Service connected");
+                BluetoothGattCharacteristic characteristic = service.getCharacteristic(UUID_CHARACTERISTIC_BUTTONSTATUS);
+                if (characteristic != null) {
+                    Log.i(TAG, "Characteristic connected");
+                    gatt.setCharacteristicNotification(characteristic, true);
+                    BluetoothGattDescriptor descriptor = characteristic.getDescriptor(UUID_DESCRIPTOR);
+                    if (descriptor != null) {
+                        // Los descriptors son muy importntes
+                        // TODO: Continue studying about descriptors in BLE
+                        descriptor.setValue(BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE);
+                        gatt.writeDescriptor(descriptor);
+                        Log.i(TAG, "Descriptor sended");
+                    }
+                }
+
+                BluetoothGattCharacteristic characteristicLed = service.getCharacteristic(UUID_CHARACTERISTIC_LED);
+                if (characteristicLed != null) {
+
+                    Runnable myRunnable = new Runnable() {
+                        @Override
+                        public void run() {
+                            if (isAlarmFired) {
+                                writeLedCharacteristic(true);
+                            }
+                        }
+                    };
+                    Handler mainHandler = new Handler(Looper.getMainLooper());
+                    mainHandler.postDelayed(myRunnable, 1000); // This causes myRunnable executed after 1000 ms, this is necesary for work, in this case we dont use runOnUiThread() because we are not modifying ui components.
+
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (isAlarmFired) {
+                                btnOff.setEnabled(true);
+                            }
+                        }
+                    });
+                }
+            }
+        }
+    }
+/*
+    @Override
+    public void onCharacteristicRead(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, int status) {
+        super.onCharacteristicRead(gatt, characteristic, status);
+    }*/
+
+    @Override
+    public void onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic) {
+        readBtnStateCharacteristic(characteristic);
+    }
+
+    private void readBtnStateCharacteristic(BluetoothGattCharacteristic characteristic) {
+        if (UUID_CHARACTERISTIC_BUTTONSTATUS.equals(characteristic.getUuid())) {
+            byte[] data = characteristic.getValue();
+            //int state = Ints.fromByteArray(data);
+            Log.i(TAG, data[0] + "");
+            if (data[0] == 1) {
+
+                Runnable r = new Runnable() {
+                    @Override
+                    public void run() {
+                        WakeLocker.release();
+                    }
+                };
+
+                Handler mainHandler = new Handler(Looper.getMainLooper());
+                mainHandler.postDelayed(r, 2000);
+                
+                // In android callbacks are executed in another thread diferent to main thread, because of that, we should execute ui operations whitin a runnable in runOnUiThread method.
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        btnOff.setEnabled(false);
+                        statusBtn.setText("Button Down");
+                    }
+                });
+            } else if (data[0] == 0) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        statusBtn.setText("Button Up");
+                    }
+                });
+            }
+        }
+    }
+};
+```
+
 
 Para configurar el momento en el que se disparara la alarma usamos un DatePicker y un TimePicker para seleccionar la fecha y la hora respectivamente.
 
@@ -593,4 +889,7 @@ El enfoque que hemos usado para solucionar el problema tiene falencias porque ha
 
 # Referencias
 <a href="http://ticketmastermobilestudio.com/blog/android-bluetooth-low-energy-tutorial" target="_blank">Android BLE tutorial</a>
+
 <a href="https://developer.android.com/guide/topics/connectivity/bluetooth-le.html" target="_blank">Android Developers, Bluetooth Low Energy</a>
+
+<a href="http://nilhcem.com/android-things/bluetooth-low-energy" target="_blank">Nilhcem, Bluetooth Low Energy</a>
