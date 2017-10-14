@@ -41,9 +41,11 @@ Un dispositivo bluetooth Low Energy generalmente puede tener mas de un servicio 
 Es un valor de algun dato, como por ejemplo **Heart Rate Measurement** que se usa para enviar un ritmo cardiaco, **Body Sensor Location** usada para describir la ubicación prevista en la que se pone un dispositivo.
 
 ## Descriptors
-Provee información adicional acerca de una caracteristica, un descriptor muy comun es el **Client Characteristic Configuration Descriptor** que se puede usar para activar las notificaciones/indicaciones en el cliente, asi cada vez que el valor de una characteristic cambie el server le envia el nuevo valor.
+Provee información adicional acerca de una caracteristica, un descriptor muy comun es el **Client Characteristic Configuration Descriptor** que se puede usar para activar las notificaciones/indicaciones en el cliente, asi cada vez que el valor de una characteristic cambie el server le envia el nuevo valor al cliente.
 
-Cabe indicar que tanto Services como Characteristics y Descriptors tienen su una UUID que los identifica.
+Cabe indicar que tanto los Services como las Characteristics y Descriptors son identificados con un ID unico (UUID) que es determinado por el **Bluetooth Special Interest Group**, sin embargo no estamos limitados a los UUID que ellos definieron ya que podemos crear los propios sin ningun problema.
+
+
 
 # Referencias
 <a href="http://ticketmastermobilestudio.com/blog/android-bluetooth-low-energy-tutorial" target="_blank">Android BLE tutorial</a>
