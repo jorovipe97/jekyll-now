@@ -234,7 +234,8 @@ El gravity=center nos permite centrar los elementos hijos del ViewGroup vertical
         android:paddingBottom="15sp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
+        
+        <!-- This TextView will be used to show to user the selected date of the alarm -->
         <TextView
             android:id="@+id/textDate"
             android:textAlignment="center"
@@ -251,7 +252,8 @@ El gravity=center nos permite centrar los elementos hijos del ViewGroup vertical
             android:paddingLeft="@dimen/h6"
             android:paddingRight="@dimen/h6"
             android:textSize="@dimen/h6"/>
-
+        
+        <!-- This TextView will be used to show to user the selected time of the alarm -->
         <TextView
             android:id="@+id/textClock"
             android:textAlignment="center"
