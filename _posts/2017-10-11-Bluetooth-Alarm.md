@@ -499,6 +499,35 @@ public class MainActivity extends AppCompatActivity  implements
 }
 ```
 
+El mismo enfoque se sigue para ejecutar codigo en el MainActivity cuando el usuario ha seleccionado una fecha: 
+
+```java
+public class MainActivity extends AppCompatActivity  implements
+        SelectTimeFragment.OnFragmentInteractionListener {
+    
+    // class code here
+    // ...
+    
+    // Code to execute when user select a time from the TimePicker dialog box.
+    public void onPickerDateSet(Calendar c) {
+        // The date is optional, in case when user doesnt specify one, today date is used.
+        isDateSeted = true;
+        if (isTimeSeted) {
+            canSetAlarm = true;
+        }
+        btnSetAlarm.setEnabled(canSetAlarm);
+        
+        // Saves in the field alarmOnDate the yar, month and day to shoot the alarm.
+        // this field will be used later on the AlarmManager for shoot the alarm.
+        alarmOnDate.set(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DATE));
+        
+        // Show in the user interface the date picked.
+        textDate.setText(c.get(Calendar.DATE) + "/" + (c.get(Calendar.MONTH)+1) + "/" + c.get(Calendar.YEAR));
+    }
+    
+}
+```
+
 **Hechale un vistazo al codigo fuente completo** [Link repositorio](https://github.com/jorovipe97/AlarmBLE)
 
 
