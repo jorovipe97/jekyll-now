@@ -5,10 +5,10 @@ title: Primeros pasos con Bluetooth Low Energy
 
 En esta ocación vamos a realizar una alarma en una aplicación Android que mediante Bluetooth Low Energy encendera un led conectado a un dispositivo wearable, con esto queremos lograr una primera introducción practica a Bluetooth Low Energy.
 
-Para este tutorial nececitaras los siguientes materiales:
-
 # Aplicación resultado final
-[![](https://imgur.com/8lzCbNd.gif)](https://play.google.com/store/apps/details?id=com.romualdo.ble.gattclient&hl=es)
+[![](https://imgur.com/Og8VHzZ.gif)](https://play.google.com/store/apps/details?id=com.romualdo.ble.gattclient&hl=es)
+
+Para este tutorial nececitaras los siguientes materiales:
 
 # Materiales
 
