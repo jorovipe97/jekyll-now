@@ -7,6 +7,9 @@ En esta ocación vamos a realizar una alarma en una aplicación Android que medi
 
 Para este tutorial nececitaras los siguientes materiales:
 
+# Aplicación resultado final
+[![](https://imgur.com/8lzCbNd.gif)](https://play.google.com/store/apps/details?id=com.romualdo.ble.gattclient&hl=es)
+
 # Materiales
 
 - 1 Simblee (RFD77203 Simblee 29-pin GPIO Breakout)
