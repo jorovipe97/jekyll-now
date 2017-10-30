@@ -143,38 +143,40 @@ void loop(void)
 
 Dos cambios importantes hay que hacerle al codigo, el primero agregar el keyword **volatile** a la variable que sera cambiada en el ISR y que sera leida en el programa principal, esto es necesario porque no queremos que el compilador haga optimizaciones en ninguna linea en la que aparece esta variable y de esta forma nos aseguramos que cada vez que aparezca esta variable su valor sea leido directamente desde la memoria RAM.
 
-La segunda consideración importante que hay que tener en cuenta es que dado que el microcontrolador del arduino (Atmega128p) es de 8 bits y es muy posible que la variable modificada en la ISR sea de mas bits, la CPU debe copiar por partes el valor, si durante la copia, se vuelve a llamar la interrupt obtendriamos un dato erroneo, en estos casos el programa funcionaria bien la mayoria del tiempo pero de vez en cuando veriamos un dato raro cuya explicación subyace en no haber tenido en cuenta esta segunda consideración, para solucionar este tipo de errores generlamente basta con dejar de escuchar interrupciones mientras estoy copiando variables que son modificadas por una interrupción y luego de haber terminado, seguir escuchandolas.
+La segunda consideración importante que hay que tener en cuenta es que dado que el microcontrolador del arduino (Atmega328p) es de 8 bits y es muy posible que la variable modificada en la ISR sea de mas bits, la CPU debe copiar por partes el valor, si durante la copia, se vuelve a llamar la interrupt obtendriamos un dato erroneo, en estos casos el programa funcionaria bien la mayoria del tiempo pero de vez en cuando veriamos un dato raro cuya explicación subyace en no haber tenido en cuenta esta segunda consideración, para solucionar este tipo de errores generlamente basta con dejar de escuchar interrupciones mientras estoy copiando variables que son modificadas por una interrupción y luego de haber terminado, seguir escuchandolas.
 
 Si una interrupcion ocurre mientras las interrupciones estan desactivadas, dicha interrupción se guardará en una "lista de espera", luego, una vez se vuelvan a activar las interrupciones se ejecutara dependiendo de su prioridad.
+
+A continuación una lista de todas las posibles interrupciones en el Atmega328 en orden de prioridad.
 
 | Priority | Description                                     | Vector Name |
 |----------|-------------------------------------------------|-------------|
 | 1        | Reset                                           |    |
-| 2        | External Interrupt Request 0  (pin D2)          | (INT0_vect) |
-| 3        | External Interrupt Request 1  (pin D3)          | (INT1_vect) |
-| 4        | Pin Change Interrupt Request 0 (pins D8 to D13) | (PCINT0_vect) |
-| 5        | Pin Change Interrupt Request 1 (pins A0 to A5)  | (PCINT1_vect) |
-| 6        | Pin Change Interrupt Request 2 (pins D0 to D7)  | (PCINT2_vect) |
-| 7        | Watchdog Time-out Interrupt                     | (WDT_vect) |
-| 8        | Timer/Counter2 Compare Match A                  | (TIMER2_COMPA_vect) |
-| 9        | Timer/Counter2 Compare Match B                  | (TIMER2_COMPB_vect) |
-| 10       | Timer/Counter2 Overflow                         | (TIMER2_OVF_vect) |
-| 11       | Timer/Counter1 Capture Event                    | (TIMER1_CAPT_vect) |
-| 12       | Timer/Counter1 Compare Match A                  | (TIMER1_COMPA_vect) |
-| 13       | Timer/Counter1 Compare Match B                  | (TIMER1_COMPB_vect) |
-| 14       | Timer/Counter1 Overflow                         | (TIMER1_OVF_vect) |
-| 15       | Timer/Counter0 Compare Match A                  | (TIMER0_COMPA_vect) |
-| 16       | Timer/Counter0 Compare Match B                  | (TIMER0_COMPB_vect) |
-| 17       | Timer/Counter0 Overflow                         | (TIMER0_OVF_vect) |
-| 18       | SPI Serial Transfer Complete                    | (SPI_STC_vect) |
-| 19       | USART Rx Complete                               | (USART_RX_vect) |
-| 20       | USART, Data Register Empty                      | (USART_UDRE_vect) |
-| 21       | USART, Tx Complete                              | (USART_TX_vect) |
-| 22       | ADC Conversion Complete                         | (ADC_vect) |
-| 23       | EEPROM Ready                                    | (EE_READY_vect) |
-| 24       | Analog Comparator                               | (ANALOG_COMP_vect) |
-| 25       | 2-wire Serial Interface  (I2C)                  | (TWI_vect) |
-| 26       | Store Program Memory Ready                      | (SPM_READY_vect) |
+| 2        | External Interrupt Request 0  (pin D2)          | INT0_vect |
+| 3        | External Interrupt Request 1  (pin D3)          | INT1_vect |
+| 4        | Pin Change Interrupt Request 0 (pins D8 to D13) | PCINT0_vect |
+| 5        | Pin Change Interrupt Request 1 (pins A0 to A5)  | PCINT1_vect |
+| 6        | Pin Change Interrupt Request 2 (pins D0 to D7)  | PCINT2_vect |
+| 7        | Watchdog Time-out Interrupt                     | WDT_vect |
+| 8        | Timer/Counter2 Compare Match A                  | TIMER2_COMPA_vect |
+| 9        | Timer/Counter2 Compare Match B                  | TIMER2_COMPB_vect |
+| 10       | Timer/Counter2 Overflow                         | TIMER2_OVF_vect |
+| 11       | Timer/Counter1 Capture Event                    | TIMER1_CAPT_vect |
+| 12       | Timer/Counter1 Compare Match A                  | TIMER1_COMPA_vect |
+| 13       | Timer/Counter1 Compare Match B                  | TIMER1_COMPB_vect |
+| 14       | Timer/Counter1 Overflow                         | TIMER1_OVF_vect |
+| 15       | Timer/Counter0 Compare Match A                  | TIMER0_COMPA_vect |
+| 16       | Timer/Counter0 Compare Match B                  | TIMER0_COMPB_vect |
+| 17       | Timer/Counter0 Overflow                         | TIMER0_OVF_vect |
+| 18       | SPI Serial Transfer Complete                    | SPI_STC_vect |
+| 19       | USART Rx Complete                               | USART_RX_vect |
+| 20       | USART, Data Register Empty                      | USART_UDRE_vect |
+| 21       | USART, Tx Complete                              | USART_TX_vect |
+| 22       | ADC Conversion Complete                         | ADC_vect |
+| 23       | EEPROM Ready                                    | EE_READY_vect |
+| 24       | Analog Comparator                               | ANALOG_COMP_vect |
+| 25       | 2-wire Serial Interface  (I2C)                  | TWI_vect |
+| 26       | Store Program Memory Ready                      | SPM_READY_vect |
 
 
 # Referencias
