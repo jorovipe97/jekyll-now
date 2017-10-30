@@ -189,6 +189,8 @@ ISR(TIMER1_OVF_vect)
 }
 ```
 
+El ISR del TIMER1_OVF_vect sera llamado cuando el timer 1 halla terminado de contar una cantidad de segundos, como veremos, este vector name es muy util para implementar temporizadores o timers y nos sera valioso a la hora de desarrollar la calculadora.
+
 # Referencias
 [TimerOne Arduino library](https://www.pjrc.com/teensy/td_libs_TimerOne.html)
 
