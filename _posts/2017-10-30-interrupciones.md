@@ -100,7 +100,7 @@ La función que se ejecuta cuando ocurre la interrupción es conocida como Inter
 
 El ISR debe tener unos requisitos, primero no puede regresar ningun valor y segundo no puede tener argumentos.
 
-## Recomendaciones a la hora de usar ISR
+## Recomendaciones a la hora de usar Interrupts
 Supongamos que en el ejemplo anterior queremos decirle al programa principal cuantas veces el **led** se ha encendido:
 
 ```c++
@@ -141,7 +141,7 @@ void loop(void)
 }
 ```
 
-Dos cambios importantes hay que hacerle al codigo, el primero agregar el keyword **volatile** a la variable que sera cambiada en el ISR y que sera leida en el programa principal, esto es necesario porque no queremos que el compilador haga optimizaciones en ninguna linea en la que aparece esta variable y de esta forma nos aseguramos que cada vez que aparezca esta variable su valor sea leido directamente desde la memoria RAM.
+Dos cambios importantes hay que hacerle al codigo, el primero agregar el keyword **volatile** a la variable que será cambiada en el ISR y que sera leida en el programa principal, esto es necesario porque no queremos que el compilador haga optimizaciones en ninguna linea en la que aparece esta variable y de esta forma nos aseguramos que cada vez que aparezca esta variable su valor sea leido directamente desde la memoria RAM.
 
 La segunda consideración importante que hay que tener en cuenta es que dado que el microcontrolador del arduino (Atmega328p) es de 8 bits y es muy posible que la variable modificada en la ISR sea de mas bits, la CPU debe copiar por partes el valor, si durante la copia, se vuelve a llamar la interrupt obtendriamos un dato erroneo, en estos casos el programa funcionaria bien la mayoria del tiempo pero de vez en cuando veriamos un dato raro cuya explicación subyace en no haber tenido en cuenta esta segunda consideración, para solucionar este tipo de errores generlamente basta con dejar de escuchar interrupciones mientras estoy copiando variables que son modificadas por una interrupción y luego de haber terminado, seguir escuchandolas.
 
@@ -178,6 +178,16 @@ A continuación una lista de todas las posibles interrupciones en el Atmega328 e
 | 25       | 2-wire Serial Interface  (I2C)                  | TWI_vect |
 | 26       | Store Program Memory Ready                      | SPM_READY_vect |
 
+Por último vale la pena hacer notar que la libreria TimerOne.h encapsula el uso de las interrupciones por nosotros, si nosotros quisieramos crear nuestra propia libreria que maneje interrupciones deberiamos escribir algo parecido a lo siguiente:
+
+```c++
+// In parenthesis goes the Interrup Vector Name (See table above to see all possible values)
+ISR(TIMER1_OVF_vect)
+{
+  // Code to execute if interrupt is called
+  Timer1.isrCallback(); // In this example we are calling a function callback.
+}
+```
 
 # Referencias
 [TimerOne Arduino library](https://www.pjrc.com/teensy/td_libs_TimerOne.html)
