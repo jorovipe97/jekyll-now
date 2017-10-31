@@ -191,6 +191,300 @@ ISR(TIMER1_OVF_vect)
 
 El ISR del TIMER1_OVF_vect sera llamado cuando el timer 1 halla terminado de contar una cantidad de segundos, como veremos, este vector name es muy util para implementar temporizadores o timers y nos sera valioso a la hora de desarrollar la calculadora.
 
+
+
+# Implementando la calculadora
+Con los conceptos que hemos discutido hasta este momento podemos desarrollar la calculadora ya mismo.
+
+```c++
+#include <TimerOne.h>
+
+/*
+   This calculator have the following limitations
+   1. Calculator is not acepting negative numbers in operatoin terms
+   2. The calculator sets a limit time for user to set the two terms of the operations.
+*/
+
+// This example uses the timer interrupt to blink an LED
+// and also demonstrates how to share a variable between
+// the interrupt and the main program.
+// read this: http://www.gammon.com.au/interrupts
+
+const int led = 2;  // the pin with a LED
+const int listen_time = 10; // How many seconds is the arduino going to wait for the two terms of thw sum
+
+typedef enum {waiting_for_operation, waiting_for_operand} calc_status;
+typedef enum {none_op, addition, substraction, division, multiplication, modulus} selected_operation;
+
+void setup(void)
+{
+
+  pinMode(led, OUTPUT);
+  Timer1.initialize(listen_time * 1000000);
+  Timer1.attachInterrupt(stopWaiting); // blinkLED to run every 5 seconds
+  Timer1.stop();
+
+  Serial.begin(9600);
+  Serial.println("What operation do you want to do? + - * / %");
+}
+
+// The interrupt will blink the LED, and keep
+// track of how many times it has blinked.
+int ledState = LOW;
+volatile unsigned long blinkCount = 0; // use volatile for shared variables
+
+void blinkLED(void)
+{
+  if (ledState == LOW) {
+    ledState = HIGH;
+    blinkCount = blinkCount + 1;  // increase when LED turns on
+  } else {
+    ledState = LOW;
+  }
+  digitalWrite(led, ledState);
+}
+
+volatile calc_status actualCalStatus = waiting_for_operation;
+volatile selected_operation actualSelectedOperation = none_op;
+/*
+   The next variable will be true if stopWatching (ISR) is called
+   and user has not typed an operand
+*/
+volatile bool operandTimeOverflow = false;
+
+/*
+   The next variable will be true only if user send an valid operand
+   before the operandTimeOverflow variable is seted to true.
+*/
+volatile bool isOperand1Seted = false;
+int operand1 = -1;
+
+volatile bool isOperand2Seted = false;
+int operand2 = -1;
+
+volatile bool isBug = false;
+
+// Global variables for copy the volatile variables.
+calc_status calcStatus;
+selected_operation selectedOperation;
+bool operandOverflow;
+bool isFirstOperandSeted;
+bool isSecondOperandSeted;
+
+void stopWaiting(void) {
+  if (isBug) {
+    isBug = false;
+    return;
+  }
+
+  if (actualCalStatus == waiting_for_operand) {    actualCalStatus = waiting_for_operation;
+    actualSelectedOperation = none_op;
+    operandTimeOverflow = true;
+    isOperand1Seted = false;
+    isOperand2Seted = false;
+  } else {
+    actualCalStatus = waiting_for_operation;
+    actualSelectedOperation = none_op;
+  }
+}
+
+
+// The main program will print the blink count
+// to the Arduino Serial Monitor
+void loop(void)
+{
+  unsigned long blinkCopy;  // holds a copy of the blinkCount
+
+  // to read a variable which the interrupt code writes, we
+  // must temporarily disable interrupts, to be sure it will
+  // not change while we are reading.  To minimize the time
+  // with interrupts off, just quickly make a copy, and then
+  // use the copy while allowing the interrupt to keep working.
+
+  // Are interrupts delayed or ignored with noInterrupts()?
+  // https://goo.gl/Y3vNn8
+
+  // Can interrupts occur while interrupts are disabled?
+  // Interrupts events (that is, noticing the event) can occur at
+  // any time, and most are remembered by setting an "interrupt event"
+  // flag inside the processor. If interrupts are disabled, then that interrup
+  // will be handled when they are enabled again, in priority order
+  noInterrupts();
+  blinkCopy = blinkCount;
+  operandOverflow = operandTimeOverflow;
+  isFirstOperandSeted = isOperand1Seted;
+  isSecondOperandSeted = isOperand2Seted;
+  calcStatus = actualCalStatus;
+  selectedOperation = actualSelectedOperation;
+  interrupts();
+
+
+  while (Serial.available() && calcStatus == waiting_for_operation) {
+    processIncomingOperation(Serial.read());
+  }
+
+  while (Serial.available() && calcStatus == waiting_for_operand) {
+    //Serial.println("Esperando operando");
+    processIncomingOperands(Serial.read());
+  }
+
+  // If operandTimeOverflow is equal to true stop timer.
+  if (operandOverflow) {
+    operandTimeOverflow = false;
+    Timer1.stop();
+    Serial.println("\nWhat operation do you want to do? + - * / %");
+  }
+
+  // If thw two operands are defined, calculate the answer
+  if (isFirstOperandSeted && isSecondOperandSeted) {
+    int result = -1;
+    if (selectedOperation == addition) {
+      result = operand1 + operand2;
+    } else if (selectedOperation == substraction) {
+      result = operand1 - operand2;
+    } else if (selectedOperation == multiplication) {
+      result = operand1 * operand2;
+    } else if (selectedOperation == division) {
+      operand2 = (operand2 == 0) ? 1 : operand2; // Ensures user does not do an division by zero
+      result = operand1 / operand2;
+    } else if (selectedOperation == modulus) {
+      result = operand1 % operand2;
+    }
+
+    Serial.println("\nRESULT:");
+    Serial.println(result);
+    /*Timer1.setPeriod(listen_time * 1000000);
+      Timer1.detachInterrupt();
+      Timer1.attachInterrupt(stopWaiting);*/
+    stopWaiting();
+
+    operandOverflow = true;
+    isFirstOperandSeted = false;
+    isSecondOperandSeted = false;
+    calcStatus = waiting_for_operation;
+    selectedOperation = none_op;
+  }
+
+  /*Serial.print("canContinue = ");
+    Serial.println(canContinue);
+    delay(100);*/ // El ISR del timeroverflow se llama cada segundo, sin embargo cada 100 ms se imprime el estado del LED
+}
+
+
+void processIncomingOperation(const char c) {
+  static char operationSymbol = 'z'; // z is a default value for no operation symbol
+
+  int number;
+
+  // If find a new line character, check if the last character was a valid operation symbol.
+  if (c == '\n' || c == '\r') {
+    if (operationSymbol == '+') {
+      Serial.println("x+y, type x operand");
+      actualCalStatus = waiting_for_operand;
+      calcStatus = actualCalStatus;
+
+      actualSelectedOperation = addition;
+      selectedOperation = actualSelectedOperation;
+      Timer1.resume();
+    } else if (operationSymbol == '-') {
+      Serial.println("x-y, type x operand");
+      actualCalStatus = waiting_for_operand;
+      calcStatus = actualCalStatus;
+
+      actualSelectedOperation = substraction;
+      selectedOperation = actualSelectedOperation;
+      Timer1.resume();
+    } else if (operationSymbol == '*') {
+      Serial.println("x*y, type x operand");
+      actualCalStatus = waiting_for_operand;
+      calcStatus = actualCalStatus;
+
+      actualSelectedOperation = multiplication;
+      selectedOperation = actualSelectedOperation;
+      Timer1.resume();
+    } else if (operationSymbol == '/') {
+      Serial.println("x/y, type x operand");
+      actualCalStatus = waiting_for_operand;
+      calcStatus = actualCalStatus;
+
+      actualSelectedOperation = division;
+      selectedOperation = actualSelectedOperation;
+      Timer1.resume();
+    } else if (operationSymbol == '%') {
+      Serial.println("x%y, type x operand");
+      actualCalStatus = waiting_for_operand;
+      calcStatus = actualCalStatus;
+
+      actualSelectedOperation = modulus;
+      selectedOperation = actualSelectedOperation;
+      //Timer1.restart();
+      Timer1.resume();
+      //Timer1.stop();
+    } else {
+      Serial.println("Ingrese una operacion valida");
+    }
+  }
+  else {
+    operationSymbol = c;
+  }
+}
+
+int actualValue = 0;
+void processIncomingOperands(const char c) {
+  // TODO: Implement compatibility for negative operands
+  int operand = -1;
+  if (isDigit(c)) {
+    actualValue = actualValue * 10; // Technique for move units to tens
+    actualValue = actualValue + (c - '0'); // '0' (char) == 48 (int) converts char to int
+  } else if (c == '\n' || c == '\r') { // End of line
+
+    // If operand 1 is not seted
+    if (!isFirstOperandSeted) {
+      // Is operand given by user is a valid number
+      if (actualValue >= 0) {
+        operand = actualValue;
+        isOperand1Seted = true;
+        isFirstOperandSeted = isOperand1Seted;
+        // If operand is seted, we need set the timer to the start of a period
+        // for wait 5 seconds for the second operator.
+        operand1 = operand;
+        // The next two lines reset the period
+        /*Timer1.stop();
+          Timer1.resume();*/
+
+        Serial.println(operand);
+        Serial.println("Type y operand");
+      }
+    }
+    // If operand 1 is seted and operand 2 is not seted
+    else if (!isSecondOperandSeted) {
+
+
+      // Preccess operand 2
+      // If operand given by user is a valid operand
+      if (actualValue >= 0) {
+        operand = actualValue;
+        isOperand2Seted = true;
+        isSecondOperandSeted = isOperand2Seted;
+        operand2 = operand;
+        Serial.println(operand);
+        // Restore this code
+        //isBug = true;
+        Timer1.restart();
+        Timer1.stop();
+        
+      }
+    }
+
+    actualValue = 0;
+    //Serial.println(operand);
+  } else {
+    // Nothing to do if neither input character is not digit nor is an end of line character
+  }
+}
+
+```
+
 # Referencias
 [TimerOne Arduino library](https://www.pjrc.com/teensy/td_libs_TimerOne.html)
 
