@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Interrupciones en Arduino
-published: false
+published: true
 ---
 
 En esta ocacion hablaremos de las interrupciones en Arduino las cuales podemos interpretar como un multithreading de bajo nivel.
