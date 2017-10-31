@@ -5,4 +5,4 @@ permalink: /about/
 ---
 
 ### Contactame
-Enviame un correo a [](mailto:jorovipe@gmail.com)
+No seas timido enviame un correo a: [](jorovipe@gmail.com)
