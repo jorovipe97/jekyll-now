@@ -8,6 +8,8 @@ En esta ocacion hablaremos de las interrupciones en Arduino las cuales podemos i
 
 Para practicar los conceptos aprendidos desarrollaremos una calculadora basica en Arduino que se controlará mediante mensajes seriales, dicha calculadora esperará por 10 segundos los operandos de la operación que halla sido seleccionada en caso de no haber sido suministrados por el usuario, se lanzará una interrupción que reiniciara la calculadora para que se vuelva a seleccionar otra operación.
 
+Este post fue escrito en colaboración con: <a href="https://romualdo97.github.io/" target="_blank">@romualdo97</a>
+
 # Flujo del programa:
 
 ![](https://imgur.com/QFRk0Wi.gif)
