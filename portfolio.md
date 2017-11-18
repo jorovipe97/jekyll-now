@@ -42,7 +42,7 @@ Esta es una aplicación pensada para funcionar con unas google cardboard, fue or
 2. Unity
 
 # Magic Wand
-<a href="https://play.google.com/store/apps/details?id=com.gamebite10.MAGICWAND&hl=es" target="_blank">Descarga el juego en tu celular android</a>
+<a href="https://play.google.com/store/apps/details?id=com.gamebite10.MAGICWAND&hl=es" target="_blank"><img src="https://imgur.com/Og8VHzZ.gif"></img></a>
 
 ![](https://imgur.com/aAsdHKF.gif)
 
