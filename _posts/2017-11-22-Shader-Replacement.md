@@ -25,7 +25,7 @@ Para usar esta tecnica nececitamos dos cosas:
 2. Escribir un Script MonoBehaviour que le comunique a la **Camera** cual es el shader de reemplazamiento y cuando lo debe usar.
 
 ## Shader de reemplazamiento
-```hlsl
+```ShaderLab
 Shader "Hidden/Show Depth"
 {
 	Properties
