@@ -17,8 +17,55 @@ En otras palabras, esta caracteristica consiste en escribir un **Shader** que re
 
 El componente encargado de reemplazar los **Shaders** de todos los objetos de la escena por el **Shader** que escribimos es la **Camera**.
 
-Analicemos el siguiente ejemplo bajo los ojos de la documentación oficial
+# Usando el reemplazo de shaders.
+Analicemos como usar el remplazo de Shaders con algo de codigo:
 
+Para usar esta tecnica nececitamos dos cosas:
+1. Escribir Shader que reemplazara el Shader de los objetos de la escena (Shader de reemplazamiento)
+2. Escribir un Script MonoBehaviour que le comunique a la **Camera** cual es el shader de reemplazamiento y cuando lo debe usar.
+
+## Shader de reemplazamiento
+```hlsl
+Shader "Hidden/Show Depth"
+{
+	Properties
+	{
+		_Color("Color", Color) = (1,1,1,1)
+	}
+
+	SubShader
+	{
+		Tags
+		{
+			"RenderType"="Opaque"
+		}
+        
+		Pass
+		{
+			CGPROGRAM
+			// CG Code goes here
+			ENDCG
+		}
+	}
+
+	SubShader
+	{
+		Tags
+		{
+			"RenderType" = "Transparent"
+		}
+        
+		Pass
+		{
+			CGPROGRAM
+			// CG Code goes here
+			ENDCG
+		}
+	}
+}
+```
+
+## Script MonoBehaviour
 ```c#
 using System.Collections;
 using System.Collections.Generic;
