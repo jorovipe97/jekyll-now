@@ -88,7 +88,7 @@ Camera.SetReplacementShader(ReplacementShader, "");
 ```
 es un string vacio.
 
-Por otro lado se usará el **Subshader** que tenga el mismo valor que el objeto en cuestion al que se le reemplazara el **Shader** en el **tag** especificado por el segundo argumento:
+Por otro lado se usará el **Subshader** que tenga el mismo valor que el objeto al que se le reemplazara el **Shader** en el **tag** especificado por el segundo argumento:
 ```c#
 Camera.SetReplacementShader(ReplacementShader, "RenderType");
 ```
