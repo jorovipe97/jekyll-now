@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Usando Replacement Shaders
-published: false
+published: true
 ---
 
 En esta ocación vamos a hablar un poco acerca del uso de los ReplacementShaders en unity, ¿Que son? ¿como se podrian usar?
