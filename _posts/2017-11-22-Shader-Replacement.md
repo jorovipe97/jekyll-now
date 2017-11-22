@@ -69,7 +69,7 @@ public class ReplacementShaderEffect : MonoBehaviour {
 ```c#
 GetComponent<Camera>().SetReplacementShader(ReplacementShader, "");
 ```
-Cuando este metodo es llamado, se reemplazara el **Shader** que se usara para cada objeto de la escena basado en el segundo argumento, el cual se explicara en mas detalle mas adelante.
+Cuando este metodo es llamado, se reemplazara el **Shader** que se usara para cada objeto de la escena basado en el segundo argumento, el cual se explicara en detalle mas adelante.
 
 ### Camera.ResetReplacementShader();
 ```c#
