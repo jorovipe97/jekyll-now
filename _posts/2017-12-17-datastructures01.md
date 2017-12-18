@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Introduction to data structures (Implementing Lists)
-published: false
+published: true
 ---
 
 This word can sound a bit theoretical and complex at first, but, what are data structures for a programmer?
@@ -42,12 +42,12 @@ Is a collection for example a **list** which ensures to the programmer client th
 ### About the ArrayList class
 The ArrayList is a list which is not Type-Safe, since it is basically an array of Objects, since in C# all the types hinherit from the **Object** class this list is able to store any type.
 
-But all is not perfect, **ArrayList** need make a Boxing operation for store any item, then ValueTypes as for example integers need to be boxed first for save it int the **ArrayList**, and also, Value Types need to be unboxed in every read operation of the **ArrayList**
+But all is not perfect, **ArrayList** need make a Boxing operation for store any item, then ValueTypes as for example integers need to be boxed first for save it in the **ArrayList**, and also, Value Types need to be unboxed in every read operation of the **ArrayList**
 
 ```c#
 ArrayList foo = new ArrayList();
-foo.Add(5); // Need perform a boxing operation over 5
-
+foo.Add(5); // Requires perform a boxing operation over 5
+int n = (int) foo[0]; // Read an Value Type item requires an unboxing operation.  
 ```
 
 
