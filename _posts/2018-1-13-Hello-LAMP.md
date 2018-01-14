@@ -133,6 +133,8 @@ Now, wen we type mysitedomain.com in the browser url system is going to read the
 TODO
 
 # References
+- [CHMOD By the numbers](http://catcode.com/teachmod/numeric.html)
 
+- [Setting up Virtual Hosts](https://www.taniarascia.com/setting-up-virtual-hosts/)
 
 
