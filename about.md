@@ -5,4 +5,4 @@ permalink: /about/
 ---
 
 ### Contactame
-No seas timido enviame un correo a: jorovipe@gmail.com
+Esta parte aun se encuentra en desarrollo :D.
