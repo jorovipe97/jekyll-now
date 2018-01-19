@@ -130,7 +130,26 @@ Add the following line to the hosts file:
 Now, wen we type mysitedomain.com in the browser url system is going to read the host file and search the domain if exists then system is going to open the info located at the specified Document Root in the step 2.
 
 # Short snippets for permissions
-TODO
+
+There are 3 main commands for deal with permissions in UNIX, **chmod**, **chown** and **chgrp**
+
+If you wish to see the permisions for files and directories in a folder type de following command:
+```bash
+$ ls -l
+```
+Example output:
+
+```bash
+-rwxrwxr-x  1 www-data www-data  5434 Sep 23 07:21 wp-activate.php
+drwxrwxr-x  9 www-data www-data  4096 Jan 13 23:34 wp-admin
+-rwxrwxr-x  1 www-data www-data   364 Dec 19  2015 wp-blog-header.php
+```
+
+The permission info is liste in the first group of letters, if the item is a directory the first letter is a **d**, otherwise if the item is a file the first letter is a minus sign **-**.
+
+## About chmod command
+**Chmod** is used for change the permisions of a file, there are 3 permissions: read, write and execute.
+
 
 # References
 - [CHMOD By the numbers](http://catcode.com/teachmod/numeric.html)
