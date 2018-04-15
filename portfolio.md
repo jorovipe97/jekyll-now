@@ -7,14 +7,25 @@ permalink: /portfolio/
 A continuación puedes conocer algunos de los trabajos que he realizado, tambien te invito a ojear mi <a href="https://github.com/jorovipe97?tab=repositories" target="_blank">repositorio de Github</a>, por otra parte puedes ver una <a href="https://cdn.rawgit.com/jorovipe97/jorovipe97.github.io/8da72cf0/images/Jose%20Villalobos%20-%20Hoja%20de%20vida%20-%20UPB%20-%20v2.0.pdf" target="_blank">hoja de vida</a> mas formal aqui.
 
 # Team Bridge Game
+Juego que mediante técnicas de visión artificial propone una dinámica cooperativa entre dos jugadores. 
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/InDA8musln0?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+
+**Mi rol:** Conceptualizar, Diseñar e Implementar el juego.
+**Tecnologias utilizadas:**
+1. Unity Engine
+2. OpenCV
+3. ShaderLab/CG
 
 
 # One-click Hologram Pyramid for Unity
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/kmLK00OomKE?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
+
 Holograma piramidal para el centro costarricense de ciencia y cultura, el objetivo era presentar los volcanes de Costa Rica a los a los niños de una forma creativa.
+
 <a href="https://www.assetstore.unity3d.com/?utm_source=webpage&utm_medium=jorovipe-portfolio#!/content/107353" target="_blank">**Descarga el Asset**</a>
 
 **Fecha:** Nov 2017
