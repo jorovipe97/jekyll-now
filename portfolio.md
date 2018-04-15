@@ -25,7 +25,7 @@ Juego que mediante técnicas de visión artificial propone una dinámica coopera
 <iframe width="560" height="315" src="https://www.youtube.com/embed/kmLK00OomKE?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
 
-Holograma piramidal para el centro costarricense de ciencia y cultura, el objetivo era presentar los volcanes de Costa Rica a los a los niños de una forma creativa.
+Holograma piramidal para el centro costarricense de ciencia y cultura, el objetivo era presentar los volcanes de Costa Rica a los niños de una forma creativa.
 
 <a href="https://www.assetstore.unity3d.com/?utm_source=webpage&utm_medium=jorovipe-portfolio#!/content/107353" target="_blank">**Descarga el Asset**</a>
 
