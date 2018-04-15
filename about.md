@@ -4,5 +4,5 @@ title: About
 permalink: /about/
 ---
 
-### Contactame
-Esta parte aun se encuentra en desarrollo :D.
+# Contacto
+Web: <a href="www.gamebite10.com" target="_blank">Game Bite 10</a>
