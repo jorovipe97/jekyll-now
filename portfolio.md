@@ -13,6 +13,7 @@ Juego que mediante técnicas de visión artificial propone una dinámica coopera
 
 
 **Mi rol:** Conceptualizar, Diseñar e Implementar el juego.
+
 **Tecnologias utilizadas:**
 1. Unity Engine
 2. OpenCV
@@ -29,8 +30,11 @@ Holograma piramidal para el centro costarricense de ciencia y cultura, el objeti
 <a href="https://www.assetstore.unity3d.com/?utm_source=webpage&utm_medium=jorovipe-portfolio#!/content/107353" target="_blank">**Descarga el Asset**</a>
 
 **Fecha:** Nov 2017
+
 **Mi rol:** Implementar el sistema de cámaras en Unity y hacer sencillo su uso, realizar el manual del sistema para nuevos usuarios.
+
 **Compañero de trabajo:** <a href="https://romualdo97.github.io/" target="_blank">@romualdo97</a>
+
 **Tecnologias aplicadas:**
 1. Unity Engine
 2. OSC
