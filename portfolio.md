@@ -4,7 +4,21 @@ title: Portfolio
 permalink: /portfolio/
 ---
 
-A continuación puedes conocer algunos de los trabajos que he realizado, si eres un stalker y lo quieres saber todo de mi, en mi <a href="https://github.com/jorovipe97?tab=repositories" target="_blank">repositorio de Github</a> puedes encontrar mas, por otra parte puedes ver una <a href="https://cdn.rawgit.com/jorovipe97/jorovipe97.github.io/ef380055/images/Jose%20Romualdo_Villalobos%20Perez_resume.pdf" target="_blank">hoja de vida mas formal aqui</a>.
+A continuación puedes conocer algunos de los trabajos que he realizado, tambien te invito a ojear mi <a href="https://github.com/jorovipe97?tab=repositories" target="_blank">repositorio de Github</a>, por otra parte puedes ver una <a href="https://cdn.rawgit.com/jorovipe97/jorovipe97.github.io/8da72cf0/images/Jose%20Villalobos%20-%20Hoja%20de%20vida%20-%20UPB%20-%20v2.0.pdf" target="_blank">hoja de vida</a> mas formal aqui.
+
+# One-click Hologram Pyramid for Unity
+<iframe width="560" height="315" src="https://www.youtube.com/embed/kmLK00OomKE?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+
+Holograma piramidal para el centro costarricense de ciencia y cultura, el objetivo era presentar los volcanes de Costa Rica a los a los niños de una forma creativa.
+
+**Fecha:** Nov 2017
+**Mi rol:** Implementar el sistema de cámaras en Unity y hacer sencillo su uso, realizar el manual del sistema para nuevos usuarios.
+**Compañero de trabajo:** <a href="https://romualdo97.github.io/" target="_blank">@romualdo97</a>
+**Tecnologias aplicadas:**
+1. Unity Engine
+2. OSC
+3. Unity Editor (Personalizar el editor de unity para simplificar tareas al equipo de desarrollo)
 
 # Vision invertida
 <a href="https://play.google.com/store/apps/details?id=com.gamebite10.VisionInvertida&hl=es" target="_blank"><img src="https://imgur.com/Og8VHzZ.gif"></a>
