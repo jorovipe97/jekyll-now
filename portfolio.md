@@ -11,6 +11,7 @@ Juego que mediante técnicas de visión artificial propone una dinámica coopera
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/InDA8musln0?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
+**Fecha:** Feb 2018
 
 **Mi rol:** Conceptualizar, Diseñar e Implementar el juego.
 
