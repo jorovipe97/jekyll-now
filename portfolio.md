@@ -42,7 +42,7 @@ Holograma piramidal para el centro costarricense de ciencia y cultura, el objeti
 3. Unity Editor (Personalizar el editor de unity para simplificar tareas al equipo de desarrollo)
 
 # SPH Water Simulation using ThreeJS
-![Sph water simulation](https://imgur.com/UTMzDNl.png)
+![Sph water simulation](https://imgur.com/UTMzDNl.gif)
 
 <a href="https://romualdo97.github.io/sph_fluid_simulation/" target="_blank">View Demo</a>
 
@@ -61,9 +61,10 @@ Esta es una simulación de fluidos de agua en 2D usando el método computacional
 4. CSS
 
 # Vision invertida
-<a href="https://play.google.com/store/apps/details?id=com.gamebite10.VisionInvertida&hl=es" target="_blank"><img src="https://imgur.com/Og8VHzZ.gif"></a>
 
 ![](https://imgur.com/CGmoEYr.gif)
+
+<a href="https://play.google.com/store/apps/details?id=com.gamebite10.VisionInvertida&hl=es" target="_blank"><img src="https://imgur.com/Og8VHzZ.gif"></a>
 
 Esta es una aplicación pensada para funcionar con unas google cardboard, fue originalmente desarrollada para usarse en una experiencia interactiva en una feria de ciencia en la que se hacia al jugador intentar patear un balon y meterlo al arco con las gafas puestas: **fue un espectáculo muy divertido para los espectadores**.
 
@@ -76,10 +77,13 @@ Esta es una aplicación pensada para funcionar con unas google cardboard, fue or
 2. Unity
 
 # N200
-<a href="https://gamejolt.com/games/n200/145477" target="_blank">Descargalo y juegalo en tu computador windows</a>
 
 ![](https://imgur.com/xahmluv.gif)
 ![](https://imgur.com/PKNL0iM.gif)
+
+<a href="https://gamejolt.com/games/n200/145477" target="_blank">Descargalo y juegalo en tu computador windows</a>
+
+Un juego demo realizado en unity con fines de aprendizaje.
 
 **Mi rol**:
 1. Implementación scripts control de personaje
