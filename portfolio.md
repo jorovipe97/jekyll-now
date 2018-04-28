@@ -100,9 +100,10 @@ Un juego demo realizado en unity con fines de aprendizaje.
 2. Unity
 
 # Magic Wand
-<a href="https://play.google.com/store/apps/details?id=com.gamebite10.MAGICWAND&hl=es" target="_blank"><img src="https://imgur.com/Og8VHzZ.gif"></a>
 
 ![](https://imgur.com/aAsdHKF.gif)
+
+<a href="https://play.google.com/store/apps/details?id=com.gamebite10.MAGICWAND&hl=es" target="_blank"><img src="https://imgur.com/Og8VHzZ.gif"></a>
 
 **Mi rol:**
 1. Implementación sistema de eventos C#
@@ -120,17 +121,18 @@ Un juego demo realizado en unity con fines de aprendizaje.
 3. ShaderLab
 
 # jelou.io
-<a href="https://jelou-cb899.firebaseapp.com/" target="_blank">Mira la web app</a>
 
 ![](https://imgur.com/QZtMRiL.gif)
 
-Esta es una aplicación web single page que comunica en tiempo real a dos personas cuyo objetivo fue ser empleada en una experiencia interactiva que ayudo a que personas desconocidas se conocieran basado en sus gustos personales, para poderla usar debes hacer lo siguiente:
+<a href="https://jelou-cb899.firebaseapp.com/" target="_blank">Mira la web app</a>
+
+Esta es una aplicación web single page que comunica en tiempo real a dos personas cuyo objetivo fue ser empleada en una experiencia interactiva que ayuda a que personas desconocidas se conozcan basado en sus gustos personales, para poderla usar debes hacer lo siguiente:
 
 Iniciar sesion en un computador A con los siguientes datos de autenticación, email: a@email.com y pass: 123456, luego en otro computador inicia sesion con los siguientes datos, email: b@email.com y pass: 123465
 
 DISCLAIMER: Este proyecto tiene varios bugs que no fueron corregidos.
 
-**Mi rol:** Implementar todo.
+**Mi rol:** Conceptualizar, diseñar e implementar la aplicación.
 
 **Compañeros de trabajo:**
 1. <a href="https://romualdo97.github.io/" target="_blank">@romualdo97</a>
@@ -143,6 +145,8 @@ DISCLAIMER: Este proyecto tiene varios bugs que no fueron corregidos.
 4. AngularFire (FirebaseAPI module for AngularJS)
 5. Bootstrap
 6. Yeoman (Angular single page app scaffolding)
+
+---
 
 # Otros proyectos interesantes
 
