@@ -41,12 +41,31 @@ Holograma piramidal para el centro costarricense de ciencia y cultura, el objeti
 2. OSC
 3. Unity Editor (Personalizar el editor de unity para simplificar tareas al equipo de desarrollo)
 
+# SPH Water Simulation using ThreeJS
+![Sph water simulation](https://imgur.com/UTMzDNl.png)
+
+<a href="https://romualdo97.github.io/sph_fluid_simulation/" target="_blank">View Demo</a>
+
+Esta es una simulación de fluidos de agua en 2D usando el método computacional conocido como [SPH](https://es.wikipedia.org/wiki/Smoothed-particle_hydrodynamics), se desarrolló usando ThreeJS para permitir su visualización en navegadores web.
+
+**Mi rol:**
+1. Implementación parcial del sistema de fuerzas.
+2. Implementación parcial del SPH.
+
+**Compañero de trabajo:** <a href="https://romualdo97.github.io/" target="_blank">@romualdo97</a>
+
+**Tecnologias aplicadas:**
+1. JavaScript
+2. HTML5 (Canvas)
+3. ThreeJS
+4. CSS
+
 # Vision invertida
 <a href="https://play.google.com/store/apps/details?id=com.gamebite10.VisionInvertida&hl=es" target="_blank"><img src="https://imgur.com/Og8VHzZ.gif"></a>
 
 ![](https://imgur.com/CGmoEYr.gif)
 
-Esta es una aplicación pensada para funcionar con unas google cardboard, fue originalmente desarrollada para usarse en una experiencia interactiva en una feria de ciencia en la que se hacia al jugador intentar patiar un balon y meterlo al arco con las gafas puestas: **fue un espectaculo muy divertido para los espectadores**.
+Esta es una aplicación pensada para funcionar con unas google cardboard, fue originalmente desarrollada para usarse en una experiencia interactiva en una feria de ciencia en la que se hacia al jugador intentar patear un balon y meterlo al arco con las gafas puestas: **fue un espectáculo muy divertido para los espectadores**.
 
 **Mi rol:** Desarrollo scripts manejo camara.
 
