@@ -60,6 +60,21 @@ Esta es una simulación de fluidos de agua en 2D usando el método computacional
 3. ThreeJS
 4. CSS
 
+# Pagina web colombirds.com
+
+![](https://imgur.com/u9zNJAL.gif)
+
+[Live demo](https://jorovipe97.github.io/colombirds.com/)
+
+**Mi rol:** Conceptualizar e implementar el front-end y funcionalidades de la pagina.
+
+**Tecnologias aplicadas:**
+1. JavaScript
+2. AngularJS
+3. JQuery
+4. CSS
+5. HTML5
+
 # Vision invertida
 
 ![](https://imgur.com/CGmoEYr.gif)
