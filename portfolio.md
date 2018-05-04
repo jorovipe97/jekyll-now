@@ -60,6 +60,24 @@ Esta es una simulación de fluidos de agua en 2D usando el método computacional
 3. ThreeJS
 4. CSS
 
+# Twitter bot for get followers
+[Link del repositorio](https://github.com/jorovipe97/WeiseBot)
+
+Bot escrito en Python para automatizar la tarea de conseguir seguidores en Twitter teniendo en cuenta un campo de interés afín (usando hashtags).
+
+**Tecnologias aplicadas:**
+1. Python
+2. Tweepy
+
+# Bot para twitter
+[Link del repositorio](https://github.com/jorovipe97/UnFollow)
+
+Bot escrito en python para automatizar la tarea dejar de seguir un porcentaje de personas que ya no te siguen en twitter.
+
+**Tecnologias aplicadas:**
+1. Python
+2. Tweepy
+
 # Pagina web colombirds.com
 
 ![](https://imgur.com/u9zNJAL.gif)
@@ -74,14 +92,6 @@ Esta es una simulación de fluidos de agua en 2D usando el método computacional
 3. JQuery
 4. CSS
 5. HTML5
-
-# Bot twitter en python
-[Link del repositorio](https://github.com/jorovipe97/UnFollow)
-Bot para Twitter escrito en python para dejar de seguir al 80% de los usuarios que no me siguen de vuelta.
-
-**Tecnologias aplicadas:**
-1. Python
-2. Tweepy
 
 # Vision invertida
 
