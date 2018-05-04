@@ -20,27 +20,6 @@ Juego que mediante técnicas de visión artificial propone una dinámica coopera
 2. OpenCV
 3. ShaderLab/CG
 
-
-# One-click Hologram Pyramid for Unity
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/kmLK00OomKE?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-
-
-Holograma piramidal para el centro costarricense de ciencia y cultura, el objetivo era presentar los volcanes de Costa Rica a los niños de una forma creativa.
-
-<a href="https://www.assetstore.unity3d.com/?utm_source=webpage&utm_medium=jorovipe-portfolio#!/content/107353" target="_blank">**Descarga el Asset**</a>
-
-**Fecha:** Nov 2017
-
-**Mi rol:** Implementar el sistema de cámaras en Unity y hacer sencillo su uso, realizar el manual del sistema para nuevos usuarios.
-
-**Compañero de trabajo:** <a href="https://romualdo97.github.io/" target="_blank">@romualdo97</a>
-
-**Tecnologias aplicadas:**
-1. Unity Engine
-2. OSC
-3. Unity Editor (Personalizar el editor de unity para simplificar tareas al equipo de desarrollo)
-
 # SPH Water Simulation using ThreeJS
 ![Sph water simulation](https://imgur.com/UTMzDNl.gif)
 
@@ -69,7 +48,7 @@ Bot escrito en Python para automatizar la tarea de conseguir seguidores en Twitt
 1. Python
 2. Tweepy
 
-# Bot para twitter
+# Twitter bot
 [Link del repositorio](https://github.com/jorovipe97/UnFollow)
 
 Bot escrito en python para automatizar la tarea dejar de seguir un porcentaje de personas que ya no te siguen en twitter.
@@ -78,7 +57,27 @@ Bot escrito en python para automatizar la tarea dejar de seguir un porcentaje de
 1. Python
 2. Tweepy
 
-# Pagina web colombirds.com
+# One-click Hologram Pyramid for Unity
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/kmLK00OomKE?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+
+Holograma piramidal para el centro costarricense de ciencia y cultura, el objetivo era presentar los volcanes de Costa Rica a los niños de una forma creativa.
+
+<a href="https://www.assetstore.unity3d.com/?utm_source=webpage&utm_medium=jorovipe-portfolio#!/content/107353" target="_blank">**Descarga el Asset**</a>
+
+**Fecha:** Nov 2017
+
+**Mi rol:** Implementar el sistema de cámaras en Unity y hacer sencillo su uso, realizar el manual del sistema para nuevos usuarios.
+
+**Compañero de trabajo:** <a href="https://romualdo97.github.io/" target="_blank">@romualdo97</a>
+
+**Tecnologias aplicadas:**
+1. Unity Engine
+2. OSC
+3. Unity Editor (Personalizar el editor de unity para simplificar tareas al equipo de desarrollo)
+
+# Web page colombirds.com
 
 ![](https://imgur.com/u9zNJAL.gif)
 
