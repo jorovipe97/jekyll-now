@@ -75,6 +75,14 @@ Esta es una simulación de fluidos de agua en 2D usando el método computacional
 4. CSS
 5. HTML5
 
+# Bot twitter en python
+[Link del repositorio](https://github.com/jorovipe97/UnFollow)
+Bot para Twitter escrito en python para dejar de seguir al 80% de los usuarios que no me siguen de vuelta.
+
+**Tecnologias aplicadas:**
+1. Python
+2. Tweepy
+
 # Vision invertida
 
 ![](https://imgur.com/CGmoEYr.gif)
@@ -177,13 +185,6 @@ NOTA: Para hacer funcionar este programa correctamente se debe implementar un ci
 4. C++
 5. GLSL (EL shader esta basado en el trabajo de Weyland Yutani)
 
-## Bot twitter en python
-[Link del repositorio](https://github.com/jorovipe97/UnFollow)
-Bot para Twitter escrito en python para dejar de seguir al 80% de los usuarios que no me siguen de vuelta.
-
-**Tecnologias aplicadas:**
-1. Python
-2. Tweepy
 
 ## Random walker demo
 [Link del repositorio](https://github.com/jorovipe97/RandomWalker)
