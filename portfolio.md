@@ -86,8 +86,8 @@ Holograma piramidal para el centro costarricense de ciencia y cultura, el objeti
 En la página **collect** Prueba los siguientes códigos para desbloquear "rare packs":
 
 1. turpi
-- garza
-- cucarachero
+2. garza
+3. cucarachero
 
 **Mi rol:** Conceptualizar e implementar el front-end y funcionalidades de la pagina.
 
