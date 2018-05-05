@@ -83,7 +83,8 @@ Holograma piramidal para el centro costarricense de ciencia y cultura, el objeti
 
 [Live demo](https://jorovipe97.github.io/colombirds.com/)
 
-Prueba los siguientes codigo para debloquear "rare packs":
+En la página **collect** Prueba los siguientes códigos para desbloquear "rare packs":
+
 1. turpi
 - garza
 - cucarachero
