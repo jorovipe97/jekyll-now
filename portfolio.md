@@ -39,6 +39,13 @@ Esta es una simulación de fluidos de agua en 2D usando el método computacional
 3. ThreeJS
 4. CSS
 
+# Applying supervised machine learning algorithms
+![Suppor Vector Machine](https://upload.wikimedia.org/wikipedia/commons/2/2a/Svm_max_sep_hyperplane_with_margin.png)
+
+[Link del repositorio](https://github.com/jorovipe97/machine-learning-supervised)
+
+Para este proyecto aplique varios algoritmos supervisados de machine learning para intentar predecir que medicina se le debe dar a un paciente con rinitis, para ello me valí de una base de datos de pacientes correctamente diagnosticados por médicos expertos, fue fabuloso darse cuenta de que el modelo entrenado quitaba la necesidad de tener a un médico experto en cada hospital.
+
 # Twitter bot for get followers
 [Link del repositorio](https://github.com/jorovipe97/WeiseBot)
 
