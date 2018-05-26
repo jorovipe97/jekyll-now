@@ -6,6 +6,27 @@ permalink: /portfolio/
 
 A continuación puedes conocer algunos de los trabajos que he realizado, tambien te invito a ojear mi <a href="https://github.com/jorovipe97?tab=repositories" target="_blank">repositorio de Github</a>, por otra parte puedes ver una <a href="https://cdn.rawgit.com/jorovipe97/jorovipe97.github.io/8da72cf0/images/Jose%20Villalobos%20-%20Hoja%20de%20vida%20-%20UPB%20-%20v2.0.pdf" target="_blank">hoja de vida</a> mas formal aqui.
 
+# Web page with interactive background by using WebGL
+![](https://imgur.com/308K0gs.gif)
+
+<a href="https://jorovipe97.github.io/colorful/" target="_blank">View Demo</a>
+
+For the background effect I have used WebGL (Helped by ThreeJS) and the HTML5 canvas element. It was necessary to write two GLSL fragment shaders and implement a double buffer system. The first one shader and the double buffer was used for implementing a smoke effect inspired by Jos Stam’s paper on “Real-Time Fluid Dynamics for Games”.
+
+The second one shader was written for convert the background image to gray scale and masking it with the original color image by using the smoke texture generated in the first shader. Note that this way we don’t need to load two images since the color conversion is occurring in the GPU dynamically.
+
+For DOM and loading animations I have used CSS3 instead of a gif (for loading animations) because I needed speed and load a gif is slower than a CSS3 animation.
+
+**Publication date:** April 2018
+
+**Used Technologies:**
+1. HTML/CSS/JS
+2. AngularJS
+3. ThreeJS / WebGL
+4. GLSL (Open GL Shading Language)
+
+
+
 # Team Bridge Game
 Juego que mediante técnicas de visión artificial propone una dinámica cooperativa entre dos jugadores. 
 
