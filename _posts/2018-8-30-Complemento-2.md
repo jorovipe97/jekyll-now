@@ -23,4 +23,4 @@ Eso es todo por el momento, espero haber explicado bien esta interpretación.
 
 # Links importantes
 - [Computer Systems A programmer’s perspective](https://www.amazon.com/Computer-Systems-Programmers-Perspective-MasteringEngineering/dp/0134123832)
-- [@romualdo97](https://romualdo97.github.io/
+- [@romualdo97](https://romualdo97.github.io/)
