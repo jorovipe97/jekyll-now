@@ -13,3 +13,15 @@ First, follow the steps on the [original documentation]( https://gstreamer.freed
 After you install the **gstreamer** you may be tempted to run the examples. The problem is that when you try to run the examples you can get the following linker errors.
 
 ![Linker errors](https://imgur.com/shvsKyZ.gif)
+
+This is because If you use **/NODEFAULTLIB** option, for example, to build your program without the C run-time library, you may have to also use **/ENTRY** to specify the entry point (function) in your program ([read the this](https://docs.microsoft.com/en-us/cpp/build/reference/nodefaultlib-ignore-libraries?view=vs-2017)).
+
+…And, of course, the **gstreamer** examples use the **/NODEFAULTLIB** option.
+![Linker is using /nodefaultlib option](https://imgur.com/dqMIlJM.gif)
+
+If you want to check it go to **project properties** > **linker** > **input**
+
+As said in the MSDN documentation the solution is to specify the entry point of our program. To do it you need to go to **project properties** > **linker** > **advanced** > **entry point** and then specify the name of the entry point function (in the examples it is named main).
+![Specifying the entry point function name](https://imgur.com/myzCbMK.gif)
+
+And that’s all, I hope you can find useful.
