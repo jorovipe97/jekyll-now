@@ -6,6 +6,34 @@ permalink: /portfolio/
 
 A continuación puedes conocer algunos de los trabajos que he realizado, tambien te invito a ojear mi <a href="https://github.com/jorovipe97?tab=repositories" target="_blank">repositorio de Github</a>, por otra parte puedes ver una <a href="https://cdn.rawgit.com/jorovipe97/jorovipe97.github.io/8da72cf0/images/Jose%20Villalobos%20-%20Hoja%20de%20vida%20-%20UPB%20-%20v2.0.pdf" target="_blank">hoja de vida</a> mas formal aqui.
 
+# Reimplementación sitio web del tour telemedellin
+![](https://imgur.com/i4zuQdR.gif)
+
+<a href="http://tour.telemedellin.tv">Ver página web</a>
+
+Fecha: Diciembre 2018
+
+Actividades importantes desarrolladas:
+1. Re implementar el frontend para lograr un sitio totalmente responsivo.
+2. Desarrollar un plugin para personalizar fácilmente y sin programación el slideshow de la página principal.
+3. Re implementar las paginas del sitio para permitir al usuario final modificar su contenido mediante un editor gráfico.
+4. Refactorizar el frontend y el backend.
+
+Tecnologías utilizadas:
+1. Backend: NodeJS, Total.js
+2. Frontend: HTML, CSS, JS, JQuery.
+
+# Remake cámara espía
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/9lRjxn5hk_c" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+Fecha: Octubre 2018
+
+Se reconstruyo desde cero esta experiencia interactiva del tour telemedellin que busca sumergir al usuario en un recorrido por las instalaciones del canal.
+
+Tecnologías utilizadas: Unity, C#
+
+
 # Web page with interactive background by using WebGL
 ![](https://imgur.com/308K0gs.gif)
 
